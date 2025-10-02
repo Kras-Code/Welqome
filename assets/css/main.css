@@ -2525,7 +2525,7 @@ input, select, textarea {
 			display: block;
 			background: #ffffff;
 			border-radius: 100%;
-			color: #312450;
+			color: #023e8a;
 			text-align: center;
 			line-height: 2.5em;
 			margin: 0 0 1.3em 0;
@@ -3236,7 +3236,7 @@ input, select, textarea {
 			}
 
 		.wrapper.alt {
-			background-color: #261c3e;
+			background-color: #03045e;
 		}
 
 		.wrapper.style1 {
@@ -3244,7 +3244,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style1-alt {
-			background-color: #493382;
+			background-color: #023e8a;
 		}
 
 		.wrapper.style2 {
@@ -3252,15 +3252,15 @@ input, select, textarea {
 		}
 
 		.wrapper.style2-alt {
-			background-color: #3e4094;
+			background-color: #90e0ef;
 		}
 
 		.wrapper.style3 {
-			background-color: #00c0fa;
+			background-color: #0077b6;
 		}
 
 		.wrapper.style3-alt {
-			background-color: #953d75;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.fullscreen {
@@ -3522,20 +3522,20 @@ input, select, textarea {
 
 /* Sidebar */
 
-	#sidebar {
-		padding: 2.5em 2.5em 0.5em 2.5em ;
-		background: #312450;
-		cursor: default;
-		height: 100vh;
-		left: 0;
-		overflow-x: hidden;
-		overflow-y: auto;
-		position: fixed;
-		text-align: right;
-		top: 0;
-		width: 18em;
-		z-index: 10000;
-	}
+#sidebar {
+	padding: 2.5em 2.5em 0.5em 2.5em;
+	background: #023e8a;
+	cursor: default;
+	height: 100vh;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: fixed;
+	text-align: right;
+	top: 0;
+	width: 18em;
+	z-index: 10000;
+}
 
 		#sidebar > .inner {
 			display: -moz-flex;
@@ -3918,3 +3918,63 @@ input, select, textarea {
 			}
 
 		}
+
+/* Founders section */
+
+#three {
+	background-color: #023e8a;
+	padding: 4rem 2rem; /* optional: adds spacing inside */
+}
+#three .founders {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	gap: 3rem;
+	flex-wrap: wrap;
+}
+
+#three .founder {
+	text-align: center;
+}
+
+	#three .founder img {
+		width: 350px; /* adjust as needed */
+		height: 350px; /* must match width for a perfect circle */
+		border-radius: 50%;
+		object-fit: cover;
+		display: block;
+		margin: 0 auto;
+	}
+
+	#three .founder figcaption {
+		margin-top: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+	}
+
+	/* Flowchart styling */
+.flowchart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-direction: row;
+}
+
+.flow-step {
+  background: #0162eb;
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 200;
+  text-align: center;
+  min-width: 150px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.arrow {
+  font-size: 2rem;
+  color: #333;
+}
