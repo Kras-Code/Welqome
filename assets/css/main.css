@@ -1,4 +1,4 @@
-@import url(fontawesome-all.min.css);
+﻿@import url(fontawesome-all.min.css);
 
 /*
 	Hyperspace by HTML5 UP
@@ -3248,11 +3248,11 @@ input, select, textarea {
 		}
 
 		.wrapper.style2 {
-			background-color: #5052b5;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.style2-alt {
-			background-color: #90e0ef;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.style3 {
@@ -3952,29 +3952,102 @@ input, select, textarea {
 		letter-spacing: 0.02em;
 	}
 
-	/* Flowchart styling */
+/* Flowchart: responsive, order-preserving, scalable */
 .flowchart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 1rem;
-  margin-top: 2rem;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	gap: clamp(12px, 1.4vw, 24px);
+	margin-top: clamp(16px, 2vw, 32px);
+	/* Keep single row on wide screens; preserve order and avoid wrapping */
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	-webkit-overflow-scrolling: touch;
+	padding-block: clamp(8px, 1vw, 16px);
+	scrollbar-width: thin;
 }
 
+	.flowchart::-webkit-scrollbar {
+		height: 8px;
+	}
+
+	.flowchart::-webkit-scrollbar-thumb {
+		background: rgba(0,0,0,0.25);
+		border-radius: 8px;
+	}
+
+	.flowchart::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+/* Step cards scale with viewport */
 .flow-step {
-  background: #0162eb;
-  color: #fff;
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 200;
-  text-align: center;
-  min-width: 150px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+	background: #0162eb;
+	color: #fff;
+	border-radius: 12px;
+	box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+	/* Size scales by viewport, but stays readable */
+	flex: 0 0 clamp(260px, 28vw, 480px);
+	min-height: clamp(160px, 24vh, 300px);
+	padding: clamp(16px, 2vw, 28px) clamp(18px, 2.2vw, 32px);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: left;
+	scroll-snap-align: start;
 }
 
+	/* Typography scales */
+	.flow-step h3 {
+		margin: 0 0 clamp(6px, 0.8vw, 10px);
+		font-weight: 700;
+		line-height: 1.2;
+		font-size: clamp(16px, 1.25vw, 22px);
+	}
+
+	.flow-step p {
+		margin: 0;5052b5
+		line-height: 1.45;
+		font-weight: 300;
+		font-size: clamp(14px, 1.05vw, 18px);
+	}
+
+/* Arrows occupy minimal space and scale */
 .arrow {
-  font-size: 2rem;
-  color: #333;
+	flex: 0 0 auto;
+	display: grid;
+	place-items: center;
+	padding-inline: clamp(4px, 0.6vw, 8px);
+	font-size: clamp(20px, 2.2vw, 36px);
+	color: rgba(0,0,0,0.65);
+	user-select: none;
+	line-height: 1;
 }
+
+/* Mobile/narrow layout: stack vertically, rotate arrows to point down */
+@media (max-width: 900px) {
+	.flowchart {
+		flex-direction: column;
+		overflow: visible; /* no horizontal scroll needed when stacked */
+	}
+
+	.flow-step {
+		width: 100%;
+		flex-basis: auto;
+		min-height: unset;
+		text-align: left;
+	}
+
+	.arrow {
+		transform: rotate(90deg); /* → becomes ↓ */
+		padding-block: 4px;
+		font-size: clamp(18px, 4.2vw, 28px);
+	}
+}
+
+/* Extra-large screens: limit step max width for readability */
+@media (min-width: 1600px) {
+	.flow-step {
+		flex-basis: 520px;
+	}
