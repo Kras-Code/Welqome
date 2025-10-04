@@ -3960,22 +3960,6 @@ input, select, textarea {
 		gap: 0.5rem; /* even spacing when wrapping */
 	}
 
-		/* The key fix: allow wrapping and size-to-text */
-		#one .features > section .actions .button {
-			display: inline-flex; /* shrink to fit text */
-			align-items: center;
-			justify-content: center;
-			white-space: normal !important; /* override theme’s nowrap */
-			overflow-wrap: anywhere; /* handle long words/URLs */
-			word-break: break-word;
-			min-width: 0 !important; /* cancel any theme min-width */
-			width: fit-content; /* expand with text */
-			max-width: 100%; /* don’t overflow the card */
-			text-align: center;
-			line-height: 1.25;
-		}
-
-
 /* Optional: slightly smaller button text on small screens */
 @media (max-width: 736px) {
 	#one .features > section .actions .button {
