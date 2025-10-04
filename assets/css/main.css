@@ -3918,6 +3918,45 @@ input, select, textarea {
 			}
 
 		}
+
+/* Section 1 */
+/* Only affect the cards, not the grid layout */
+#one .features > section {
+	display: flex;
+	flex-direction: column;
+}
+
+	/* Push the actions block to the bottom of each card */
+	#one .features > section .actions {
+		margin-top: auto;
+		/* center the button horizontally */
+		display: flex;
+		justify-content: center;
+	}
+
+		/* keep list tidy */
+		#one .features > section .actions li {
+			margin: 0;
+			list-style: none;
+		}
+
+
+
+
+/* Tablet and below: cap by viewport width to avoid cut-off */
+@media screen and (max-width: 980px) {
+	#intro .logo {
+		max-width: min(85vw, 400px);
+	}
+}
+
+/* Small phones: a slightly tighter cap */
+@media screen and (max-width: 736px) {
+	#intro .logo {
+		max-width: min(90vw, 340px);
+	}
+}
+
 /*section 2 */
 /* Hide the default disclosure marker */
 
@@ -3985,7 +4024,7 @@ input, select, textarea {
 
 /* Step cards (smaller) */
 .flow-step {
-	width: 100%;
+	width: 90%;
 	background: #023e8a;
 	color: #fff;
 	border-radius: 10px; /* slightly tighter corners */
@@ -4051,13 +4090,13 @@ input, select, textarea {
 			margin-top: 0.75rem;
 		}
 
-/* ---- Shared sizing (computed once) ---- */
+/* ---- Section 4 - Ai agent ---- */
 #four {
 	--h3-size: clamp(1rem, 0.85rem + 0.9vw, 1.5rem);
 	--icon-scale: 5;
 	--icon: calc(var(--h3-size) * var(--icon-scale));
 	/* readable line-length for wrapping text */
-	--measure: clamp(28ch, 52vw, 62ch);
+	--measure: clamp(28ch, 35vw, 35ch);
 	/* total card width cap = icon + gap + text measure */
 	--card-max: calc(var(--icon) + 1rem + var(--measure));
 }

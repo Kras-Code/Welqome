@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets"
+    "\\assets",
+    "\\assets\\css",
+    "\\assets\\sass\\components",
+    "\\assets\\sass\\layout"
   ],
-  "SelectedNode": "\\assets\\css",
+  "SelectedNode": "\\images",
   "PreviewInSolutionExplorer": false
 }
