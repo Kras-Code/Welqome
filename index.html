@@ -19,377 +19,465 @@
 	<link rel="stylesheet" href="assets/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 </head>
-	<body class="is-preload">
+<body class="is-preload">
 
-		<!-- Sidebar -->
-		<section id="sidebar">
+	<!-- Sidebar -->
+	<section id="sidebar">
+		<div class="inner">
+			<nav>
+				<ul>
+					<li><a href="#intro">WelQome</a></li>
+					<li><a href="#one">What we do</a></li>
+					<li><a href="#two">Automation Workflow</a></li>
+					<li><a href="#three">Our Team</a></li>
+					<li><a href="#four">Try it out</a></li>
+					<li><a href="#five">Get in touch</a></li>
+				</ul>
+			</nav>
+		</div>
+	</section>
+
+	<!-- Mobile sidebar toggle (visible only on mobile via CSS) -->
+	<button id="mSidebarToggle"
+			class="button small"
+			aria-controls="m-sidebar"
+			aria-expanded="false">
+		☰ Menu
+	</button>
+
+	<!-- Mobile drawer (separate from your desktop #sidebar) -->
+	<aside id="m-sidebar" aria-hidden="true">
+		<div class="inner">
+			<nav aria-label="Mobile">
+				<ul class="menu"><!-- will be cloned from #sidebar --></ul>
+			</nav>
+		</div>
+	</aside>
+
+	<!-- Backdrop -->
+	<div id="m-sidebar-backdrop" hidden></div>
+
+	<script>
+		(function () {
+			const desktopList = document.querySelector('#sidebar nav > ul');
+			const mobileList = document.querySelector('#m-sidebar nav > ul.menu');
+			const toggle = document.getElementById('mSidebarToggle');
+			const drawer = document.getElementById('m-sidebar');
+			const backdrop = document.getElementById('m-sidebar-backdrop');
+			if (!mobileList || !toggle || !drawer || !backdrop) return;
+
+			// Clone desktop items into mobile on first load
+			if (desktopList && !mobileList.children.length) {
+				mobileList.innerHTML = desktopList.innerHTML;
+			}
+
+			let lastFocus = null;
+
+			function openDrawer() {
+				lastFocus = document.activeElement;
+				drawer.classList.add('is-open');
+				backdrop.hidden = false;
+				backdrop.classList.add('is-visible');
+				toggle.setAttribute('aria-expanded', 'true');
+				document.documentElement.style.overflow = 'hidden';
+				document.body.style.overflow = 'hidden';
+				const firstFocusable = drawer.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
+				(firstFocusable || drawer).focus({ preventScroll: true });
+			}
+
+			function closeDrawer() {
+				drawer.classList.remove('is-open');
+				toggle.setAttribute('aria-expanded', 'false');
+				document.documentElement.style.overflow = '';
+				document.body.style.overflow = '';
+				backdrop.classList.remove('is-visible');
+				setTimeout(() => { backdrop.hidden = true; }, 240);
+				(lastFocus && lastFocus.focus) ? lastFocus.focus({ preventScroll: true }) : toggle.focus({ preventScroll: true });
+			}
+
+			toggle.addEventListener('click', () => {
+				const open = drawer.classList.contains('is-open');
+				open ? closeDrawer() : openDrawer();
+			});
+			backdrop.addEventListener('click', closeDrawer);
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+					e.preventDefault(); closeDrawer();
+				}
+			});
+
+			// Keep the "active" class in sync if desktop updates later (optional)
+			const observer = new MutationObserver(() => {
+				if (!desktopList) return;
+				const activeHrefs = new Set([...desktopList.querySelectorAll('a.active')].map(a => a.getAttribute('href')));
+				mobileList.querySelectorAll('a').forEach(a => {
+					activeHrefs.has(a.getAttribute('href')) ? a.classList.add('active') : a.classList.remove('active');
+				});
+			});
+			if (desktopList) observer.observe(desktopList, { subtree: true, attributes: true, attributeFilter: ['class'] });
+
+			// Close after clicking a same-page link
+			mobileList.addEventListener('click', (e) => {
+				const a = e.target.closest('a'); if (!a) return;
+				const href = a.getAttribute('href') || '';
+				if (href.startsWith('#') || href === '' || href.startsWith(location.origin)) closeDrawer();
+			});
+		})();
+	</script>
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Intro -->
+		<section id="intro" class="wrapper style1 fullscreen fade-up">
 			<div class="inner">
-				<nav>
-					<ul>
-						<li><a href="#intro">WelQome</a></li>
-						<li><a href="#one">What we do</a></li>
-						<li><a href="#two">Automation Workflow</a></li>
-						<li><a href="#three">Our Team</a></li>
-						<li><a href="#four">Try it out</a></li>
-						<li><a href="#five">Get in touch</a></li>
-					</ul>
-				</nav>
+				<img src="images/Welqome_Logo.png" alt="WelQome Logo" class="logo">
+				<p>AI powered automation tailored to your business</p>
+				<ul class="actions">
+					<li><a href="#one" class="button scrolly">Learn more</a></li>
+				</ul>
 			</div>
 		</section>
 
-		<!-- Wrapper -->
-		<div id="wrapper">
-
-			<!-- Intro -->
-			<section id="intro" class="wrapper style1 fullscreen fade-up">
-				<div class="inner">
-					<img src="images/Welqome_Logo.png" alt="WelQome Logo" class="logo">
-					<p>AI powered automation tailored to your business</p>
-					<ul class="actions">
-						<li><a href="#one" class="button scrolly">Learn more</a></li>
-					</ul>
+		<!-- One -->
+		<section id="one" class="wrapper style1-alt fade-up">
+			<div class="inner">
+				<h2>What we do</h2>
+				<p>WelQome builds AI receptionists tailored to your workflows.</p>
+				<div class="features">
+					<section>
+						<span class="icon solid major fa-link"></span>
+						<h3>Frictionless Integration</h3>
+						<p>We seamlessly engineer AI automation with your existing phone numbers, systems, calendars and CRM. We support 1000+ intergrations.</p>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">Find out about integrations</a></li>
+						</ul>
+					</section>
+					<section>
+						<span class="icon solid major fa-phone"></span>
+						<h3>24/7 Call Handling</h3>
+						<p>Always-on coverage frees up your time and captures after-hours demand, eliminating revenue leakage from missed calls.</p>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">Find out about benefits</a></li>
+						</ul>
+					</section>
+					<section>
+						<span class="icon solid major fa-bullseye"></span>
+						<h3>Accuracy & Quality</h3>
+						<p>Natural, warm conversations in your brand voice. Your agent is educated on your brand and services, with safeguards against conversational drift.</p>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">Find out about brand tailoring</a></li>
+						</ul>
+					</section>
+					<section>
+						<span class="icon solid major fa-lock"></span>
+						<h3>Secure & Compliant</h3>
+						<p>Data privacy, GDPR-compliant and secure call handling.</p>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">Find out about compliance</a></li>
+						</ul>
+					</section>
 				</div>
-			</section>
+				<ul class="actions special">
+					<li><a href="#two" class="button scrolly">How our service works</a></li>
+				</ul>
+			</div>
+		</section>
 
-			<!-- One -->
-			<section id="one" class="wrapper style1-alt fade-up">
-				<div class="inner">
-					<h2>What we do</h2>
-					<p>WelQome builds AI receptionists tailored to your workflows.</p>
-					<div class="features">
-						<section>
-							<span class="icon solid major fa-link"></span>
-							<h3>Frictionless Integration</h3>
-							<p>We seamlessly engineer AI automation with your existing phone numbers, systems, calendars and CRM. We support 1000+ intergrations.</p>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">Find out about intergrations</a></li>
-							</ul>
-						</section>
-						<section>
-							<span class="icon solid major fa-phone"></span>
-							<h3>24/7 Call Handling</h3>
-							<p>Always-on coverage frees up your time and captures after-hours demand, eliminating revenue leakage from missed calls.</p>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">Find out about benefits</a></li>
-							</ul>
-						</section>
-						<section>
-							<span class="icon solid major fa-bullseye"></span>
-							<h3>Accuracy & Quality</h3>
-							<p>Natural, warm conversations in your brand voice. Your agent is educated on your brand and services, with safeguards against conversational drift.</p>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">Find out about brand tailoring</a></li>
-							</ul>
-						</section>
-						<section>
-							<span class="icon solid major fa-lock"></span>
-							<h3>Secure & Compliant</h3>
-							<p>Data privacy, GDPR-compliant and secure call handling.</p>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">Find out about compliance</a></li>
-							</ul>
-						</section>
-					</div>
-					<ul class="actions">
-						<li><a href="generic.html" class="button">How our service works</a></li>
-					</ul>
+		<!-- Two -->
+		<section id="two" class="wrapper style1 fade-up">
+			<div class="inner">
+				<h2>Automation Workflow</h2>
+				<p>From initial consultation to deployment, our workflow ensures a seamless integration of AI reception into your business.</p>
+
+				<div class="yt-wrap">
+					<iframe src="https://www.youtube-nocookie.com/embed/U80VHwbFq44?si=0ID_30U1AQ2K4Ezc"
+							title="Descriptive video title"
+							loading="lazy"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							referrerpolicy="strict-origin-when-cross-origin"
+							allowfullscreen></iframe>
 				</div>
-			</section>
 
-			<!-- Two -->
-			<section id="two" class="wrapper style1 fade-up">
-				<div class="inner">
-					<h2>Automation Workflow</h2>
-					<p>From initial consultation to deployment, our workflow ensures a seamless integration of AI reception into your business.</p>
+				<style>
+					.yt-wrap {
+						max-width: 900px; /* optional: constrain width */
+						margin: 0 auto; /* optional: center in layout */
+						aspect-ratio: 16 / 9; /* scales height with width */
+					}
 
-					<div class="yt-wrap">
-						<iframe src="https://www.youtube-nocookie.com/embed/U80VHwbFq44?si=0ID_30U1AQ2K4Ezc"
-								title="Descriptive video title"
-								loading="lazy"
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								referrerpolicy="strict-origin-when-cross-origin"
-								allowfullscreen></iframe>
-					</div>
-
-					<style>
-						.yt-wrap {
-							max-width: 900px; /* optional: constrain width */
-							margin: 0 auto; /* optional: center in layout */
-							aspect-ratio: 16 / 9; /* scales height with width */
+						.yt-wrap > iframe {
+							width: 100%;
+							height: 100%;
+							border: 0;
+							display: block;
 						}
+				</style>
 
-							.yt-wrap > iframe {
-								width: 100%;
-								height: 100%;
-								border: 0;
-								display: block;
-							}
-					</style>
+				<details class="reveal">
+					<summary class="reveal-summary">
+						<span class="button">
+							<span class="label-closed">Show more</span>
+							<span class="label-open">Show less</span>
+						</span>
+					</summary>
 
-					<details class="reveal">
-						<summary class="reveal-summary">
-							<span class="button">
-								<span class="label-closed">Show more</span>
-								<span class="label-open">Show less</span>
-							</span>
-						</summary>
-
-						<div class="flowchart" role="list" aria-label="Automation workflow">
-							<div class="flow-step" role="listitem">
-								<h3>1. Needs Assessment</h3>
-								<p>We begin with a discussion of your business needs, customer interaction points and desired outcomes.</p>
-							</div>
-							<div class="arrow" aria-hidden="true">↓</div>
-
-							<div class="flow-step" role="listitem">
-								<h3>2. Solution Proposal &amp; Agreement</h3>
-								<p>We outline the AI receptionist automation plan, including integrations tailored to your business.</p>
-							</div>
-							<div class="arrow" aria-hidden="true">↓</div>
-
-							<div class="flow-step" role="listitem">
-								<h3>3. Build-with-you AI Development</h3>
-								<p>Our engineers build and customise your AI receptionist pipeline. We keep you in the loop and provide continuous feedback.</p>
-							</div>
-							<div class="arrow" aria-hidden="true">↓</div>
-
-							<div class="flow-step" role="listitem">
-								<h3>4. Internal Testing &amp; Quality Assurance</h3>
-								<p>We simulate real call and scheduling scenarios to ensure accuracy, reliability and GDPR compliance.</p>
-							</div>
-							<div class="arrow" aria-hidden="true">↓</div>
-
-							<div class="flow-step" role="listitem">
-								<h3>5. Deployment &amp; Onboarding</h3>
-								<p>WelQome goes live for your business. We provide training and ensure smooth integration with your daily operations.</p>
-							</div>
-							<div class="arrow" aria-hidden="true">↓</div>
-
-							<div class="flow-step" role="listitem">
-								<h3>6. Ongoing Optimisation &amp; Support</h3>
-								<p>Post-launch, we monitor performance and provide 24/7 support.</p>
-							</div>
+					<div class="flowchart" role="list" aria-label="Automation workflow">
+						<div class="flow-step" role="listitem">
+							<h3>1. Needs Assessment</h3>
+							<p>We begin with a discussion of your business needs, customer interaction points and desired outcomes.</p>
 						</div>
-						<script>
-							(() => {
-								const DURATION = 350;
-								const EASING = 'cubic-bezier(0.2, 0, 0, 1)';
+						<div class="arrow" aria-hidden="true">↓</div>
 
-								document.querySelectorAll('details.reveal').forEach((details) => {
-									const summary = details.querySelector('summary');
-									const panel = details.querySelector('.flowchart');
-									let animating = false;
-									let currentAnim = null;
+						<div class="flow-step" role="listitem">
+							<h3>2. Solution Proposal &amp; Agreement</h3>
+							<p>We outline the AI receptionist automation plan, including integrations tailored to your business.</p>
+						</div>
+						<div class="arrow" aria-hidden="true">↓</div>
 
-									// Defensive: ensure the panel is present
-									if (!summary || !panel) return;
+						<div class="flow-step" role="listitem">
+							<h3>3. Build-with-you AI Development</h3>
+							<p>Our engineers build and customise your AI receptionist pipeline. We keep you in the loop and provide continuous feedback.</p>
+						</div>
+						<div class="arrow" aria-hidden="true">↓</div>
 
-									// Optional: ensure pointer affordance
-									summary.style.cursor = 'pointer';
+						<div class="flow-step" role="listitem">
+							<h3>4. Internal Testing &amp; Quality Assurance</h3>
+							<p>We simulate real call and scheduling scenarios to ensure accuracy, reliability and GDPR compliance.</p>
+						</div>
+						<div class="arrow" aria-hidden="true">↓</div>
 
-									summary.addEventListener('click', (e) => {
-										// Respect reduced-motion: let native toggle occur
-										if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+						<div class="flow-step" role="listitem">
+							<h3>5. Deployment &amp; Onboarding</h3>
+							<p>WelQome goes live for your business. We provide training and ensure smooth integration with your daily operations.</p>
+						</div>
+						<div class="arrow" aria-hidden="true">↓</div>
 
-										// Use custom animation instead of native toggle
-										e.preventDefault();
+						<div class="flow-step" role="listitem">
+							<h3>6. Ongoing Optimisation &amp; Support</h3>
+							<p>Post-launch, we monitor performance and provide 24/7 support.</p>
+						</div>
+					</div>
+					<script>
+						(() => {
+							const DURATION = 350;
+							const EASING = 'cubic-bezier(0.2, 0, 0, 1)';
 
-										if (animating) return;
-										animating = true;
+							document.querySelectorAll('details.reveal').forEach((details) => {
+								const summary = details.querySelector('summary');
+								const panel = details.querySelector('.flowchart');
+								let animating = false;
+								let currentAnim = null;
 
-										// Cancel any in-flight animation cleanly
-										if (currentAnim) {
-											currentAnim.cancel();
-											currentAnim = null;
-										}
+								// Defensive: ensure the panel is present
+								if (!summary || !panel) return;
 
-										const openNow = details.open;
+								// Optional: ensure pointer affordance
+								summary.style.cursor = 'pointer';
 
-										if (!openNow) {
-											// ---- OPEN: fade-down (translateY -8px -> 0) ----
-											details.open = true;            // make panel measurable
-											panel.style.overflow = 'hidden';
-											panel.style.height = '0px';
-											panel.style.opacity = '0';
-											panel.style.transform = 'translateY(-8px)';
+								summary.addEventListener('click', (e) => {
+									// Respect reduced-motion: let native toggle occur
+									if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-											// measure target block-size after it's in layout
-											const target = panel.scrollHeight;
+									// Use custom animation instead of native toggle
+									e.preventDefault();
 
-											// kick animation on next frame so initial styles stick
-											requestAnimationFrame(() => {
-												currentAnim = panel.animate([
-													{ height: '0px', opacity: 0, transform: 'translateY(-8px)' },
-													{ height: target + 'px', opacity: 1, transform: 'translateY(0)' }
-												], { duration: DURATION, easing: EASING });
+									if (animating) return;
+									animating = true;
 
-												currentAnim.onfinish = () => {
-													// snap to natural layout (auto height), clear overrides
-													panel.style.height = '';
-													panel.style.opacity = '';
-													panel.style.transform = '';
-													panel.style.overflow = '';
-													animating = false;
-													currentAnim = null;
-												};
+									// Cancel any in-flight animation cleanly
+									if (currentAnim) {
+										currentAnim.cancel();
+										currentAnim = null;
+									}
 
-												currentAnim.oncancel = () => { animating = false; currentAnim = null; };
-											});
+									const openNow = details.open;
 
-										} else {
-											// ---- CLOSE: fade-up (translateY 0 -> -8px) ----
-											const start = panel.offsetHeight;   // current rendered height
-											panel.style.overflow = 'hidden';    // constrain during collapse
+									if (!openNow) {
+										// ---- OPEN: fade-down (translateY -8px -> 0) ----
+										details.open = true;            // make panel measurable
+										panel.style.overflow = 'hidden';
+										panel.style.height = '0px';
+										panel.style.opacity = '0';
+										panel.style.transform = 'translateY(-8px)';
 
+										// measure target block-size after it's in layout
+										const target = panel.scrollHeight;
+
+										// kick animation on next frame so initial styles stick
+										requestAnimationFrame(() => {
 											currentAnim = panel.animate([
-												{ height: start + 'px', opacity: 1, transform: 'translateY(0)' },
-												{ height: '0px', opacity: 0, transform: 'translateY(-8px)' }
+												{ height: '0px', opacity: 0, transform: 'translateY(-8px)' },
+												{ height: target + 'px', opacity: 1, transform: 'translateY(0)' }
 											], { duration: DURATION, easing: EASING });
 
 											currentAnim.onfinish = () => {
-												// After collapsing, actually close the <details>
+												// snap to natural layout (auto height), clear overrides
 												panel.style.height = '';
 												panel.style.opacity = '';
 												panel.style.transform = '';
 												panel.style.overflow = '';
-												details.open = false;            // triggers your label swap CSS
 												animating = false;
 												currentAnim = null;
 											};
 
 											currentAnim.oncancel = () => { animating = false; currentAnim = null; };
-										}
-									});
+										});
+
+									} else {
+										// ---- CLOSE: fade-up (translateY 0 -> -8px) ----
+										const start = panel.offsetHeight;   // current rendered height
+										panel.style.overflow = 'hidden';    // constrain during collapse
+
+										currentAnim = panel.animate([
+											{ height: start + 'px', opacity: 1, transform: 'translateY(0)' },
+											{ height: '0px', opacity: 0, transform: 'translateY(-8px)' }
+										], { duration: DURATION, easing: EASING });
+
+										currentAnim.onfinish = () => {
+											// After collapsing, actually close the <details>
+											panel.style.height = '';
+											panel.style.opacity = '';
+											panel.style.transform = '';
+											panel.style.overflow = '';
+											details.open = false;            // triggers your label swap CSS
+											animating = false;
+											currentAnim = null;
+										};
+
+										currentAnim.oncancel = () => { animating = false; currentAnim = null; };
+									}
 								});
-							})();
-						</script>
-					</details>
+							});
+						})();
+					</script>
+				</details>
 
 
-				</div>
-			</section>
-
-
-			<!-- Three -->
-			<section id="three" class="wrapper style1-alt fade-up">
-				<div class="inner">
-					<h2>Our Team</h2>
-					<div class="founders">
-						<figure class="founder">
-							<img src="images/karol.png" alt="Karol headshot" />
-							<figcaption>Karol Krasnowolski, MSci.</figcaption>
-							<figcaption>Founder | CEO</figcaption>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">About Karol</a></li>
-							</ul>
-						</figure>
-
-						<figure class="founder">
-							<img src="images/jai.png" alt="Jai headshot" />
-							<figcaption>Jai Kumar, MSc.</figcaption>
-							<figcaption>Founder | CTO</figcaption>
-							<ul class="actions special">
-								<li><a href="generic.html" class="button">About Jai</a></li>
-							</ul>
-						</figure>
-					</div>
-				</div>
-			</section>
-
-			<!-- Four -->
-			<section id="four" class="wrapper style1 fade-up">
-				<div class="inner">
-					<h2>Try it out</h2>
-					<p>At WelQome we believe in the value AI automation agents bring to businesses, which is why we use our own service.</p>
-					<div class="features">
-						<section>
-							<img src="images/Mascot.png" alt="Mascot" />
-							<h3>Call Henry, our AI assistant</h3>
-							<p>
-								<a id="henry-number"
-								   href="tel:+447900000000"
-								   class="tel-link"
-								   aria-label="Call Henry on 07900 000000">
-									07900 000000
-								</a>
-							</p>
-							<p>He'll answer your questions and book a meeting with one of our automation experts.</p>
-						</section>
-			</section>
-
-			<!-- Five -->
-			<section id="five" class="wrapper style1-alt fade-up">
-				<div class="inner">
-					<h2>Get in touch</h2>
-					<p>Have questions, need a demo, or want a tailored quote? Send us a message and we’ll propose the best automation flow for your business. We can review your call scripts, calendar setup, and CRM in one quick session and outline a go-live plan.</p>
-					<div class="split style1">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field half">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field half">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="5"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><a href="" class="button submit">Send Message</a></li>
-								</ul>
-							</form>
-						</section>
-						<section>
-							<ul class="contact">
-								<li>
-									<h3>Email</h3>
-									<a href="#">enquiries@welqome.co.uk</a>
-								</li>
-								<li>
-									<h3>Phone</h3>
-									<span>+44 000-0000</span>
-								</li>
-								<li>
-									<h3>Social</h3>
-									<ul class="icons">
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-										<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-										<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-									</ul>
-								</li>
-							</ul>
-						</section>
-					</div>
-				</div>
-			</section>
-
-		</div>
-
-		<!-- Footer -->
-		<footer id="footer" class="wrapper style1-alt">
-			<div class="inner">
-				<ul class="menu">
-					<li>&copy; Welqome. All rights reserved.</li>
-					<l>
-				</ul>
 			</div>
-		</footer>
+		</section>
 
-		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.scrollex.min.js"></script>
-		<script src="assets/js/jquery.scrolly.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
 
-	</body>
+		<!-- Three -->
+		<section id="three" class="wrapper style1-alt fade-up">
+			<div class="inner">
+				<h2>Our Team</h2>
+				<div class="founders">
+					<figure class="founder">
+						<img src="images/karol.png" alt="Karol headshot" />
+						<figcaption>Karol Krasnowolski, MSci.</figcaption>
+						<figcaption>Founder | CEO</figcaption>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">About Karol</a></li>
+						</ul>
+					</figure>
+
+					<figure class="founder">
+						<img src="images/jai.png" alt="Jai headshot" />
+						<figcaption>Jai Kumar, MSc.</figcaption>
+						<figcaption>Founder | CTO</figcaption>
+						<ul class="actions special">
+							<li><a href="generic.html" class="button">About Jai</a></li>
+						</ul>
+					</figure>
+				</div>
+			</div>
+		</section>
+
+		<!-- Four -->
+		<section id="four" class="wrapper style1 fade-up">
+			<div class="inner">
+				<h2>Try it out</h2>
+				<p>At WelQome we believe in the value AI automation agents bring to businesses, which is why we use our own service.</p>
+				<div class="features">
+					<section>
+						<img src="images/Mascot.png" alt="Mascot" />
+						<h3>Call Henry, our AI assistant</h3>
+						<p>
+							<a id="henry-number"
+							   href="tel:+447900000000"
+							   class="tel-link"
+							   aria-label="Call Henry on 07900 000000">
+								07900 000000
+							</a>
+						</p>
+						<p>He'll answer your questions and book a meeting with one of our automation experts.</p>
+					</section>
+		</section>
+
+		<!-- Five -->
+		<section id="five" class="wrapper style1-alt fade-up">
+			<div class="inner">
+				<h2>Get in touch</h2>
+				<p>Have questions, need a demo, or want a tailored quote? Send us a message and we’ll propose the best automation flow for your business. We can review your call scripts, calendar setup, and CRM in one quick session and outline a go-live plan.</p>
+				<div class="split style1">
+					<section>
+						<form method="post" action="#">
+							<div class="fields">
+								<div class="field half">
+									<label for="name">Name</label>
+									<input type="text" name="name" id="name" />
+								</div>
+								<div class="field half">
+									<label for="email">Email</label>
+									<input type="text" name="email" id="email" />
+								</div>
+								<div class="field">
+									<label for="message">Message</label>
+									<textarea name="message" id="message" rows="5"></textarea>
+								</div>
+							</div>
+							<ul class="actions">
+								<li><a href="" class="button submit">Send Message</a></li>
+							</ul>
+						</form>
+					</section>
+					<section>
+						<ul class="contact">
+							<li>
+								<h3>Email</h3>
+								<a href="#">enquiries@welqome.co.uk</a>
+							</li>
+							<li>
+								<h3>Phone</h3>
+								<span>+44 000-0000</span>
+							</li>
+							<li>
+								<h3>Social</h3>
+								<ul class="icons">
+									<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+				</div>
+			</div>
+		</section>
+
+	</div>
+
+	<!-- Footer -->
+	<footer id="footer" class="wrapper style1-alt">
+		<div class="inner">
+			<ul class="menu">
+				<li>&copy; Welqome. All rights reserved.</li>
+				<l>
+			</ul>
+		</div>
+	</footer>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrollex.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+
+</body>
 </html>

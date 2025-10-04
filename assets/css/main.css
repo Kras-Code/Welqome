@@ -3870,6 +3870,152 @@ input, select, textarea {
 
 		}
 
+/* Mobile Sidebar */
+/* --- Defaults: hide mobile UI on desktop --- */
+#m-sidebar,
+#m-sidebar-backdrop,
+#mSidebarToggle {
+	display: none;
+}
+
+/* --- Backdrop base --- */
+#m-sidebar-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.45);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 220ms ease;
+	z-index: 10001; /* below drawer */
+}
+
+/* --- Mobile breakpoint (matches your theme’s 736px) --- */
+@media screen and (max-width: 736px) {
+
+	/* Your existing CSS already hides #sidebar here; leave that rule in place. */
+
+	/* Show toggle button */
+	#mSidebarToggle {
+		display: inline-flex;
+		align-items: center;
+		gap: .5rem;
+		position: fixed;
+		top: .75rem;
+		left: .75rem;
+		z-index: 10003; /* above drawer */
+	}
+
+	/* Off-canvas drawer */
+	#m-sidebar {
+		display: block;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: min(84vw, 18em); /* match desktop width cap */
+		background: #023e8a; /* same as desktop */
+		text-align: right; /* match desktop alignment */
+		padding: 2.5em 2.5em 0.5em 2.5em; /* match desktop spacing */
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		transform: translateX(-100%); /* hidden by default */
+		transition: transform 240ms ease;
+		box-shadow: 2px 0 18px rgba(0,0,0,0.22);
+		z-index: 10002; /* above backdrop, below toggle */
+	}
+
+		#m-sidebar.is-open {
+			transform: translateX(0);
+		}
+
+		#m-sidebar .inner {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			min-height: 100%;
+			width: 100%;
+			opacity: 1;
+			transition: opacity 1s ease; /* mirrors desktop fade */
+		}
+
+		/* Nav list structure (mirrors desktop) */
+		#m-sidebar nav > ul {
+			list-style: none;
+			padding: 0;
+		}
+
+			#m-sidebar nav > ul > li {
+				margin: 1.5em 0 0 0;
+				padding: 0;
+				position: relative;
+				opacity: 1;
+				transform: translateY(0);
+				transition: opacity 0.15s ease, transform 0.75s ease;
+			}
+
+				#m-sidebar nav > ul > li:first-child {
+					margin: 0;
+				}
+
+		/* Links (copied from desktop and kept in sync) */
+		#m-sidebar nav a {
+			transition: color 0.2s ease;
+			border: 0;
+			color: rgba(255, 255, 255, 0.35);
+			display: block;
+			font-size: 0.6em;
+			font-weight: bold;
+			letter-spacing: 0.25em;
+			line-height: 1.75;
+			outline: 0;
+			padding: 1.35em 0;
+			position: relative;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+
+			#m-sidebar nav a::before,
+			#m-sidebar nav a::after {
+				border-radius: 0.2em;
+				bottom: 0;
+				content: '';
+				height: 0.2em;
+				position: absolute;
+				right: 0;
+				width: 100%;
+			}
+
+			#m-sidebar nav a::before {
+				background: #1c3d58;
+			}
+
+			#m-sidebar nav a::after {
+				background-image: linear-gradient(to right, #0162eb, #00c0fa);
+				transition: max-width 0.2s ease;
+				max-width: 0;
+			}
+
+			#m-sidebar nav a:hover {
+				color: rgba(255, 255, 255, 0.55);
+			}
+
+			#m-sidebar nav a.active {
+				color: #ffffff;
+			}
+
+				#m-sidebar nav a.active::after {
+					max-width: 100%;
+				}
+
+	/* Backdrop visible state */
+	#m-sidebar-backdrop.is-visible {
+		display: block;
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+
 /* Intro */
 
 	#intro {
