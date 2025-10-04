@@ -3983,13 +3983,6 @@ input, select, textarea {
 			line-height: 1.25;
 		}
 
-/* Optional: slightly smaller button text on small screens */
-@media (max-width: 736px) {
-	#one .features > section .actions .button {
-		font-size: 0.95rem;
-	}
-}
-
 
 /*section 2 */
 /* Hide the default disclosure marker */
