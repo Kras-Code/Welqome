@@ -3,9 +3,7 @@
     "",
     "\\assets",
     "\\assets\\css",
-    "\\assets\\sass\\components",
-    "\\assets\\sass\\layout"
+    "\\assets\\css\\images"
   ],
-  "SelectedNode": "\\images",
   "PreviewInSolutionExplorer": false
 }
