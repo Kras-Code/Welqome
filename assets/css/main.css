@@ -3960,14 +3960,6 @@ input, select, textarea {
 		gap: 0.5rem; /* even spacing when wrapping */
 	}
 
-		/* Ensure list items don't constrain width */
-		#one .features > section .actions li {
-			margin: 0;
-			list-style: none;
-			flex: 0 1 auto;
-			max-width: 100%;
-		}
-
 		/* The key fix: allow wrapping and size-to-text */
 		#one .features > section .actions .button {
 			display: inline-flex; /* shrink to fit text */
@@ -3983,10 +3975,6 @@ input, select, textarea {
 			line-height: 1.25;
 		}
 
-		html {
-			-webkit-text-size-adjust: 100%;
-			text-size-adjust: 100%;
-		}
 
 /* Optional: slightly smaller button text on small screens */
 @media (max-width: 736px) {
