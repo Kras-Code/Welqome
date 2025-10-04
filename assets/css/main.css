@@ -38,7 +38,7 @@ ol, ul {
 
 blockquote, q {
 	quotes: none;
-}
+}`	
 
 	blockquote:before, blockquote:after, q:before, q:after {
 		content: '';
@@ -3372,7 +3372,8 @@ input, select, textarea {
 		display: flex;
 		background-color: #0162eb;
 		cursor: default;
-		padding: 1.75em 2em;
+		padding: .8em 2em;
+		padding-bottom: 0em
 	}
 
 		#header > .title {
@@ -3398,7 +3399,7 @@ input, select, textarea {
 
 				#header > nav > ul > li {
 					display: inline-block;
-					margin-left: 1.75em;
+					margin-left: 2em;
 					padding: 0;
 					vertical-align: middle;
 				}
@@ -4016,9 +4017,9 @@ input, select, textarea {
 }
 
 /* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
-:root {
-	--sidebar-w: 18em; /* same as #sidebar width */
-	--topbar-h: 3.5em; /* same as #sidebar height in the <=1280px rule */
+body.page-index {
+	--sidebar-w: 18em; /* matches #sidebar width used on index */
+	--topbar-h: 3.5em; /* matches top bar height on index */
 }
 
 /* ≥1281px: fixed left sidebar; push page content to the right so it sits alongside */
@@ -4064,6 +4065,13 @@ input, select, textarea {
 
 		.logo {
 			max-width: 400px;
+			height: auto;
+			margin: 0 0 20px 0; /* remove centering */
+			display: block;
+		}
+
+		.slogo {
+			max-width: 300px;
 			height: auto;
 			margin: 0 0 20px 0; /* remove centering */
 			display: block;
@@ -4364,3 +4372,38 @@ input, select, textarea {
 				white-space: normal;
 				overflow-wrap: anywhere;
 			}
+
+
+
+
+/* Founder page */
+
+/*this is for matching the buttons to the slogo size*/
+#header {
+	--slogo-h: 4rem;
+}
+
+	#header .slogo {
+		height: var(--slogo-h);
+		width: auto; /* preserves aspect ratio */
+		max-width: none; /* avoid width capping fighting the fixed height */
+		display: block;
+		margin: 0 0 20px 0;
+	}
+
+	#header nav a.match-slogo {
+		display: inline-flex; /* flex container for the text */
+		align-items: center; /* vertical centre */
+		justify-content: center; /* horizontal centre */
+		height: var(--slogo-h); /* same as your logo height source */
+		padding: 0 0.9rem;
+		line-height: 1;
+		text-align: center;
+		white-space: nowrap; /* optional: prevent wrapping in nav */
+	}
+
+@media (max-width: 736px) {
+	#header {
+		--slogo-h: 2.5rem;
+	}
+}
