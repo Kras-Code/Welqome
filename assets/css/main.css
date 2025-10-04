@@ -3918,6 +3918,19 @@ input, select, textarea {
 			}
 
 		}
+		/* Tablet and below: cap by viewport width to avoid cut-off */
+		@media screen and (max-width: 980px) {
+			#intro .logo {
+				max-width: min(85vw, 400px);
+			}
+		}
+
+		/* Small phones: a slightly tighter cap */
+		@media screen and (max-width: 736px) {
+			#intro .logo {
+				max-width: min(90vw, 340px);
+			}
+		}
 
 /* Section 1 */
 /* Only affect the cards, not the grid layout */
@@ -3939,23 +3952,44 @@ input, select, textarea {
 			margin: 0;
 			list-style: none;
 		}
+	#one .features > section .actions {
+		margin-top: auto;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap; /* allow multiple buttons to wrap onto new lines */
+		gap: 0.5rem; /* even spacing when wrapping */
+	}
 
+		/* Ensure list items don't constrain width */
+		#one .features > section .actions li {
+			margin: 0;
+			list-style: none;
+			flex: 0 1 auto;
+			max-width: 100%;
+		}
 
+		/* The key fix: allow wrapping and size-to-text */
+		#one .features > section .actions .button {
+			display: inline-flex; /* shrink to fit text */
+			align-items: center;
+			justify-content: center;
+			white-space: normal !important; /* override theme’s nowrap */
+			overflow-wrap: anywhere; /* handle long words/URLs */
+			word-break: break-word;
+			min-width: 0 !important; /* cancel any theme min-width */
+			width: fit-content; /* expand with text */
+			max-width: 100%; /* don’t overflow the card */
+			text-align: center;
+			line-height: 1.25;
+		}
 
-
-/* Tablet and below: cap by viewport width to avoid cut-off */
-@media screen and (max-width: 980px) {
-	#intro .logo {
-		max-width: min(85vw, 400px);
+/* Optional: slightly smaller button text on small screens */
+@media (max-width: 736px) {
+	#one .features > section .actions .button {
+		font-size: 0.95rem;
 	}
 }
 
-/* Small phones: a slightly tighter cap */
-@media screen and (max-width: 736px) {
-	#intro .logo {
-		max-width: min(90vw, 340px);
-	}
-}
 
 /*section 2 */
 /* Hide the default disclosure marker */
@@ -4159,10 +4193,3 @@ input, select, textarea {
 				white-space: normal;
 				overflow-wrap: anywhere;
 			}
-
-/* Small screens: dial down the icon scale */
-@media (max-width: 420px) {
-	#four {
-		--icon-scale: 1.05;
-	}
-}
