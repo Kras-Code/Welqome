@@ -3960,27 +3960,28 @@ input, select, textarea {
 		gap: 0.5rem; /* even spacing when wrapping */
 	}
 
-		/* Ensure list items don't constrain width */
+	/* Keep the actions row centered; no sizing tricks */
+	#one .features > section .actions {
+		display: flex;
+		justify-content: center;
+	}
+
+		/* Tidy list bullets without affecting layout */
 		#one .features > section .actions li {
 			margin: 0;
 			list-style: none;
-			flex: 0 1 auto;
-			max-width: 100%;
 		}
 
-		/* The key fix: allow wrapping and size-to-text */
+		/* Minimal wrapping fix, preserve theme font size */
 		#one .features > section .actions .button {
-			display: inline-flex; /* shrink to fit text */
-			align-items: center;
-			justify-content: center;
-			white-space: normal !important; /* override theme’s nowrap */
-			overflow-wrap: anywhere; /* handle long words/URLs */
-			word-break: break-word;
-			min-width: 0 !important; /* cancel any theme min-width */
-			width: fit-content; /* expand with text */
-			max-width: 100%; /* don’t overflow the card */
-			text-align: center;
-			line-height: 1.25;
+			display: inline-block; /* natural shrink-to-fit */
+			white-space: normal !important; /* allow wrapping */
+			overflow-wrap: anywhere; /* break long tokens if needed */
+			max-width: 100%; /* never spill the card */
+			min-width: 0 !important; /* neutralize any theme min-width */
+			font: inherit; /* use the theme’s default text size */
+			-webkit-text-size-adjust: 100%; /* prevent mobile text “boosting” */
+			text-size-adjust: 100%;
 		}
 
 /* Optional: slightly smaller button text on small screens */
