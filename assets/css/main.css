@@ -4015,6 +4015,38 @@ input, select, textarea {
 	}
 }
 
+/* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
+:root {
+	--sidebar-w: 18em; /* same as #sidebar width */
+	--topbar-h: 3.5em; /* same as #sidebar height in the <=1280px rule */
+}
+
+/* ≥1281px: fixed left sidebar; push page content to the right so it sits alongside */
+@media screen and (min-width: 1281px) {
+	/* Fastest universal fix: pad the page at the left by the sidebar width */
+	body {
+		padding-left: var(--sidebar-w);
+	}
+
+	/* If you prefer not to pad the whole body, target your main wrapper instead:
+     #wrapper, #main, .site-content { margin-left: var(--sidebar-w); } */
+}
+
+/* 737–1280px: your CSS turns #sidebar into a fixed top bar; push content down */
+@media screen and (max-width: 1280px) and (min-width: 737px) {
+	body {
+		padding-left: 0;
+		padding-top: var(--topbar-h);
+	}
+}
+
+/* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
+@media screen and (max-width: 736px) {
+	body {
+		padding: 0;
+	}
+}
+
 
 /* Intro */
 
