@@ -4379,27 +4379,22 @@ body.page-index {
 
 	#header .slogo {
 		height: var(--slogo-h);
-		width: auto; /* preserves aspect ratio */
-		max-width: none; /* avoid width capping fighting the fixed height */
+		width: auto;
+		max-width: 300px;
 		display: block;
-		margin: 0 0 20px 0;
+		margin: 0 0 20px 0; /* keep your bottom spacing */
 	}
 
-		.slogo {
-			max-width: 300px;
-			height: auto;
-			margin: 0 0 20px 0; /* remove centering */
-			display: block;
-		}
+/* Mobile-only: ensure the margin doesn't collapse, then add top offset */
+@media (max-width: 736px) {
+	#header {
+		display: flow-root; /* prevents margin-top collapse */
+	}
 
-		/* Mobile only: move just the logo down inside the flex header */
-		@media (max-width: 736px) {
-			#header .slogo {
-				align-self: flex-start; /* override any align-items: center on the header */
-				margin-top: 0.75rem !important; /* ensure it wins over earlier rules */
-				display: block;
-			}
+		#header .slogo {
+			margin-top: 1rem !important; /* guaranteed override */
 		}
+}
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
