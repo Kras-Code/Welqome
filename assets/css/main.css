@@ -98,7 +98,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #1c3d58;
+		background: #023e8a;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -1915,7 +1915,7 @@ input, select, textarea {
 		button.primary,
 		.button.primary {
 			background-color: #ffffff;
-			color: #1c3d58 !important;
+			color: #023e8a !important;
 		}
 
 			input[type="submit"].primary:after,
@@ -2356,7 +2356,7 @@ input, select, textarea {
 
 		select option {
 			color: #ffffff;
-			background: #1c3d58;
+			background: #023e8a;
 		}
 
 		select:focus::-ms-value {
@@ -3762,7 +3762,7 @@ input, select, textarea {
 			}
 
 			#sidebar nav a:before {
-				background: #1c3d58;
+				background: #023e8a;
 			}
 
 			#sidebar nav a:after {
@@ -3987,7 +3987,7 @@ input, select, textarea {
 			}
 
 			#m-sidebar nav a::before {
-				background: #1c3d58;
+				background: #023e8a;
 			}
 
 			#m-sidebar nav a::after {
@@ -4367,7 +4367,20 @@ body.page-index {
 				overflow-wrap: anywhere;
 			}
 
+	/* Centers the button row directly under the preceding .features block */
+	.features + .center-below-features {
+		display: flex;
+		justify-content: center;
+		gap: 0.75rem; /* safe if you add more buttons later */
+		margin: 0rem auto 0;
+		padding: 0;
+		max-width: fit-content; /* shrink-wrap to the buttons */
+	}
 
+		.features + .center-below-features li {
+			list-style: none;
+			margin: 0;
+		}
 
 
 /* Founder page */
@@ -4500,3 +4513,6 @@ body.page-index {
 		margin: 1rem 0;
 	}
 }
+
+
+/* Benefits Page*/
