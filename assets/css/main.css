@@ -4404,6 +4404,12 @@ body.page-index {
 		}
 	}
 
+	@media (max-width: 736px) {
+		#header {
+			--slogo-h: 3.5rem;
+		}
+	}
+
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
@@ -4416,11 +4422,6 @@ body.page-index {
 		white-space: nowrap; /* optional: prevent wrapping in nav */
 	}
 
-@media (max-width: 736px) {
-	#header {
-		--slogo-h: 2.5rem;
-	}
-}
 
 /* Make the nav a single row on mobile and let buttons wrap text */
 @media (max-width: 736px) {
