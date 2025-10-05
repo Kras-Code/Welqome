@@ -4407,3 +4407,53 @@ body.page-index {
 		--slogo-h: 2.5rem;
 	}
 }
+
+/* Karol Founder images formatting*/
+
+/* Clear only this biography block (so floats don't collapse the container) */
+.inner--bio::after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Bio image wrapper: opt-in improvements without touching .image defaults */
+.image.bio-img {
+	overflow: hidden; /* clip rounded corners cleanly */
+	line-height: 0; /* remove inline-gap around images */
+}
+
+/* Desktop/tablet sizing caps */
+.image.bio-img--left,
+.image.bio-img--right {
+	/* Prevent extremes: never too small or too wide */
+	max-inline-size: clamp(220px, 40%, 420px);
+	top: 0 !important; /* neutralise any theme nudge */
+}
+
+.image.bio-img--left {
+	margin-right: 1.25rem;
+}
+
+.image.bio-img--right {
+	margin-left: 1.25rem;
+}
+
+/* Mobile: stack and center */
+@media (max-width: 980px) {
+	.image.bio-img--left,
+	.image.bio-img--right {
+		float: none !important; /* stop side floats on small screens */
+		display: block;
+		max-inline-size: min(100%, 520px);
+		margin: 0 auto 1rem; /* center with spacing */
+	}
+}
+
+/* Optional: nicer text wrap respecting rounded corners on wide screens */
+@supports (shape-outside: inset(0 round 0.25em)) {
+	.image.bio-img--left,
+	.image.bio-img--right {
+		shape-outside: inset(0 round 0.25em);
+	}
+}
