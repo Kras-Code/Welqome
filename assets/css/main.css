@@ -4077,6 +4077,13 @@ body.page-index {
 			display: block;
 		}
 
+		/* Mobile only: nudge the logo downward inside the header */
+		@media (max-width: 736px) {
+			#header .slogo {
+				margin-top: 0.75rem; /* adjust to taste */
+			}
+		}
+
 		#intro p {
 			font-size: 1.25em;
 		}
@@ -4444,7 +4451,7 @@ body.page-index {
 
 @media (max-width: 736px) {
 	#header nav li {
-		margin-block: 0.25rem; /* space above & below each button cell */
+		margin-block: 0.4rem; /* space above & below each button cell */
 	}
 }
 
