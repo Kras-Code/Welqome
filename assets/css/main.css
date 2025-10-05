@@ -2256,6 +2256,17 @@ input, select, textarea {
 				width: calc(100% - 1.5em);
 			}
 
+		form > .fields > .field textarea {
+			display: block;
+			width: 100%;
+			max-width: 100%;
+			min-height: 8rem; /* initial height */
+			max-height: 35rem; /* hard cap */
+			resize: vertical; /* allow only vertical resize */
+			overflow: auto; /* scroll after hitting max-height */
+			box-sizing: border-box;
+		}
+
 				form > .fields > .field.half {
 					width: calc(50% - 0.75em);
 				}
