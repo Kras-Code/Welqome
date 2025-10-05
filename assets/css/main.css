@@ -4384,12 +4384,19 @@ body.page-index {
   margin: 0 0 20px 0; /* keep your bottom spacing */
 }
 
-/* Mobile-only: logo offset */
-	@media (max-width: 736px) {
-		#header {
-			padding-top: 1.5rem;
-		}
+@media (max-width: 736px) {
+	/* Stack logo above nav and center it */
+	#header {
+		display: flex; /* if it's already flex, this just overrides direction */
+		flex-direction: column; /* stack children vertically */
+		align-items: center; /* center the logo horizontally */
 	}
+
+		/* Center the logo block itself */
+		#header .slogo {
+			margin: 0 auto 20px; /* centered, keep your bottom spacing */
+		}
+}
 
 
 	#header nav a.match-slogo {
