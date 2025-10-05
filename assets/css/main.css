@@ -1,4 +1,4 @@
-@import url(fontawesome-all.min.css);
+﻿@import url(fontawesome-all.min.css);
 
 /*
 	Hyperspace by HTML5 UP
@@ -38,7 +38,7 @@ ol, ul {
 
 blockquote, q {
 	quotes: none;
-}
+}`	
 
 	blockquote:before, blockquote:after, q:before, q:after {
 		content: '';
@@ -2525,7 +2525,7 @@ input, select, textarea {
 			display: block;
 			background: #ffffff;
 			border-radius: 100%;
-			color: #312450;
+			color: #023e8a;
 			text-align: center;
 			line-height: 2.5em;
 			margin: 0 0 1.3em 0;
@@ -3236,7 +3236,7 @@ input, select, textarea {
 			}
 
 		.wrapper.alt {
-			background-color: #261c3e;
+			background-color: #03045e;
 		}
 
 		.wrapper.style1 {
@@ -3244,23 +3244,23 @@ input, select, textarea {
 		}
 
 		.wrapper.style1-alt {
-			background-color: #493382;
+			background-color: #023e8a;
 		}
 
 		.wrapper.style2 {
-			background-color: #5052b5;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.style2-alt {
-			background-color: #3e4094;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.style3 {
-			background-color: #00c0fa;
+			background-color: #0077b6;
 		}
 
 		.wrapper.style3-alt {
-			background-color: #953d75;
+			background-color: #00b4d8;
 		}
 
 		.wrapper.fullscreen {
@@ -3372,7 +3372,8 @@ input, select, textarea {
 		display: flex;
 		background-color: #0162eb;
 		cursor: default;
-		padding: 1.75em 2em;
+		padding: .8em 2em;
+		padding-bottom: 0em
 	}
 
 		#header > .title {
@@ -3398,7 +3399,7 @@ input, select, textarea {
 
 				#header > nav > ul > li {
 					display: inline-block;
-					margin-left: 1.75em;
+					margin-left: 2em;
 					padding: 0;
 					vertical-align: middle;
 				}
@@ -3522,20 +3523,20 @@ input, select, textarea {
 
 /* Sidebar */
 
-	#sidebar {
-		padding: 2.5em 2.5em 0.5em 2.5em ;
-		background: #312450;
-		cursor: default;
-		height: 100vh;
-		left: 0;
-		overflow-x: hidden;
-		overflow-y: auto;
-		position: fixed;
-		text-align: right;
-		top: 0;
-		width: 18em;
-		z-index: 10000;
-	}
+#sidebar {
+	padding: 2.5em 2.5em 0.5em 2.5em;
+	background: #023e8a;
+	cursor: default;
+	height: 100vh;
+	left: 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: fixed;
+	text-align: right;
+	top: 0;
+	width: 18em;
+	z-index: 10000;
+}
 
 		#sidebar > .inner {
 			display: -moz-flex;
@@ -3870,6 +3871,184 @@ input, select, textarea {
 
 		}
 
+/* Mobile Sidebar */
+/* --- Defaults: hide mobile UI on desktop --- */
+#m-sidebar,
+#m-sidebar-backdrop,
+#mSidebarToggle {
+	display: none;
+}
+
+/* --- Backdrop base --- */
+#m-sidebar-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.45);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 220ms ease;
+	z-index: 10001; /* below drawer */
+}
+
+/* --- Mobile breakpoint (matches your theme’s 736px) --- */
+@media screen and (max-width: 736px) {
+
+	/* Your existing CSS already hides #sidebar here; leave that rule in place. */
+
+	/* Show toggle button */
+	#mSidebarToggle {
+		display: inline-flex;
+		align-items: center;
+		gap: .5rem;
+		position: fixed;
+		top: .75rem;
+		left: .75rem;
+		z-index: 10003; /* above drawer */
+	}
+
+	/* Off-canvas drawer */
+	#m-sidebar {
+		display: block;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: min(84vw, 18em); /* match desktop width cap */
+		background: #023e8a; /* same as desktop */
+		text-align: right; /* match desktop alignment */
+		padding: 2.5em 2.5em 0.5em 2.5em; /* match desktop spacing */
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		transform: translateX(-100%); /* hidden by default */
+		transition: transform 240ms ease;
+		box-shadow: 2px 0 18px rgba(0,0,0,0.22);
+		z-index: 10002; /* above backdrop, below toggle */
+	}
+
+		#m-sidebar.is-open {
+			transform: translateX(0);
+		}
+
+		#m-sidebar .inner {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			min-height: 100%;
+			width: 100%;
+			opacity: 1;
+			transition: opacity 1s ease; /* mirrors desktop fade */
+		}
+
+		/* Nav list structure (mirrors desktop) */
+		#m-sidebar nav > ul {
+			list-style: none;
+			padding: 0;
+		}
+
+			#m-sidebar nav > ul > li {
+				margin: 1.5em 0 0 0;
+				padding: 0;
+				position: relative;
+				opacity: 1;
+				transform: translateY(0);
+				transition: opacity 0.15s ease, transform 0.75s ease;
+			}
+
+				#m-sidebar nav > ul > li:first-child {
+					margin: 0;
+				}
+
+		/* Links (copied from desktop and kept in sync) */
+		#m-sidebar nav a {
+			transition: color 0.2s ease;
+			border: 0;
+			color: rgba(255, 255, 255, 0.35);
+			display: block;
+			font-size: 0.6em;
+			font-weight: bold;
+			letter-spacing: 0.25em;
+			line-height: 1.75;
+			outline: 0;
+			padding: 1.35em 0;
+			position: relative;
+			text-decoration: none;
+			text-transform: uppercase;
+		}
+
+			#m-sidebar nav a::before,
+			#m-sidebar nav a::after {
+				border-radius: 0.2em;
+				bottom: 0;
+				content: '';
+				height: 0.2em;
+				position: absolute;
+				right: 0;
+				width: 100%;
+			}
+
+			#m-sidebar nav a::before {
+				background: #1c3d58;
+			}
+
+			#m-sidebar nav a::after {
+				background-image: linear-gradient(to right, #0162eb, #00c0fa);
+				transition: max-width 0.2s ease;
+				max-width: 0;
+			}
+
+			#m-sidebar nav a:hover {
+				color: rgba(255, 255, 255, 0.55);
+			}
+
+			#m-sidebar nav a.active {
+				color: #ffffff;
+			}
+
+				#m-sidebar nav a.active::after {
+					max-width: 100%;
+				}
+
+	/* Backdrop visible state */
+	#m-sidebar-backdrop.is-visible {
+		display: block;
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+/* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
+body.page-index {
+	--sidebar-w: 18em; /* matches #sidebar width used on index */
+	--topbar-h: 3.5em; /* matches top bar height on index */
+}
+
+/* ≥1281px: fixed left sidebar; push page content to the right so it sits alongside */
+@media screen and (min-width: 1281px) {
+	/* Fastest universal fix: pad the page at the left by the sidebar width */
+	body {
+		padding-left: var(--sidebar-w);
+	}
+
+	/* If you prefer not to pad the whole body, target your main wrapper instead:
+     #wrapper, #main, .site-content { margin-left: var(--sidebar-w); } */
+}
+
+/* 737–1280px: your CSS turns #sidebar into a fixed top bar; push content down */
+@media screen and (max-width: 1280px) and (min-width: 737px) {
+	body {
+		padding-left: 0;
+		padding-top: var(--topbar-h);
+	}
+}
+
+/* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
+@media screen and (max-width: 736px) {
+	body {
+		padding: 0;
+	}
+}
+
+
 /* Intro */
 
 	#intro {
@@ -3879,6 +4058,24 @@ input, select, textarea {
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 	}
+
+		#intro .inner {
+			text-align: left; /* align all inner content to the left */
+		}
+
+		.logo {
+			max-width: 400px;
+			height: auto;
+			margin: 0 0 20px 0; /* remove centering */
+			display: block;
+		}
+
+		.slogo {
+			max-width: 300px;
+			height: auto;
+			margin: 0 0 20px 0; /* remove centering */
+			display: block;
+		}
 
 		#intro p {
 			font-size: 1.25em;
@@ -3907,3 +4104,306 @@ input, select, textarea {
 			}
 
 		}
+		/* Tablet and below: cap by viewport width to avoid cut-off */
+		@media screen and (max-width: 980px) {
+			#intro .logo {
+				max-width: min(85vw, 400px);
+			}
+		}
+
+		/* Small phones: a slightly tighter cap */
+		@media screen and (max-width: 736px) {
+			#intro .logo {
+				max-width: min(90vw, 340px);
+			}
+		}
+
+/* Section 1 */
+/* Only affect the cards, not the grid layout */
+#one .features > section {
+	display: flex;
+	flex-direction: column;
+}
+
+	/* Push the actions block to the bottom of each card */
+	#one .features > section .actions {
+		margin-top: auto;
+		/* center the button horizontally */
+		display: flex;
+		justify-content: center;
+	}
+
+		/* keep list tidy */
+		#one .features > section .actions li {
+			margin: 0;
+			list-style: none;
+		}
+	#one .features > section .actions {
+		margin-top: auto;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap; /* allow multiple buttons to wrap onto new lines */
+		gap: 0.5rem; /* even spacing when wrapping */
+	}
+
+		/* Ensure list items don't constrain width */ 
+		#one .features > section .actions li {
+			margin: 0;
+			list-style: none;
+			flex: 0 1 auto;
+			max-width: 100%;
+		}
+		/* The key fix: allow wrapping and size-to-text */
+
+		#one .features > section .actions .button {
+			display: inline-flex; /* shrink to fit text */
+			align-items: center;
+			justify-content: center;
+			white-space: normal !important; /* override theme’s nowrap */
+			overflow-wrap: anywhere; /* handle long words/URLs */
+			word-break: break-word;
+			min-width: 0 !important; /* cancel any theme min-width */
+			width: fit-content; /* expand with text */
+			max-width: 100%; /* don’t overflow the card */
+			text-align: center;
+			line-height: 1.25;
+		}
+
+
+/*section 2 */
+/* Hide the default disclosure marker */
+
+.reveal {
+	/* use logical property so it works in all writing modes */
+	margin-block-start: clamp(1rem, 3vw, 2.5rem);
+}
+
+.reveal summary::-webkit-details-marker {
+	display: none;
+}
+
+.reveal-summary {
+	display: flex; /* enables flex layout */
+	justify-content: center;
+}
+
+.reveal summary::marker {
+	content: "";
+}
+
+/* Swap the visible label based on open state */
+.reveal .label-open {
+	display: none;
+}
+
+.reveal[open] .label-open {
+	display: inline;
+}
+
+.reveal[open] .label-closed {
+	display: none;
+}
+
+/* Optional: spacing above the revealed panel */
+.reveal > .flowchart {
+	margin-top: 0.75rem;
+}
+
+/* Flowchart: always vertical */
+.flowchart {
+	display: flex;
+	flex-direction: column;
+	gap: 10px; /* smaller spacing */
+	margin-top: 12px; /* smaller top margin */
+}
+
+:root {
+	--fs-step-title: clamp(1rem, 0.8rem + 0.6vw, 1.25rem);
+	--fs-step-body: clamp(0.9rem, 0.8rem + 0.3vw, 1.05rem);
+	--fs-arrow: clamp(0.9rem, 0.7rem + 0.4vw, 1rem);
+}
+
+.flow-step h3 {
+	font-size: var(--fs-step-title);
+}
+
+.flow-step p {
+	font-size: var(--fs-step-body);
+}
+
+.arrow {
+	font-size: var(--fs-arrow);
+}
+
+/* Step cards (smaller) */
+.flow-step {
+	width: 90%;
+	background: #023e8a;
+	color: #fff;
+	border-radius: 10px; /* slightly tighter corners */
+	box-shadow: 0 4px 10px rgba(0,0,0,0.12); /* lighter shadow */
+	padding: 12px 14px; /* smaller padding */
+}
+
+	.flow-step h3 {
+		margin: 0 0 6px; /* tighter spacing */
+		font-weight: 700;
+		line-height: 1.2;
+	} 
+
+	.flow-step p {
+		margin: 0;
+		line-height: 1.45; /* slightly tighter line-height */
+	}
+
+/* Arrows (smaller + colored) */
+.arrow {
+	text-align: center;
+	font-size: 25px; /* smaller arrow */
+	line-height: 1;
+	padding: 2px 0; /* tighter padding */
+	color: #1c3d58; /* requested color */
+}
+
+
+/* Founders section */
+
+#three {
+	background-color: #023e8a;
+}
+
+	#three .founders {
+		display: flex;
+		justify-content: center;
+		align-items: flex-start;
+		gap: 3rem;
+		flex-wrap: wrap;
+	}
+
+	#three .founder {
+		text-align: center;
+	}
+
+		#three .founder img {
+			width: 350px; /* adjust as needed */
+			height: 350px; /* must match width for a perfect circle */
+			border-radius: 50%;
+			object-fit: cover;
+			display: block;
+			margin: 0 auto;
+		}
+
+		#three .founder figcaption {
+			margin-top: 0.75rem;
+			font-weight: 600;
+			letter-spacing: 0.02em;
+		}
+
+		#three .founder .actions {
+			margin-top: 0.75rem;
+		}
+
+/* ---- Section 4 - Ai agent ---- */
+#four {
+	--h3-size: clamp(1rem, 0.85rem + 0.9vw, 1.5rem);
+	--icon-scale: 5;
+	--icon: calc(var(--h3-size) * var(--icon-scale));
+	/* readable line-length for wrapping text */
+	--measure: clamp(28ch, 35vw, 35ch);
+	/* total card width cap = icon + gap + text measure */
+	--card-max: calc(var(--icon) + 1rem + var(--measure));
+}
+
+	/* ---- Parent: make the grid track content-sized, not full-width ---- */
+	#four .features {
+		display: inline-block;
+		/* one column that shrink-wraps to content, capped to viewport/card max */
+		grid-template-columns: fit-content(min(100%, var(--card-max)));
+		justify-content: start; /* don't stretch the track */
+		justify-items: start; /* keep child aligned left */
+	}
+
+		/* ---- Card: wrap text but don't stretch ---- */
+		#four .features > section {
+			display: grid;
+			grid-template-columns: var(--icon) minmax(0, var(--measure));
+			grid-auto-rows: auto;
+			column-gap: 1rem;
+			row-gap: 0.4rem;
+			align-items: center;
+			/* ensure the border/box sizes to content instead of full row width */
+			box-sizing: border-box;
+			inline-size: auto;
+			max-inline-size: min(100%, var(--card-max));
+			justify-self: center;
+			/* clear any theme leftovers */
+			margin-left: 0;
+			padding-left: 0;
+			padding-block: 0;
+		}
+
+			#four .features > section > img {
+				grid-column: 1;
+				grid-row: 1 / span 3; /* heading + phone + body */
+				inline-size: var(--icon);
+				block-size: var(--icon);
+				aspect-ratio: 1 / 1;
+				object-fit: contain;
+				display: block;
+			}
+
+			#four .features > section > h3 {
+				grid-column: 2;
+				margin: 0;
+				font-size: var(--h3-size);
+				line-height: 1.2;
+			}
+
+			#four .features > section > p {
+				grid-column: 2;
+				margin: 0;
+				font-weight: 600;
+				line-height: 1.25;
+			}
+
+			/* Make long tokens (e.g., URLs) not force the card wider */
+			#four .features > section > h3,
+			#four .features > section > p {
+				white-space: normal;
+				overflow-wrap: anywhere;
+			}
+
+
+
+
+/* Founder page */
+
+/*this is for matching the buttons to the slogo size*/
+#header {
+	--slogo-h: 4rem;
+}
+
+	#header .slogo {
+		height: var(--slogo-h);
+		width: auto; /* preserves aspect ratio */
+		max-width: none; /* avoid width capping fighting the fixed height */
+		display: block;
+		margin: 0 0 20px 0;
+	}
+
+	#header nav a.match-slogo {
+		display: inline-flex; /* flex container for the text */
+		align-items: center; /* vertical centre */
+		justify-content: center; /* horizontal centre */
+		height: var(--slogo-h); /* same as your logo height source */
+		padding: 0 0.9rem;
+		line-height: 1;
+		text-align: center;
+		white-space: nowrap; /* optional: prevent wrapping in nav */
+	}
+
+@media (max-width: 736px) {
+	#header {
+		--slogo-h: 2.5rem;
+	}
+}

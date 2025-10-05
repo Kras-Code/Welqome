@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\assets",
+    "\\assets\\css",
+    "\\assets\\css\\images"
   ],
-  "SelectedNode": "\\C:\\Users\\karol\\Source\\Repos\\Welqome",
   "PreviewInSolutionExplorer": false
 }
