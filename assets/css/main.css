@@ -4398,6 +4398,12 @@ body.page-index {
 		}
 }
 
+	@media (max-width: 736px) {
+		#header {
+			padding-top: 1.5rem;
+		}
+	}
+
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
@@ -4452,7 +4458,7 @@ body.page-index {
 
 @media (max-width: 736px) {
 	#header nav li {
-		margin-block: 0.4rem; /* space above & below each button cell */
+		margin-block: 1rem; /* space above & below each button cell */
 	}
 }
 
