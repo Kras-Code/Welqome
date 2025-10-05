@@ -4374,27 +4374,23 @@ body.page-index {
 
 /*this is for matching the buttons to the slogo size*/
 #header {
-	--slogo-h: 4rem;
+  --slogo-h: 4rem;
+}
+#header .slogo {
+  height: var(--slogo-h);
+  width: auto;
+  max-width: 300px;
+  display: block;
+  margin: 0 0 20px 0; /* keep your bottom spacing */
 }
 
-	#header .slogo {
-		height: var(--slogo-h);
-		width: auto;
-		max-width: 300px;
-		display: block;
-		margin: 0 0 20px 0; /* keep your bottom spacing */
-	}
-
-/* Mobile-only: ensure the margin doesn't collapse, then add top offset */
-@media (max-width: 736px) {
-	#header {
-		display: flow-root; /* prevents margin-top collapse */
-	}
-
-		#header .slogo {
-			margin-top: 1rem !important; /* guaranteed override */
+/* Mobile-only: logo offset */
+	@media (max-width: 736px) {
+		#header {
+			padding-top: 1rem;
 		}
-}
+	}
+
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
