@@ -4387,7 +4387,7 @@ body.page-index {
 /* Mobile-only: logo offset */
 	@media (max-width: 736px) {
 		#header {
-			padding-top: 1rem;
+			padding-top: 1.5rem;
 		}
 	}
 
