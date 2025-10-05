@@ -4401,15 +4401,9 @@ body.page-index {
 	@media (max-width: 736px) {
 		#header {
 			padding-top: 1.5rem;
-		}
-	}
-
-	@media (max-width: 736px) {
-		#header {
 			--slogo-h: 3.5rem;
 		}
 	}
-
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
