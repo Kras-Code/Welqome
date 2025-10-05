@@ -4407,3 +4407,81 @@ body.page-index {
 		--slogo-h: 2.5rem;
 	}
 }
+
+/* Make the nav a single row on mobile and let buttons wrap text */
+@media (max-width: 736px) {
+	#header nav ul {
+		display: flex;
+		flex-wrap: nowrap; /* keep all three on one line */
+		gap: 0.5rem;
+		padding: 0;
+		margin: 0;
+	}
+
+	#header nav li {
+		flex: 1 1 0; /* three equal-width cells */
+		min-width: 0; /* allow shrinking below intrinsic width */
+		list-style: none;
+	}
+
+	#header nav a.match-slogo {
+		display: flex; /* fill the li cell */
+		width: 100%;
+		min-width: 0;
+		justify-content: center;
+		align-items: center;
+		/* height behaviour: at least the logo height, but can grow if text wraps */
+		min-height: var(--slogo-h);
+		height: auto;
+		padding: 0 0.6rem;
+		line-height: 1.1;
+		text-align: center;
+		/* allow multi-line text so the row doesn't wrap */
+		white-space: normal; /* overrides your desktop nowrap */
+		word-break: break-word; /* safety for long words */
+	}
+}
+
+
+/* Founder 1 image formatting*/
+/* 1) Make .inner expand to wrap floated children */
+.inner.fit-media::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+/* 2) Keep images responsive inside their span wrappers */
+#main .image img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 3) Sensible float widths + margins on wide screens */
+@media (min-width: 980px) {
+	#main .image.left,
+	#main .image.right {
+		max-width: clamp(14rem, 38%, 28rem);
+	}
+
+	#main .image.left {
+		float: left;
+		margin: 0 2rem 1rem 0;
+	}
+
+	#main .image.right {
+		float: right;
+		margin: 0 0 1rem 2rem;
+	}
+}
+
+/* 4) Stack on small screens to avoid crowding */
+@media (max-width: 979.98px) {
+	#main .image.left,
+	#main .image.right {
+		float: none;
+		max-width: 100%;
+		margin: 1rem 0;
+	}
+}
