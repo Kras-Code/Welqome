@@ -4070,19 +4070,6 @@ body.page-index {
 			display: block;
 		}
 
-		.slogo {
-			max-width: 300px;
-			height: auto;
-			margin: 0 0 20px 0; /* remove centering */
-			display: block;
-		}
-
-		/* Mobile only: nudge the logo downward inside the header */
-		@media (max-width: 736px) {
-			#header .slogo {
-				margin-top: 0.75rem; /* adjust to taste */
-			}
-		}
 
 		#intro p {
 			font-size: 1.25em;
@@ -4397,6 +4384,22 @@ body.page-index {
 		display: block;
 		margin: 0 0 20px 0;
 	}
+
+		.slogo {
+			max-width: 300px;
+			height: auto;
+			margin: 0 0 20px 0; /* remove centering */
+			display: block;
+		}
+
+		/* Mobile only: move just the logo down inside the flex header */
+		@media (max-width: 736px) {
+			#header .slogo {
+				align-self: flex-start; /* override any align-items: center on the header */
+				margin-top: 0.75rem !important; /* ensure it wins over earlier rules */
+				display: block;
+			}
+		}
 
 	#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
