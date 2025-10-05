@@ -4526,4 +4526,194 @@ body.page-index {
 }
 
 
-/* Benefits Page*/
+/* Info */
+
+/* ---------- Our Integrations (self-contained) ---------- */
+.integrations {
+	/* Safe spacing; background inherits unless you set --integrations-bg */
+	--integrations-bg: transparent;
+	--logo-h: 2.75rem; /* cap height for brand marks */
+	--gap: clamp(.5rem, 2vw, 1.25rem);
+	background: var(--integrations-bg);
+	padding-block: clamp(2rem, 3vw, 4rem);
+	color: inherit;
+}
+
+.integrations__inner {
+	max-width: 75rem;
+	margin-inline: auto;
+	padding-inline: clamp(1rem, 3vw, 2rem);
+}
+
+.integrations__heading {
+	margin: 0 0 .5rem 0;
+	line-height: 1.2;
+	font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
+}
+
+.integrations__lead {
+	margin: 0 0 1.25rem 0;
+	font-size: clamp(1rem, .2rem + .6vw, 1.125rem);
+}
+
+/* Responsive “banner” that wraps neatly and keeps logos visually uniform */
+.logo-strip {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+	gap: var(--gap);
+	align-items: center;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+	.logo-strip li {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: .5rem .75rem;
+		border-radius: .75rem;
+		/* subtle chip on capable browsers; otherwise harmless */
+		background: color-mix(in oklab, currentColor 5%, transparent);
+	}
+
+	.logo-strip img {
+		height: var(--logo-h);
+		width: auto;
+		max-width: 100%;
+		object-fit: contain;
+		/* tasteful hover affordance without harsh color shifts */
+		filter: grayscale(100%) contrast(1.05) brightness(.95);
+		opacity: .85;
+		transition: filter .2s ease, opacity .2s ease, transform .2s ease;
+	}
+
+		.logo-strip img:hover,
+		.logo-strip img:focus {
+			filter: none;
+			opacity: 1;
+			transform: translateY(-1px);
+			outline: none;
+		}
+
+@media (max-width: 480px) {
+	.integrations {
+		--logo-h: 2.2rem;
+	}
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.logo-strip img {
+		transition: none;
+	}
+}
+
+
+/*Infinite card marquee*/
+
+/* ---------- Design tokens ---------- */
+:root {
+	--card-bg: #0161eb; /* requested card background */
+	--card-fg: #ffffff; /* text colour over the blue */
+	--card-w: clamp(12rem, 22vw, 18rem);
+	--card-h: clamp(7rem, 18vw, 10rem);
+	--gap: 1rem;
+	--radius: 1rem;
+	--shadow-3d: 0 8px 14px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.15);
+	--nav-size: 3.25rem;
+}
+
+/* ---------- Component shell ---------- */
+.card-marquee {
+	position: relative;
+	padding: 1.5rem 3.5rem; /* space for arrows */
+	user-select: none;
+}
+
+	.card-marquee .viewport {
+		overflow: hidden;
+		width: 100%;
+		/* subtle edge fading; remove if undesired */
+		-webkit-mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
+		mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
+		outline: none;
+	}
+
+	.card-marquee .track {
+		display: inline-flex;
+		gap: var(--gap);
+		align-items: stretch;
+		white-space: nowrap;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.card-marquee .card {
+		background: var(--card-bg);
+		color: var(--card-fg);
+		min-width: var(--card-w);
+		height: var(--card-h);
+		border-radius: var(--radius);
+		display: grid;
+		place-items: center;
+		padding: 1rem;
+		font: 600 1rem/1.2 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+		box-shadow: 0 6px 12px rgba(0,0,0,.18);
+	}
+
+	/* ---------- 3D arrow controls ---------- */
+	.card-marquee .nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: var(--nav-size);
+		height: var(--nav-size);
+		border: 0;
+		border-radius: 999px;
+		background: linear-gradient(180deg, #ffffff, #e6e6e6);
+		color: #0b2a6f;
+		box-shadow: var(--shadow-3d);
+		display: grid;
+		place-items: center;
+		cursor: pointer;
+		transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+		will-change: transform;
+	}
+
+		.card-marquee .nav.prev {
+			left: .5rem;
+		}
+
+		.card-marquee .nav.next {
+			right: .5rem;
+		}
+
+		.card-marquee .nav:focus-visible {
+			outline: 3px solid #a7c7ff;
+			outline-offset: 2px;
+		}
+
+		.card-marquee .nav:hover {
+			filter: brightness(.98);
+		}
+
+		.card-marquee .nav:active {
+			transform: translateY(-50%) translateZ(0) scale(.96);
+			box-shadow: 0 4px 8px rgba(0,0,0,.25) inset;
+		}
+
+/* ---------- Reduced motion accessibility ---------- */
+@media (prefers-reduced-motion: reduce) {
+	.card-marquee {
+		padding: 1.25rem 3.5rem;
+	}
+}
+
+/* Optional: make cards wrap nicely on very narrow layouts if JS is disabled */
+@supports not (scroll-behavior: smooth) {
+	.card-marquee .track {
+		flex-wrap: nowrap;
+	}
+}

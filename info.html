@@ -28,8 +28,8 @@
 				<ul>
 					<li><a href="#intro">Our Integrations</a></li>
 					<li><a href="#one">Benefits</a></li>
-					<li><a href="#two">Automation Workflow</a></li>
-					<li><a href="#three">Our Team</a></li>
+					<li><a href="#two">Brand Tailoring</a></li>
+					<li><a href="#three">Legal Compliance</a></li>
 					<li><a href="#four">Try it out | FAQs </a></li>
 					<li><a href="#five">Get in touch</a></li>
 				</ul>
@@ -63,6 +63,28 @@
 		<!-- Intro -->
 		<section id="intro" class="wrapper style1 fullscreen fade-up">
 			<div class="inner">
+				<section id="integrations" class="integrations" aria-labelledby="integrations-heading">
+					<div class="integrations__inner">
+						<h2 id="integrations-heading" class="integrations__heading">Our Integrations</h2>
+						<p class="integrations__lead">
+							Our systems support <strong>1000+ integrations</strong>. Below are just some of the most commonly used tools our clients use.
+						</p>
+
+						<!-- Logo banner -->
+						<ul class="logo-strip" aria-label="Popular integrations supported via n8n">
+							<li><img src="images/integrations/google_calendar.svg" alt="Google Calendar" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/google_Sheets.svg" alt="Google Sheets" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/microsoft_teams.svg" alt="Microsoft Teams" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/salesforce.com.svg" alt="Salesforce.com" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/shopify.svg" alt="Shopify" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/whatsapp.svg" alt="WhatsApp" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/zendesk.svg" alt="Zendesk" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/zoom.svg" alt="Zoom" loading="lazy" decoding="async"></li>
+							<li><img src="images/integrations/hubspot.svg" alt="Hubspot" loading="lazy" decoding="async"></li>
+
+						</ul>
+					</div>
+				</section>
 
 			</div>
 		</section>
@@ -70,6 +92,34 @@
 		<!-- One -->
 		<section id="one" class="wrapper style1-alt fade-up">
 			<div class="inner">
+				<section class="card-marquee" data-speed="80" aria-label="Scrolling partner cards">
+					<button class="nav prev" aria-label="Scroll left" type="button">
+						<!-- inline SVG chevron -->
+						<svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+							<path d="M15.5 4.5L8 12l7.5 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</button>
+
+					<div class="viewport" id="marquee-viewport" tabindex="0">
+						<ul class="track">
+							<!-- Replace/duplicate these cards with your real items -->
+							<li class="card">Card 1</li>
+							<li class="card">Card 2</li>
+							<li class="card">Card 3</li>
+							<li class="card">Card 4</li>
+							<li class="card">Card 5</li>
+							<li class="card">Card 6</li>
+							<li class="card">Card 7</li>
+							<li class="card">Card 8</li>
+						</ul>
+					</div>
+
+					<button class="nav next" aria-label="Scroll right" type="button" aria-controls="marquee-viewport">
+						<svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+							<path d="M8.5 4.5L16 12l-7.5 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+						</svg>
+					</button>
+				</section>
 			</div>
 		</section>
 
@@ -189,6 +239,7 @@
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
 	<script src="assets/js/flowchart.js"></script>
+	<script src="assets/js/card-marquee.js"></script>
 
 </body>
 </html>
