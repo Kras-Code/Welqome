@@ -4442,6 +4442,12 @@ body.page-index {
 	}
 }
 
+@media (max-width: 736px) {
+	#header nav li {
+		margin-block: 0.25rem; /* space above & below each button cell */
+	}
+}
+
 
 /* Founder 1 image formatting*/
 /* 1) Make .inner expand to wrap floated children */
