@@ -4214,6 +4214,161 @@ body.page-index {
 	margin-top: 0.75rem;
 }
 
+
+
+
+/* ===== Fake Zoom Overlay ===== */
+:root {
+	--zoom-radius: 1rem;
+	--zoom-dur: 480ms;
+	--zoom-ease: cubic-bezier(.2,.7,.2,1);
+	--zoom-backdrop: rgba(3, 14, 30, 0.58);
+	--zoom-sheet-bg: #0161eb; /* adjust to match your theme */
+}
+
+/* Prevent background scroll when overlay is open */
+html.zoom-lock, body.zoom-lock {
+	overflow: hidden !important;
+}
+
+/* Overlay root appears only while active (inserted by JS) */
+.zoom-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: grid;
+	grid-template: 1fr / 1fr;
+}
+
+/* Backdrop layer */
+.zoom-overlay__backdrop {
+	grid-area: 1 / 1;
+	background: var(--zoom-backdrop);
+	opacity: 0;
+	transition: opacity var(--zoom-dur) ease;
+}
+
+/* The “sheet” that looks like your box, then grows to fullscreen */
+.zoom-overlay__sheet {
+	grid-area: 1 / 1;
+	background: var(--zoom-sheet-bg);
+	color: inherit;
+	border-radius: var(--zoom-radius);
+	box-shadow: 0 20px 60px rgba(0,0,0,.35);
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	/* Fullscreen size; we animate via transform from the source rect */
+	width: 100vw;
+	height: 100dvh;
+	/* FLIP: start at --initial-transform, end at identity */
+	transform: var(--initial-transform);
+	transform-origin: 0 0;
+	transition: transform var(--zoom-dur) var(--zoom-ease), border-radius var(--zoom-dur) var(--zoom-ease);
+}
+
+/* When entering: fade in backdrop, square off corners, transform to identity */
+.zoom-overlay[data-state="enter"] .zoom-overlay__backdrop {
+	opacity: 1;
+}
+
+.zoom-overlay[data-state="enter"] .zoom-overlay__sheet {
+	border-radius: 0;
+	transform: none;
+}
+
+/* Sheet content wrapper */
+.zoom-overlay__content {
+	/* Give some breathing room when fullscreen */
+	padding: clamp(1rem, 2vw + 1rem, 2.5rem);
+}
+
+/* A small top-right toolbar inside the sheet */
+.zoom-overlay__toolbar {
+	position: sticky;
+	top: 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: .5rem;
+	padding: .75rem;
+	background: linear-gradient(to bottom, rgba(0,0,0,.25), transparent);
+	z-index: 1;
+}
+
+.zoom-close {
+	appearance: none;
+	border: 0;
+	border-radius: .75rem;
+	padding: .5rem .8rem;
+	font: inherit;
+	cursor: pointer;
+	background: rgba(255,255,255,.12);
+	color: #fff;
+	backdrop-filter: blur(6px);
+}
+
+	.zoom-close:focus {
+		outline: 2px solid #fff7;
+		outline-offset: 2px;
+	}
+
+/* Make cloned content look like the original card.
+   Adjust these to mirror your theme card styles. */
+.zoom-overlay__content .feature-card,
+.zoom-overlay__content .zoomable {
+	background: transparent !important; /* sheet already has bg */
+	box-shadow: none !important;
+	margin: 0 !important;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.zoom-overlay__backdrop,
+	.zoom-overlay__sheet {
+		transition: none !important;
+	}
+}
+
+/* --- Sidebar-aware fullscreen layout for the zoom overlay --- */
+/* Define your sidebar width once (match your actual sidebar). */
+:root {
+	--sidebar-w: 18em; /* adjust to your real #sidebar width */
+}
+
+/* Always keep sheet in border-box so padding doesn't cause overflow */
+.zoom-overlay__sheet {
+	box-sizing: border-box;
+}
+
+/* Apply only when the sidebar is visible (match your breakpoint). */
+@media (min-width: 980px) { /* or 1280px if that's where your sidebar appears */
+	/* Keep the sidebar above the overlay if needed */
+	/* #sidebar { z-index: 10000; } .zoom-overlay { z-index: 9999; } */
+
+	/* Shift content away from the sidebar */
+	.zoom-overlay__sheet {
+		/* leave the sheet positioned at the viewport origin for FLIP correctness,
+       but reserve space for the sidebar using logical padding */
+		padding-inline-start: max(var(--sidebar-w), env(safe-area-inset-left));
+	}
+
+	/* Keep the sticky toolbar aligned with the visible content column */
+	.zoom-overlay__toolbar {
+		padding-inline-start: calc(max(var(--sidebar-w), env(safe-area-inset-left)) + 0.75rem);
+	}
+
+	/* Optional: prevent any overlay pixels (backdrop or sheet) from painting
+     under the sidebar area. This is purely visual; remove if you want the
+     dim to cover beneath the sidebar too. */
+	.zoom-overlay__backdrop,
+	.zoom-overlay__sheet {
+		clip-path: inset(0 0 0 var(--sidebar-w));
+	}
+}
+
+
+
+/*Section 3*/
+
 /* Flowchart: always vertical */
 .flowchart {
 	display: flex;
@@ -4539,11 +4694,6 @@ body.page-index {
 	color: inherit;
 }
 
-.integrations__inner {
-	max-width: 75rem;
-	margin-inline: auto;
-	padding-inline: clamp(1rem, 3vw, 2rem);
-}
 
 .integrations__heading {
 	margin: 0 0 .5rem 0;
@@ -4574,7 +4724,7 @@ body.page-index {
 		padding: .5rem .75rem;
 		border-radius: .75rem;
 		/* subtle chip on capable browsers; otherwise harmless */
-		background: color-mix(in oklab, currentColor 5%, transparent);
+		background: color-mix(in oklab, currentColor 30%, transparent);
 	}
 
 	.logo-strip img {
@@ -4583,7 +4733,7 @@ body.page-index {
 		max-width: 100%;
 		object-fit: contain;
 		/* tasteful hover affordance without harsh color shifts */
-		filter: grayscale(100%) contrast(1.05) brightness(.95);
+		filter: grayscale(0%) contrast(1.05) brightness(.95);
 		opacity: .85;
 		transition: filter .2s ease, opacity .2s ease, transform .2s ease;
 	}
@@ -4606,114 +4756,5 @@ body.page-index {
 @media (prefers-reduced-motion: reduce) {
 	.logo-strip img {
 		transition: none;
-	}
-}
-
-
-/*Infinite card marquee*/
-
-/* ---------- Design tokens ---------- */
-:root {
-	--card-bg: #0161eb; /* requested card background */
-	--card-fg: #ffffff; /* text colour over the blue */
-	--card-w: clamp(12rem, 22vw, 18rem);
-	--card-h: clamp(7rem, 18vw, 10rem);
-	--gap: 1rem;
-	--radius: 1rem;
-	--shadow-3d: 0 8px 14px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.15);
-	--nav-size: 3.25rem;
-}
-
-/* ---------- Component shell ---------- */
-.card-marquee {
-	position: relative;
-	padding: 1.5rem 3.5rem; /* space for arrows */
-	user-select: none;
-}
-
-	.card-marquee .viewport {
-		overflow: hidden;
-		width: 100%;
-		/* subtle edge fading; remove if undesired */
-		-webkit-mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
-		mask-image: linear-gradient(to right, transparent 0, black 2.5rem, black calc(100% - 2.5rem), transparent 100%);
-		outline: none;
-	}
-
-	.card-marquee .track {
-		display: inline-flex;
-		gap: var(--gap);
-		align-items: stretch;
-		white-space: nowrap;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-	}
-
-	.card-marquee .card {
-		background: var(--card-bg);
-		color: var(--card-fg);
-		min-width: var(--card-w);
-		height: var(--card-h);
-		border-radius: var(--radius);
-		display: grid;
-		place-items: center;
-		padding: 1rem;
-		font: 600 1rem/1.2 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
-		box-shadow: 0 6px 12px rgba(0,0,0,.18);
-	}
-
-	/* ---------- 3D arrow controls ---------- */
-	.card-marquee .nav {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		width: var(--nav-size);
-		height: var(--nav-size);
-		border: 0;
-		border-radius: 999px;
-		background: linear-gradient(180deg, #ffffff, #e6e6e6);
-		color: #0b2a6f;
-		box-shadow: var(--shadow-3d);
-		display: grid;
-		place-items: center;
-		cursor: pointer;
-		transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-		will-change: transform;
-	}
-
-		.card-marquee .nav.prev {
-			left: .5rem;
-		}
-
-		.card-marquee .nav.next {
-			right: .5rem;
-		}
-
-		.card-marquee .nav:focus-visible {
-			outline: 3px solid #a7c7ff;
-			outline-offset: 2px;
-		}
-
-		.card-marquee .nav:hover {
-			filter: brightness(.98);
-		}
-
-		.card-marquee .nav:active {
-			transform: translateY(-50%) translateZ(0) scale(.96);
-			box-shadow: 0 4px 8px rgba(0,0,0,.25) inset;
-		}
-
-/* ---------- Reduced motion accessibility ---------- */
-@media (prefers-reduced-motion: reduce) {
-	.card-marquee {
-		padding: 1.25rem 3.5rem;
-	}
-}
-
-/* Optional: make cards wrap nicely on very narrow layouts if JS is disabled */
-@supports not (scroll-behavior: smooth) {
-	.card-marquee .track {
-		flex-wrap: nowrap;
 	}
 }

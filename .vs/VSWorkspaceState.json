@@ -4,8 +4,9 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\css\\images",
-    "\\images"
+    "\\assets\\js",
+    "\\assets\\webfonts"
   ],
-  "SelectedNode": "\\elements.html",
+  "SelectedNode": "\\assets\\js\\card-marquee.js",
   "PreviewInSolutionExplorer": false
 }
