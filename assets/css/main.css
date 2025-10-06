@@ -4330,9 +4330,9 @@ html.zoom-lock, body.zoom-lock {
 
 /* --- Sidebar-aware fullscreen layout for the zoom overlay --- */
 /* Define your sidebar width once (match your actual sidebar). */
-:root {
-	--sidebar-w: 18em; /* adjust to your real #sidebar width */
-}
+html.page-index {
+	--sidebar-w: 18em
+} 
 
 /* Always keep sheet in border-box so padding doesn't cause overflow */
 .zoom-overlay__sheet {
