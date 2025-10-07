@@ -4304,12 +4304,16 @@ html.zoom-lock, body.zoom-lock {
 }
 
 .zoom-close {
-	appearance: none;
-	border: 0;
+	all: unset; /* remove everything else */
+	display: inline-grid; /* easy centering */
+	place-items: center;
+	inline-size: var(--zc-w, 2.25rem); /* fixed width */
+	block-size: var(--zc-h, 2.25rem); /* fixed height */
+	font-weight: 700; /* bold text */
+	font-size: 1.5rem; /* visually larger text */
+	line-height: 1; /* no extra vertical slack */
 	border-radius: .75rem;
-	padding: .5rem .8rem;
-	font: inherit;
-	cursor: pointer;
+	padding: .15rem;
 	background: rgba(255,255,255,.12);
 	color: #fff;
 	backdrop-filter: blur(6px);

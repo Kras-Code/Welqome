@@ -187,4 +187,90 @@
 				}
 			});
 
+
+
+	// Code for synchronising when a button is pressed
+	// --- Button->Sidebar sync WITHOUT breaking fullscreen.js --- //
+	(() => {
+		if (window.__navSyncInstalled) return;
+		window.__navSyncInstalled = true;
+
+		const ACTIVE_SELECTOR = 'a.button, button, .actions .button, .zoom-open';
+
+		// Build nav map once (desktop + mobile)
+		const navMap = (() => {
+			const map = new Map();
+			document.querySelectorAll('#sidebar a[href^="#"], #m-sidebar a[href^="#"]').forEach(a => {
+				const id = (a.getAttribute('href') || '').slice(1);
+				if (!id) return;
+				(map.get(id) || map.set(id, []).get(id)).push(a);
+			});
+			return map;
+		})();
+
+		document.addEventListener('click', (evt) => {
+			const trigger = evt.target.closest(ACTIVE_SELECTOR);
+			if (!trigger) return;
+
+			// 1) Resolve the top-level section that exists in the nav
+			const sectionId = resolveTargetSectionId(trigger, navMap);
+			if (sectionId) activateNav(sectionId, navMap);
+
+			// 2) If this is a fullscreen trigger, DO NOT interfere; fullscreen.js will preventDefault itself.
+			const isZoomOpen = trigger.classList.contains('zoom-open');
+			const tplSel = trigger.dataset && trigger.dataset.zoomTemplate;
+			const hasValidTpl = !!(tplSel && document.querySelector(tplSel));
+			if (isZoomOpen && hasValidTpl) {
+				return; // let fullscreen.js handle it
+			}
+
+			// 3) Otherwise, for external links, do the small paint delay
+			if (trigger.tagName === 'A') {
+				const href = trigger.getAttribute('href') || '';
+				const isHash = href.trim().startsWith('#');
+				const isExternalNav = href && !isHash && !trigger.hasAttribute('target');
+				if (isExternalNav) {
+					evt.preventDefault();
+					setTimeout(() => { window.location.href = trigger.href; }, 75);
+				}
+			}
+		}, { capture: true });
+
+		// --- helpers ---
+		function resolveTargetSectionId(trigger, map) {
+			// Optional explicit hint
+			const hinted = trigger.closest('[data-nav-target]')?.getAttribute('data-nav-target')?.trim()
+				|| trigger.dataset?.navTarget?.trim();
+			if (hinted && map.has(hinted)) return hinted;
+
+			// Walk up to a section[id] that the nav actually knows about (e.g., "#one")
+			let cur = trigger.closest('section[id]');
+			while (cur) {
+				if (map.has(cur.id)) return cur.id;
+				cur = cur.parentElement ? cur.parentElement.closest('section[id]') : null;
+			}
+			return '';
+		}
+
+		function activateNav(id, map) {
+			const targets = map.get(id);
+			if (!targets || !targets.length) return;
+
+			document.querySelectorAll('#sidebar a[href^="#"], #m-sidebar a[href^="#"]').forEach(a => {
+				a.classList.remove('active', 'active-locked');
+				a.removeAttribute('aria-current');
+			});
+
+			targets.forEach(a => {
+				a.classList.add('active', 'active-locked');
+				a.setAttribute('aria-current', 'page');
+				try { a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch { a.scrollIntoView(); }
+			});
+
+			setTimeout(() => targets.forEach(a => a.classList.remove('active-locked')), 500);
+		}
+	})();
+
+
+
 })(jQuery);

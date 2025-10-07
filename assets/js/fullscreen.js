@@ -18,7 +18,7 @@
       <div class="zoom-overlay__backdrop" data-close="1" aria-hidden="true"></div>
       <div class="zoom-overlay__sheet">
         <div class="zoom-overlay__toolbar">
-          <button type="button" class="zoom-close" data-close="1" aria-label="Minimise and return">Minimise</button>
+          <button type="button" class="zoom-close" data-close="1" aria-label="Minimise and return"><strong>-</strong></button>
         </div>
         <div class="zoom-overlay__content"></div>
       </div>
@@ -228,4 +228,84 @@
         const source = trigger.closest('.zoomable') || trigger.closest('section') || document.body;
         openZoom(source, trigger);
     }, { capture: true, passive: false });
+
+
+    /* ================= Sidebar-triggered minimise ================= */
+
+    /** Find all open overlays (defensive if multiple could exist) */
+    function getOpenOverlays() {
+        return Array.from(document.querySelectorAll('.zoom-overlay'));
+    }
+
+    /** Close one overlay using your existing closeZoom(...) */
+    function _closeOverlay(ov) {
+        const src = ov._sourceEl || document.body; // fallback if not tracked
+        // If your closeZoom is in scope, this will animate-out; otherwise remove hard.
+        if (typeof closeZoom === 'function') {
+            closeZoom(ov, src);
+        } else {
+            ov.remove();
+            document.documentElement.classList.remove('zoom-lock');
+            document.body.classList.remove('zoom-lock');
+        }
+    }
+
+    /** Close any open overlay(s) */
+    function closeAnyZoom() {
+        const open = getOpenOverlays();
+        if (!open.length) return;
+        open.forEach(_closeOverlay);
+    }
+
+    /* Expose a tiny global (optional but handy for other scripts) */
+    window.ZoomOverlay = Object.freeze({
+        closeAny: closeAnyZoom,
+        isOpen: () => !!document.querySelector('.zoom-overlay'),
+    });
+
+    /* Ensure we remember the source element when opening (one-liner safety)
+       If you already set overlay._sourceEl in openZoom, this is redundant. */
+    const _openZoom_orig = typeof openZoom === 'function' ? openZoom : null;
+    if (_openZoom_orig) {
+        window.openZoom = function patchedOpenZoom(sourceEl, triggerEl) {
+            const before = document.querySelector('.zoom-overlay');
+            _openZoom_orig(sourceEl, triggerEl);
+            // After open, tag the newly inserted overlay with its source
+            const after = document.querySelector('.zoom-overlay');
+            if (after && after !== before) after._sourceEl = sourceEl;
+        };
+    }
+
+    /* Close on desktop sidebar links, mobile drawer links, and mobile toggle.
+       Use capture so we run even if other listeners stop propagation. */
+    const NAV_SELECTORS = '#sidebar a, #m-sidebar a, #mSidebarToggle';
+
+    function bindNavMinimisers() {
+        // Trigger close on keyboard/mouse/touch activations
+        ['pointerdown', 'click', 'keydown'].forEach(type => {
+            document.addEventListener(type, (e) => {
+                if (!window.ZoomOverlay.isOpen()) return;
+
+                // Keyboard: Enter/Space on focused link/button
+                if (type === 'keydown') {
+                    const k = e.key;
+                    if (k !== 'Enter' && k !== ' ') return;
+                }
+
+                const hit = e.target.closest(NAV_SELECTORS);
+                if (!hit) return;
+
+                // Do not block navigation — just start minimising
+                closeAnyZoom();
+            }, { capture: true, passive: true });
+        });
+
+        // Also close on hash URL changes and history navigation
+        window.addEventListener('hashchange', closeAnyZoom, { passive: true });
+        window.addEventListener('popstate', closeAnyZoom, { passive: true });
+    }
+
+    // Run once after parse (your file is loaded with `defer`)
+    bindNavMinimisers();
+
 })();
