@@ -4690,6 +4690,62 @@ html.page-index {
 }
 
 
+/*FAQs*/
+
+/* Reset a counter for each FAQ block */
+.content {
+	counter-reset: faq;
+}
+
+	/* Summary styled like h4, white text */
+	.content details > summary {
+		display: block;
+		font-size: 1.25rem; /* match your h4 if different */
+		line-height: 1.4;
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		margin: 0 0 0.75rem;
+		cursor: pointer;
+		list-style: none; /* Firefox marker */
+		color: #fff; /* make the summary text white */
+	}
+
+		/* Hide WebKit default marker */
+		.content details > summary::-webkit-details-marker {
+			display: none;
+		}
+
+		/* Leading number (auto-incremented) */
+		.content details > summary::before {
+			counter-increment: faq;
+			content: counter(faq) ". ";
+			margin-right: 0.5rem;
+		}
+
+		/* Chevron indicator on the right */
+		.content details > summary::after {
+			content: "▸";
+			float: right;
+			transition: transform 200ms ease;
+		}
+
+	/* Rotate chevron when open */
+	.content details[open] > summary::after {
+		transform: rotate(90deg);
+	}
+
+	/* Accessible focus outline that matches the white text */
+	.content details > summary:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+		border-radius: 0.25rem;
+	}
+
+
+
+
+
+
 /* Info */
 
 /* ---------- Our Integrations (self-contained) ---------- */
@@ -4767,3 +4823,5 @@ html.page-index {
 		transition: none;
 	}
 }
+
+

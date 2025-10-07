@@ -62,4 +62,42 @@
 		const href = a.getAttribute('href') || '';
 		if (href.startsWith('#') || href === '' || href.startsWith(location.origin)) closeDrawer();
 	});
+
+
+
+	/* ---- Close overlay if open, then resolve when the animation actually finishes ---- */
+	async function minimizeOverlayIfOpen({ returnFocus = false } = {}) {
+		const ov = document.querySelector('.zoom-overlay');
+		if (!ov) return;                    // nothing to do
+
+		// Optional: suppress focus return (useful when immediately opening sidebar)
+		if (returnFocus === false) ov._returnFocus = null;
+
+		const sheet = ov.querySelector('.zoom-overlay__sheet');
+		const closeBtn = ov.querySelector('[data-close]');
+
+		await new Promise((resolve) => {
+			// If reduced motion, the overlay script will remove immediately after we click close
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const finish = () => resolve();
+
+			if (!sheet || reduced) {
+				// Fall back if we can't observe the transition
+				closeBtn ? closeBtn.click() : ov.remove();
+				resolve();
+				return;
+			}
+
+			const onEnd = (e) => {
+				if (e.propertyName !== 'transform') return; // ignore unrelated transitions
+				sheet.removeEventListener('transitionend', onEnd);
+				// By now the overlay script has run its cleanup & removed the node.
+				resolve();
+			};
+			sheet.addEventListener('transitionend', onEnd, { once: true });
+
+			// Start the close using the overlay's own handler
+			closeBtn ? closeBtn.click() : ov.remove();
+		});
+	}
 })();
