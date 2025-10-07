@@ -1,0 +1,33 @@
+# robots.txt for welqome.co.uk
+# Goal: maximise discoverability while avoiding accidental blocks of CSS/JS and public images.
+
+User-agent: *
+# Never block core assets required for rendering/indexing
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.webp$
+Allow: /*.svg$
+Allow: /*.woff$
+Allow: /*.woff2$
+
+# Fence off typical non-public or temporary areas (harmless if they don't exist)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /drafts/
+Disallow: /temp/
+Disallow: /tmp/
+Disallow: /cgi-bin/
+
+# Prevent crawling of archive bundles (not pages)
+Disallow: /*.zip$
+Disallow: /*.tar$
+Disallow: /*.gz$
+
+# Declare the canonical sitemap
+Sitemap: https://welqome.co.uk/sitemap.xml
+
+# Yandex honours this; others ignore—harmless and can help consolidate host signals
+Host: welqome.co.uk

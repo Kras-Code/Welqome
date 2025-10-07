@@ -4062,6 +4062,15 @@ body.page-index {
 
 /* Intro */
 
+		/* h1 copies p style*/
+		#intro .inner .h1--subtle {
+			font: inherit; /* keep paragraph family/weight/line-height */
+			color: inherit;
+			font-size: clamp(1.125rem, 1rem + 1vw, 1.75rem); /* bigger, responsive */
+			margin: 1em 0 1.5em;
+			margin-left: 0.25em; /* shift right by 1em inside the flow */
+		}
+
 	#intro {
 		background-attachment: fixed;
 		background-image: url("images/intro.svg");

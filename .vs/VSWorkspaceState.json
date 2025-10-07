@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\assets",
+    "\\assets\\js"
   ],
-  "SelectedNode": "\\C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome",
+  "SelectedNode": "\\assets\\js",
   "PreviewInSolutionExplorer": false
 }
