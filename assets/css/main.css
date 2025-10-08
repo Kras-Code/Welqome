@@ -4890,19 +4890,3 @@ html.page-index {
 	.zoom-header-stack p {
 		margin: 0;
 	}
-
-/* Tight line-height + larger gap on narrow viewports */
-@media (max-width: 640px) {
-	.zoom-header-stack {
-		--zoom-header-gap: 0.5rem; /* increase spacing on mobile */
-	}
-
-		.zoom-header-stack h2 {
-			line-height: 0.5;
-		}
-		/* Neutralize any stray margins so the stack rule is authoritative */
-		.zoom-header-stack h2,
-		.zoom-header-stack p {
-			margin: 0;
-		}
-}
