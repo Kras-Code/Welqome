@@ -4806,9 +4806,41 @@ html.page-index {
 	--logo-h: 2.75rem; /* cap height for brand marks */
 	--gap: clamp(.5rem, 2vw, 1.25rem);
 	background: var(--integrations-bg);
-	padding-block: clamp(2rem, 3vw, 4rem);
+	padding-block: clamp(1rem, 2vw, 3rem);
 	color: inherit;
 }
+
+/* --- Heading separator bar (5px) that follows the title width --- */
+header.zoom-header-stack {
+	--bar-color: #1c3d58;
+	--bar-thickness: 4px;
+	--bar-overhang: .5rem; /* “a little bit” past the text edges */
+	--bar-gap: .6rem; /* space between title and bar */
+	overflow: visible;
+}
+
+	header.zoom-header-stack > :is(h1, h2, .integrations__heading) {
+		position: relative;
+		display: inline-block; /* shrink-wrap to title text */
+		padding-bottom: var(--bar-gap);
+		margin: 0 0 calc(var(--gap, 1rem) - var(--bar-gap)) 0;
+	}
+
+		header.zoom-header-stack > :is(h1, h2, .integrations__heading)::after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: calc(-1 * var(--bar-overhang));
+			height: var(--bar-thickness);
+			width: calc(100% + 2 * var(--bar-overhang));
+			background: var(--bar-color);
+			border-radius: var(--bar-thickness); /* soft caps (optional) */
+		}
+
+	/* keep your existing paragraph spacing */
+	header.zoom-header-stack p:last-of-type {
+		margin-bottom: 1rem;
+	}
 
 
 .integrations__heading {
@@ -4821,6 +4853,12 @@ html.page-index {
 	margin: 0 0 1.25rem 0;
 	font-size: clamp(1rem, .2rem + .6vw, 1.125rem);
 }
+
+header.zoom-header-stack p:last-of-type {
+	margin-bottom: 1rem; /* the “1 rem gap below” */
+}
+
+
 
 /* Responsive “banner” that wraps neatly and keeps logos visually uniform */
 .logo-strip {
@@ -4872,6 +4910,74 @@ html.page-index {
 @media (prefers-reduced-motion: reduce) {
 	.logo-strip img {
 		transition: none;
+	}
+}
+
+/* Card sizing knobs */
+.integrations {
+	--card-w: 200px; /* width of each logo card */
+	--card-h: 200px; /* height of each logo card */
+}
+
+/* Make the grid respect the desired card width and center rows */
+.logo-strip {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-w)), 1fr));
+	justify-content: center;
+}
+
+	/* Clear prior chip styling; the card supplies its own */
+	.logo-strip li {
+		padding: 0;
+		background: none;
+	}
+
+/* The card that contains the logo + label */
+.logo-card {
+	display: grid;
+	grid-template-rows: 1fr auto; /* logo fills, caption sits below */
+	place-items: center;
+	width: 100%;
+	height: var(--card-h);
+	padding: 1rem;
+	border-radius: .75rem;
+	background: color-mix(in oklab, currentColor 30%, transparent);
+	box-shadow: 0 0 0 1px color-mix(in oklab, currentColor 15%, transparent) inset;
+}
+
+	/* Logo fits within the available area without distortion */
+	.logo-card img {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+		filter: grayscale(0%) contrast(1.05) brightness(.95);
+		opacity: .9;
+		transition: transform .2s ease, opacity .2s ease, filter .2s ease;
+	}
+
+	/* Label text inside each card */
+	.logo-card figcaption {
+		align-self: end;
+		margin-top: .5rem;
+		font-size: .95rem;
+		line-height: 1.2;
+		text-align: center;
+		opacity: .95;
+	}
+
+/* Hover affordance on capable devices */
+@media (hover: hover) and (pointer: fine) {
+	.logo-card:hover img {
+		transform: translateY(-1px) scale(1.02);
+		filter: none;
+		opacity: 1;
+	}
+}
+
+/* Mobile tuning: keep strong visuals while fitting narrow viewports */
+@media (max-width: 480px) {
+	.integrations {
+		--card-w: 100%;
+		--card-h: 180px;
 	}
 }
 

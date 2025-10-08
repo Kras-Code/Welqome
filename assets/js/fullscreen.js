@@ -160,11 +160,12 @@
         overlay._cleanup = () => document.removeEventListener('keydown', onKey);
 
         overlay.addEventListener('click', (e) => {
-            if (e.target && e.target.hasAttribute('data-close')) {
-                e.preventDefault();
-                closeZoom(overlay, sourceEl);
-            }
+            const btn = e.target && e.target.closest('[data-close]');
+            if (!btn) return;
+            e.preventDefault();
+            closeZoom(overlay, sourceEl);
         });
+
 
         // Keep reverse transform aligned if viewport changes
         const ro = new ResizeObserver(() => {
@@ -179,8 +180,22 @@
     }
 
     function closeZoom(overlay, sourceEl) {
-        // Reverse animation
-        overlay.dataset.state && overlay.removeAttribute('data-state');
+        // Prevent re-entrancy / spam while an existing close is in-flight
+        if (overlay._closing) return;
+        overlay._closing = true;
+
+        // If an open rAF is queued, cancel its work
+        overlay._cancelEnter = true;
+
+        // Reverse animation: removing data-state puts the sheet back to its initial transform
+        if (overlay.dataset.state) overlay.removeAttribute('data-state');
+
+        // Disable all minimise controls during close
+        overlay.querySelectorAll('[data-close]').forEach(el => {
+            el.setAttribute('aria-disabled', 'true');
+            el.setAttribute('disabled', '');
+            el.style.pointerEvents = 'none';
+        });
 
         const finish = () => {
             overlay._cleanup && overlay._cleanup();
@@ -188,28 +203,57 @@
             overlay.remove();
             document.documentElement.classList.remove('zoom-lock');
             document.body.classList.remove('zoom-lock');
-            if (overlay._returnFocus && overlay._returnFocus.focus) {
-                overlay._returnFocus.focus({ preventScroll: false });
-            } else {
+            overlay._closing = false;
+
+            // Return focus
+            const ret = overlay._returnFocus;
+            if (ret && typeof ret.focus === 'function') {
+                ret.focus({ preventScroll: false });
+            } else if (sourceEl && typeof sourceEl.focus === 'function') {
                 sourceEl.setAttribute('tabindex', '-1');
                 sourceEl.focus({ preventScroll: false });
                 sourceEl.removeAttribute('tabindex');
             }
         };
 
-        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduced) { finish(); return; }
+        // Respect reduced motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            finish();
+            return;
+        }
 
         const sheet = overlay.querySelector('.zoom-overlay__sheet');
         if (!sheet) { finish(); return; }
 
-        const onEnd = (e) => {
-            if (e.propertyName !== 'transform') return;
+        // Force reflow so the browser observes the state flip even mid-animation
+        void sheet.getBoundingClientRect();
+
+        // Compute a robust fallback timeout from the actual CSS timings
+        const cs = getComputedStyle(sheet);
+        const first = s => (s || '0s').split(',')[0].trim();
+        const toMs = s => {
+            const n = parseFloat(s);
+            return s.endsWith('ms') ? n : n * 1000;
+        };
+        const durMs = toMs(first(cs.transitionDuration));
+        const delMs = toMs(first(cs.transitionDelay));
+        const fallbackMs = Math.max(200, durMs + delMs + 120); // safety buffer
+
+        let done = false;
+        const onEnd = () => {
+            if (done) return;
+            done = true;
             sheet.removeEventListener('transitionend', onEnd);
+            clearTimeout(timer);
             finish();
         };
-        sheet.addEventListener('transitionend', onEnd);
+
+        // Don’t over-filter on propertyName; some themes don’t animate transform
+        sheet.addEventListener('transitionend', onEnd, { once: true });
+
+        const timer = setTimeout(onEnd, fallbackMs);
     }
+
 
     /* ------------ robust event interception ------------ */
     document.addEventListener('click', function (e) {
