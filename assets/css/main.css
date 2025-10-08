@@ -4650,6 +4650,53 @@ html.page-index {
 }
 
 
+/* Founder Linked in formatting*/
+/* Keep the icon neatly aligned to the heading text */
+#main .major {
+	display: inline-flex;
+	align-items: baseline; /* align with the text baseline instead of centering */
+	gap: 0.5rem;
+	flex-wrap: nowrap; /* keep icon on the same line */
+	white-space: nowrap; /* hard-stop wrapping */
+}
+
+/* (optional) let it wrap on very narrow screens */
+@media (max-width: 520px) {
+	#main .major {
+		flex-wrap: wrap;
+		white-space: normal;
+	}
+}
+
+	/* Size/spacing for the icon anchor (HTML5 UP uses ::before to render the icon) */
+	#main .major .li-icon {
+		line-height: 1;
+		font-size: 0.5em; /* slightly smaller than the H1 text */
+		border-radius: 0.4rem;
+		padding: 0.15em 0.35em; /* hit area for focus/hover */
+		text-decoration: none;
+		outline: none;
+		transition: box-shadow 180ms ease, filter 180ms ease;
+	}
+
+		/* Smooth transform for the icon glyph itself */
+		#main .major .li-icon::before {
+			transition: text-shadow 180ms ease, transform 180ms ease;
+		}
+
+		/* Hover/focus glow (LinkedIn blue) */
+		#main .major .li-icon:hover::before,
+		#main .major .li-icon:focus-visible::before {
+			text-shadow: 0 0 6px rgba(0,119,181,0.9), 0 0 14px rgba(0,119,181,0.7), 0 0 24px rgba(0,119,181,0.5);
+			transform: translateY(-1px);
+		}
+
+		/* Optional: visible focus ring for keyboard users */
+		#main .major .li-icon:focus-visible {
+			box-shadow: 0 0 0 3px rgba(0,119,181,0.35);
+		}
+
+
 /* Founder 1 image formatting*/
 /* 1) Make .inner expand to wrap floated children */
 .inner.fit-media::after {
@@ -4829,3 +4876,37 @@ html.page-index {
 }
 
 
+/* Zoom pop-up sections*/
+
+/* Reusable vertical stack for popup headers */
+/* Define once, then consumed by your sibling rule */
+.zoom-header-stack {
+	--zoom-header-gap: 0.2rem;
+}
+
+	/* keep this as-is */
+	.zoom-header-stack > * + * {
+		margin-top: var(--zoom-header-gap);
+	}
+
+	/* ensure defaults don't add extra space */
+	.zoom-header-stack h2,
+	.zoom-header-stack p {
+		margin: 0;
+	}
+
+/* Tight line-height + larger gap on narrow viewports */
+@media (max-width: 640px) {
+	.zoom-header-stack {
+		--zoom-header-gap: 0.2rem; /* increase spacing on mobile */
+	}
+
+		.zoom-header-stack h2 {
+			line-height: 0.5;
+		}
+		/* Neutralize any stray margins so the stack rule is authoritative */
+		.zoom-header-stack h2,
+		.zoom-header-stack p {
+			margin: 0;
+		}
+}
