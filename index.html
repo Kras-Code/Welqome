@@ -488,24 +488,66 @@
                 <p>Have questions, need a demo, or want a tailored quote? Send us a message and we’ll propose the best automation flow for your business.</p>
                 <div class="split style1">
                     <section>
-                        <form method="post" action="#">
+                        <form method="POST" action="https://formspree.io/f/meorlpjj" id="contact-form">
                             <div class="fields">
                                 <div class="field half">
                                     <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" />
+                                    <input type="text" name="name" id="name" required />
                                 </div>
                                 <div class="field half">
                                     <label for="email">Email</label>
-                                    <input type="email" name="email" id="email" />
+                                    <input type="email" name="email" id="email" required />
                                 </div>
                                 <div class="field">
                                     <label for="message">Message</label>
-                                    <textarea name="message" id="message" rows="5"></textarea>
+                                    <textarea name="message" id="message" rows="5" required></textarea>
                                 </div>
+
+                                <!-- anti-bot honeypot (kept empty by humans) -->
+                                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
+
+                                <!-- optional: set a custom subject line -->
+                                <input type="hidden" name="_subject" value="New message from WelQome contact form">
+
+                                <!-- optional: redirect after success -->
+                                <!-- <input type="hidden" name="_redirect" value="https://welqome.co.uk/thanks.html"> -->
                             </div>
+
                             <ul class="actions">
                                 <li><button type="submit" class="button submit">Send Message</button></li>
                             </ul>
+
+                            <!-- optional inline status message without leaving the page -->
+                            <p id="form-status" role="status" aria-live="polite" style="margin-top:.75rem;"></p>
+                        </form>
+
+                        <script>
+                            // Optional enhancement: AJAX submit to stay on the page and show a status message
+                            const form = document.getElementById('contact-form');
+                            const statusEl = document.getElementById('form-status');
+
+                            form.addEventListener('submit', async (e) => {
+                                // comment out this block if you prefer a full-page redirect flow
+                                e.preventDefault();
+                                statusEl.textContent = 'Sending…';
+
+                                try {
+                                    const formData = new FormData(form);
+                                    const res = await fetch(form.action, {
+                                        method: 'POST',
+                                        headers: { 'Accept': 'application/json' },
+                                        body: formData
+                                    });
+                                    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+                                    statusEl.textContent = 'Thanks — your message has been sent.';
+                                    form.reset();
+                                } catch (err) {
+                                    statusEl.textContent = 'Sorry — something went wrong. Please try again or email us directly.';
+                                    console.error(err);
+                                }
+                            });
+                        </script>
                         </form>
                     </section>
                     <section>
