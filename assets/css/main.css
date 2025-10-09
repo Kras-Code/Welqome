@@ -5297,8 +5297,7 @@ header.zoom-header-stack p:last-of-type {
 	}
 }
 
-/* Keep your existing button exactly as is. We do not target .btn-relay. */
-/* If you need spacing above it without changing its styling: */
+/* If you need spacing above relay button without changing its styling: */
 .contact-us-card .actions {
 	margin-top: .25rem;
 }
@@ -5318,13 +5317,22 @@ header.zoom-header-stack p:last-of-type {
 	height: var(--contact-h, var(--card-h)); /* fixed vertical size */
 }
 
-/* Mobile: card will naturally span full row; height remains constant */
+/* Ensure Contact Us card keeps its background & border on all viewports */
+.logo-strip > li.contact-us > .contact-us-card,
+.logo-strip > li.contact-us > .Contact-us-card {
+	background: #023e8a;
+	border: 1px solid rgba(255,255,255,.18);
+	border-radius: .75rem;
+	box-shadow: none; /* avoid being overridden by other inset rules */
+	overflow: hidden; /* keep radius crisp */
+}
+
+/* Mobile row span (if you use a mobile override) */
 @media (max-width: 480px) {
-	.logo-strip li.contact-us {
+	.logo-strip > li.contact-us {
 		grid-column: 1 / -1;
 	}
 }
-
 
 
 
