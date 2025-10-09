@@ -2,7 +2,7 @@
 <html lang="en-GB">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Primary SEO -->
     <title>WelQome | AI Receptionist & Call-Handling Automation for UK Businesses</title>
@@ -10,23 +10,34 @@
     <link rel="canonical" href="https://www.welqome.co.uk/" />
 
     <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any">
+    <link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+    <link rel="icon" type="image/png" href="/favicon-96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-192.png" sizes="192x192">
     <link rel="icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-    <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 
-    <!-- Open Graph / Twitter -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.welqome.co.uk/">
+    <meta property="og:site_name" content="WelQome">
     <meta property="og:title" content="WelQome | AI Receptionist & Call-Handling Automation">
-    <meta property="og:description" content="24/7 AI call handling with brand-aligned responses, GDPR compliance, and 1000+ integrations.">
+    <meta property="og:description" content="24/7 AI call handling with brand-aligned responses, GDPR compliance, and 1,000+ integrations.">
     <meta property="og:image" content="https://www.welqome.co.uk/images/og/welqome_long.png">
+    <!-- Replace with the actual intrinsic dimensions of your OG image -->
+    <meta property="og:image:width" content="2911">
+    <meta property="og:image:height" content="834">
     <meta property="og:image:alt" content="WelQome AI receptionist automation">
+    <meta property="og:locale" content="en_GB">
+
+    <!-- Twitter (X) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="WelQome | AI Receptionist & Call-Handling Automation">
-    <meta name="twitter:description" content="24/7 AI call handling with brand-aligned responses, GDPR compliance, and 1000+ integrations.">
+    <meta name="twitter:description" content="24/7 AI call handling with brand-aligned responses, GDPR compliance, and 1,000+ integrations.">
     <meta name="twitter:image" content="https://www.welqome.co.uk/images/og/welqome_long.png">
+    <meta name="twitter:image:alt" content="WelQome AI receptionist automation">
+    <!-- Set to your handle (optional but recommended) -->
+    <meta name="twitter:site" content="@Welqome_ai">
 
     <!-- Styles: keep blocking CSS small; everything else deferred by the theme -->
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -42,13 +53,18 @@
               "@id": "https://www.welqome.co.uk/#org",
               "name": "WelQome",
               "url": "https://www.welqome.co.uk/",
-              "logo": "https://www.welqome.co.uk/images/Welqome_Logo.png",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.welqome.co.uk/images/welqome_logo.png",
+                "width": 2881,
+                "height": 489
+              },
               "sameAs": [
                 "https://www.tiktok.com/@welqome.ai",
                 "https://www.youtube.com/@welqome-ai",
                 "https://www.instagram.com/welqome.ai/",
                 "https://x.com/Welqome_ai",
-                "https://linkedin.com/company/welqome-ai"
+                "https://www.linkedin.com/company/welqome-ai"
               ],
               "contactPoint": [{
                 "@type": "ContactPoint",
@@ -59,45 +75,17 @@
               }]
             },
             {
-              "@type": "Service",
-              "serviceType": "AI receptionist and call-handling automation",
-              "provider": { "@id": "https://www.welqome.co.uk/#org" },
-              "areaServed": "GB",
-              "audience": { "@type": "BusinessAudience", "name": "SMEs" },
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "AI automation features",
-                "itemListElement": [
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "24/7 Call Handling" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "1000+ Integrations" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Accuracy & Brand Voice" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Security & GDPR Compliance" } }
-                ]
-              }
-            },
-            {
-              "@type": "FAQPage",
-              "mainEntity": [
-                {
-                  "@type": "Question",
-                  "name": "Do we need to change phone numbers to use WelQome?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "No. We integrate with your existing phone numbers and systems." }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Can WelQome integrate with our CRM and calendars?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We support 1000+ integrations including Google Calendar, Microsoft Teams, Salesforce, and HubSpot." }
-                },
-                {
-                  "@type": "Question",
-                  "name": "Is WelQome GDPR-compliant?",
-                  "acceptedAnswer": { "@type": "Answer", "text": "Yes. We implement data minimisation, encryption, role-based access, and erasure workflows." }
-                }
-              ]
+              "@type": "WebSite",
+              "@id": "https://www.welqome.co.uk/#website",
+              "url": "https://www.welqome.co.uk/",
+              "name": "WelQome",
+              "alternateName": "WelQome AI Reception",
+              "publisher": { "@id": "https://www.welqome.co.uk/#org" }
             }
           ]
         }
     </script>
+</head>
 </head>
 
 <body class="is-preload page-index">
