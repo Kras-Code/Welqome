@@ -188,6 +188,41 @@
 			});
 
 
+	(() => {
+		function relayToSidebar(e, el) {
+			const target = el.getAttribute('data-target');
+			if (!target) return;
+
+			const sideLink = document.querySelector(`#sidebar a[href="${target}"]`);
+			if (!sideLink) return;
+
+			// Stop the original event so your sync handler never sees it.
+			e.preventDefault();
+			e.stopImmediatePropagation();
+
+			// Delegate to the real sidebar link.
+			try { sideLink.focus({ preventScroll: true }); } catch { }
+			sideLink.dispatchEvent(new MouseEvent('click', {
+				bubbles: true,
+				cancelable: true,
+				view: window
+			}));
+		}
+
+		// Mouse/touch
+		document.addEventListener('click', (e) => {
+			const el = e.target.closest('.btn-relay[data-target]');
+			if (el) relayToSidebar(e, el);
+		}, { capture: true });
+
+		// Keyboard (Enter/Space)
+		document.addEventListener('keydown', (e) => {
+			const el = e.target.closest('.btn-relay[data-target]');
+			if (!el) return;
+			if (e.key === 'Enter' || e.key === ' ') relayToSidebar(e, el);
+		}, { capture: true });
+	})();
+
 
 	// Code for synchronising when a button is pressed
 	// --- Button->Sidebar sync WITHOUT breaking fullscreen.js --- //
