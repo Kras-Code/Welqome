@@ -5098,7 +5098,7 @@ header.zoom-header-stack p:last-of-type {
 		display: block; /* avoid baseline alignment quirks */
 		align-self: center;
 		justify-self: center;
-		max-width: 100%;
+		max-width: 80%;
 		height: auto;
 		max-height: var(--logo-h);
 		object-fit: contain;
