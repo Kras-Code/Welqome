@@ -4954,15 +4954,24 @@ header.zoom-header-stack p:last-of-type {
 		transition: transform .2s ease, opacity .2s ease, filter .2s ease;
 	}
 
-	/* Label text inside each card */
-	.logo-card figcaption {
-		align-self: end;
-		margin-top: .5rem;
-		font-size: .95rem;
-		line-height: 1.2;
-		text-align: center;
-		opacity: .95;
-	}
+/* Label text inside each card */
+.logo-card figcaption {
+	/* visual styles */
+	margin-top: .5rem;
+	font-size: .95rem;
+	line-height: 1.2;
+	text-align: center;
+	opacity: .95;
+
+	/* ignore the grid’s columns and sit under the icons */
+	display: block;                 /* treat as a full-width block */
+	width: 100%;
+	grid-column: 1 / -1 !important; /* span entire card */
+	grid-row: 2 !important;         /* force it onto the second row */
+	align-self: auto;               /* reset any prior alignment */
+	justify-self: stretch;          /* use the full spanned width */
+}
+
 
 /* Hover affordance on capable devices */
 @media (hover: hover) and (pointer: fine) {
@@ -4980,6 +4989,80 @@ header.zoom-header-stack p:last-of-type {
 		--card-h: 180px;
 	}
 }
+
+/* --- Multiple images inside one .logo-card --- */
+.logo-card {
+	/* gap between sibling logos inside the same card */
+	--img-gap: clamp(.5rem, 1.5vw, 1rem);
+}
+
+	/* When a card has >1 image, flow images horizontally on the first row */
+	.logo-card:has(img + img) {
+		/* keep caption on its own row; images auto-flow into columns */
+		grid-auto-flow: column;
+		grid-auto-columns: 1fr;
+		align-items: center;
+		justify-items: center;
+		column-gap: var(--img-gap);
+	}
+
+		/* Ensure the caption spans beneath all images */
+		.logo-card:has(img + img) > figcaption {
+			grid-column: 1 / -1;
+			grid-row: 2;
+		}
+
+		/* Normalize image sizing so they appear parallel (same cap-height) */
+		.logo-card:has(img + img) > img {
+			grid-row: 1; /* keep all images on the first row */
+			height: var(--logo-h); /* reuse your existing logo height variable */
+			width: auto;
+			max-height: none; /* override earlier max-height */
+			object-fit: contain;
+		}
+
+			/* Divider + spacing between adjacent images */
+			.logo-card:has(img + img) > img + img {
+				border-left: 2px solid #00c0fa; /* the requested divider */
+				margin-left: var(--img-gap); /* space before the divider */
+				padding-left: var(--img-gap); /* space after the divider */
+			}
+
+	/* Multi-image cards: ignore grid and lay icons in one row */
+	.logo-card:has(> img + img) {
+		display: block; /* disable grid for this case */
+		text-align: center; /* center inline icons */
+	}
+
+		/* Icons in a horizontal row with consistent height */
+		.logo-card:has(> img + img) > img {
+			display: inline-block;
+			vertical-align: middle;
+			height: var(--logo-h);
+			width: auto;
+			max-width: none; /* don't shrink unexpectedly */
+			margin: 0 calc(var(--img-gap, 1rem) / 2);
+		}
+
+			/* 2px #00c0fa divider between adjacent icons + spacing */
+			.logo-card:has(> img + img) > img:not(:first-of-type) {
+				border-left: 2px solid #00c0fa;
+				margin-left: var(--img-gap, 1rem);
+				padding-left: var(--img-gap, 1rem);
+			}
+
+	/* Caption: always full-width below the icons */
+	.logo-card figcaption {
+		display: block;
+		width: 100%;
+		margin-top: .5rem;
+		text-align: center;
+		font-size: .95rem;
+		line-height: 1.2;
+		opacity: .95;
+	}
+
+
 
 
 /* Zoom pop-up sections*/
