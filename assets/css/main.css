@@ -4812,12 +4812,43 @@ body.page-index {
 		background-color: rgba(255,255,255,0.12);
 		border-color: rgba(255,255,255,0.35);
 	}
+
+	/* 1) Prevent 100%-width span + padding from overflowing */
+	.segmented__option span {
+		box-sizing: border-box;
+	}
+
+/* 2) Mobile: force one row and scale text/padding to fit */
+@media (max-width: 480px) {
+	.segmented__group {
+		flex-wrap: nowrap; /* single row */
+		gap: .35rem; /* tighter spacing on mobile */
+	}
+
+	.segmented__option {
+		flex: 1 1 0; /* equal-width columns */
+		min-width: 0; /* allow shrinking */
+	}
+
+		.segmented__option span {
+			width: 100%;
+			text-align: center;
+			padding: .5em .6em; /* tighter padding to save width */
+			font-size: clamp(.75rem, 2.8vw, .9rem); /* scales down on very small viewports */
+			letter-spacing: .01em; /* tighten tracking */
+			white-space: nowrap; /* keep each label on one line */
+		}
+}
+
+
 	/* Center any .actions that contains a .submit button */
 	.actions:has(> li > .submit) {
 		display: flex; /* ensure flex */
 		justify-content: center !important;
 		gap: var(--gap, 0.75rem);
 	}
+
+
 
 
 /*Fulscreen popups*/
