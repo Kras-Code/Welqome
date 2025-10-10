@@ -4337,159 +4337,6 @@ body.page-index {
 
 
 
-/* ===== Fake Zoom Overlay ===== */
-:root {
-	--zoom-radius: 1rem;
-	--zoom-dur: 480ms;
-	--zoom-ease: cubic-bezier(.2,.7,.2,1);
-	--zoom-backdrop: rgba(3, 14, 30, 0.58);
-	--zoom-sheet-bg: #0161eb; /* adjust to match your theme */
-}
-
-/* Prevent background scroll when overlay is open */
-html.zoom-lock, body.zoom-lock {
-	overflow: hidden !important;
-}
-
-/* Overlay root appears only while active (inserted by JS) */
-.zoom-overlay {
-	position: fixed;
-	inset: 0;
-	z-index: 9999;
-	display: grid;
-	grid-template: 1fr / 1fr;
-}
-
-/* Backdrop layer */
-.zoom-overlay__backdrop {
-	grid-area: 1 / 1;
-	background: var(--zoom-backdrop);
-	opacity: 0;
-	transition: opacity var(--zoom-dur) ease;
-}
-
-/* The “sheet” that looks like your box, then grows to fullscreen */
-.zoom-overlay__sheet {
-	grid-area: 1 / 1;
-	background: var(--zoom-sheet-bg);
-	color: inherit;
-	border-radius: var(--zoom-radius);
-	box-shadow: 0 20px 60px rgba(0,0,0,.35);
-	overflow: auto;
-	-webkit-overflow-scrolling: touch;
-	/* Fullscreen size; we animate via transform from the source rect */
-	width: 100vw;
-	height: 100dvh;
-	/* FLIP: start at --initial-transform, end at identity */
-	transform: var(--initial-transform);
-	transform-origin: 0 0;
-	transition: transform var(--zoom-dur) var(--zoom-ease), border-radius var(--zoom-dur) var(--zoom-ease);
-}
-
-/* When entering: fade in backdrop, square off corners, transform to identity */
-.zoom-overlay[data-state="enter"] .zoom-overlay__backdrop {
-	opacity: 1;
-}
-
-.zoom-overlay[data-state="enter"] .zoom-overlay__sheet {
-	border-radius: 0;
-	transform: none;
-}
-
-/* Sheet content wrapper */
-.zoom-overlay__content {
-	/* Give some breathing room when fullscreen */
-	padding: clamp(1rem, 2vw + 1rem, 2.5rem);
-}
-
-/* A small top-right toolbar inside the sheet */
-.zoom-overlay__toolbar {
-	position: sticky;
-	top: 0;
-	display: flex;
-	justify-content: flex-end;
-	gap: .5rem;
-	padding: .75rem;
-	background: linear-gradient(to bottom, rgba(0,0,0,.25), transparent);
-	z-index: 1;
-}
-
-.zoom-close {
-	all: unset; /* remove everything else */
-	display: inline-grid; /* easy centering */
-	place-items: center;
-	inline-size: var(--zc-w, 2.25rem); /* fixed width */
-	block-size: var(--zc-h, 2.25rem); /* fixed height */
-	font-weight: 700; /* bold text */
-	font-size: 1.5rem; /* visually larger text */
-	line-height: 1; /* no extra vertical slack */
-	border-radius: .75rem;
-	padding: .15rem;
-	background: rgba(255,255,255,.12);
-	color: #fff;
-	backdrop-filter: blur(6px);
-}
-
-	.zoom-close:focus {
-		outline: 2px solid #fff7;
-		outline-offset: 2px;
-	}
-
-/* Make cloned content look like the original card.
-   Adjust these to mirror your theme card styles. */
-.zoom-overlay__content .feature-card,
-.zoom-overlay__content .zoomable {
-	background: transparent !important; /* sheet already has bg */
-	box-shadow: none !important;
-	margin: 0 !important;
-}
-
-/* Respect reduced motion preferences */
-@media (prefers-reduced-motion: reduce) {
-	.zoom-overlay__backdrop,
-	.zoom-overlay__sheet {
-		transition: none !important;
-	}
-}
-
-/* --- Sidebar-aware fullscreen layout for the zoom overlay --- */
-/* Define your sidebar width once (match your actual sidebar). */
-html.page-index {
-	--sidebar-w: 18em
-} 
-
-/* Always keep sheet in border-box so padding doesn't cause overflow */
-.zoom-overlay__sheet {
-	box-sizing: border-box;
-}
-
-/* Apply only when the sidebar is visible (match your breakpoint). */
-@media (min-width: 980px) { /* or 1280px if that's where your sidebar appears */
-	/* Keep the sidebar above the overlay if needed */
-	/* #sidebar { z-index: 10000; } .zoom-overlay { z-index: 9999; } */
-
-	/* Shift content away from the sidebar */
-	.zoom-overlay__sheet {
-		/* leave the sheet positioned at the viewport origin for FLIP correctness,
-       but reserve space for the sidebar using logical padding */
-		padding-inline-start: max(var(--sidebar-w), env(safe-area-inset-left));
-	}
-
-	/* Keep the sticky toolbar aligned with the visible content column */
-	.zoom-overlay__toolbar {
-		padding-inline-start: calc(max(var(--sidebar-w), env(safe-area-inset-left)) + 0.75rem);
-	}
-
-	/* Optional: prevent any overlay pixels (backdrop or sheet) from painting
-     under the sidebar area. This is purely visual; remove if you want the
-     dim to cover beneath the sidebar too. */
-	.zoom-overlay__backdrop,
-	.zoom-overlay__sheet {
-		clip-path: inset(0 0 0 var(--sidebar-w));
-	}
-}
-
-
 
 /*Section 3*/
 
@@ -4907,9 +4754,226 @@ html.page-index {
 
 
 
+/*Contact form*/
+
+
+.segmented {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.segmented legend {
+	font-weight: 600;
+	margin-bottom: .5rem;
+}
+
+.segmented__group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+}
+
+.segmented__option {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+}
+
+	.segmented__option input {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.segmented__option span {
+		display: inline-block;
+		padding: .65em 1.1em;
+		border: 1px solid rgba(255,255,255,0.15); /* matches your .button border */
+		border-radius: 3em; /* matches your .button radius */
+		line-height: 1;
+		font-weight: 600;
+		letter-spacing: .02em;
+		user-select: none;
+		transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .1s ease;
+	}
+
+	.segmented__option:hover span {
+		transform: translateY(-1px);
+	}
+
+	.segmented__option input:focus-visible + span {
+		outline: 2px solid currentColor;
+		outline-offset: 2px;
+	}
+
+	.segmented__option input:checked + span {
+		background-color: rgba(255,255,255,0.12);
+		border-color: rgba(255,255,255,0.35);
+	}
+	/* Center any .actions that contains a .submit button */
+	.actions:has(> li > .submit) {
+		display: flex; /* ensure flex */
+		justify-content: center !important;
+		gap: var(--gap, 0.75rem);
+	}
+
+
+/*Fulscreen popups*/
+/* ===== Fake Zoom Overlay ===== */
+:root {
+	--zoom-radius: 1rem;
+	--zoom-dur: 480ms;
+	--zoom-ease: cubic-bezier(.2,.7,.2,1);
+	--zoom-backdrop: rgba(3, 14, 30, 0.58);
+	--zoom-sheet-bg: #0161eb; /* adjust to match your theme */
+}
+
+/* Prevent background scroll when overlay is open */
+html.zoom-lock, body.zoom-lock {
+	overflow: hidden !important;
+}
+
+/* Overlay root appears only while active (inserted by JS) */
+.zoom-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	display: grid;
+	grid-template: 1fr / 1fr;
+}
+
+/* Backdrop layer */
+.zoom-overlay__backdrop {
+	grid-area: 1 / 1;
+	background: var(--zoom-backdrop);
+	opacity: 0;
+	transition: opacity var(--zoom-dur) ease;
+}
+
+/* The “sheet” that looks like your box, then grows to fullscreen */
+.zoom-overlay__sheet {
+	grid-area: 1 / 1;
+	background: var(--zoom-sheet-bg);
+	color: inherit;
+	border-radius: var(--zoom-radius);
+	box-shadow: 0 20px 60px rgba(0,0,0,.35);
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	/* Fullscreen size; we animate via transform from the source rect */
+	width: 100vw;
+	height: 100dvh;
+	/* FLIP: start at --initial-transform, end at identity */
+	transform: var(--initial-transform);
+	transform-origin: 0 0;
+	transition: transform var(--zoom-dur) var(--zoom-ease), border-radius var(--zoom-dur) var(--zoom-ease);
+}
+
+/* When entering: fade in backdrop, square off corners, transform to identity */
+.zoom-overlay[data-state="enter"] .zoom-overlay__backdrop {
+	opacity: 1;
+}
+
+.zoom-overlay[data-state="enter"] .zoom-overlay__sheet {
+	border-radius: 0;
+	transform: none;
+}
+
+/* Sheet content wrapper */
+.zoom-overlay__content {
+	/* Give some breathing room when fullscreen */
+	padding: clamp(1rem, 2vw + 1rem, 2.5rem);
+}
+
+/* A small top-right toolbar inside the sheet */
+.zoom-overlay__toolbar {
+	position: sticky;
+	top: 0;
+	display: flex;
+	justify-content: flex-end;
+	gap: .5rem;
+	padding: .75rem;
+	background: linear-gradient(to bottom, rgba(0,0,0,.25), transparent);
+	z-index: 1;
+}
+
+.zoom-close {
+	all: unset; /* remove everything else */
+	display: inline-grid; /* easy centering */
+	place-items: center;
+	inline-size: var(--zc-w, 2.25rem); /* fixed width */
+	block-size: var(--zc-h, 2.25rem); /* fixed height */
+	font-weight: 700; /* bold text */
+	font-size: 1.5rem; /* visually larger text */
+	line-height: 1; /* no extra vertical slack */
+	border-radius: .75rem;
+	padding: .15rem;
+	background: rgba(255,255,255,.12);
+	color: #fff;
+	backdrop-filter: blur(6px);
+}
+
+	.zoom-close:focus {
+		outline: 2px solid #fff7;
+		outline-offset: 2px;
+	}
+
+/* Make cloned content look like the original card.
+   Adjust these to mirror your theme card styles. */
+.zoom-overlay__content .feature-card,
+.zoom-overlay__content .zoomable {
+	background: transparent !important; /* sheet already has bg */
+	box-shadow: none !important;
+	margin: 0 !important;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.zoom-overlay__backdrop,
+	.zoom-overlay__sheet {
+		transition: none !important;
+	}
+}
+
+/* --- Sidebar-aware fullscreen layout for the zoom overlay --- */
+/* Define your sidebar width once (match your actual sidebar). */
+html.page-index {
+	--sidebar-w: 18em
+}
+
+/* Always keep sheet in border-box so padding doesn't cause overflow */
+.zoom-overlay__sheet {
+	box-sizing: border-box;
+}
+
+/* Apply only when the sidebar is visible (match your breakpoint). */
+@media (min-width: 980px) { /* or 1280px if that's where your sidebar appears */
+	/* Keep the sidebar above the overlay if needed */
+	/* #sidebar { z-index: 10000; } .zoom-overlay { z-index: 9999; } */
+
+	/* Shift content away from the sidebar */
+	.zoom-overlay__sheet {
+		/* leave the sheet positioned at the viewport origin for FLIP correctness,
+       but reserve space for the sidebar using logical padding */
+		padding-inline-start: max(var(--sidebar-w), env(safe-area-inset-left));
+	}
+
+	/* Keep the sticky toolbar aligned with the visible content column */
+	.zoom-overlay__toolbar {
+		padding-inline-start: calc(max(var(--sidebar-w), env(safe-area-inset-left)) + 0.75rem);
+	}
+
+	/* Optional: prevent any overlay pixels (backdrop or sheet) from painting
+     under the sidebar area. This is purely visual; remove if you want the
+     dim to cover beneath the sidebar too. */
+	.zoom-overlay__backdrop,
+	.zoom-overlay__sheet {
+		clip-path: inset(0 0 0 var(--sidebar-w));
+	}
+}
 
 /* Info */
-
 /* ---------- Our Integrations (self-contained) ---------- */
 .integrations {
 	/* Safe spacing; background inherits unless you set --integrations-bg */
@@ -4970,53 +5034,12 @@ header.zoom-header-stack p:last-of-type {
 }
 
 
-/* ---------- Grid of logo cards ---------- */
-.logo-strip {
-	display: grid;
-	/* respect card width and center rows */
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-w)), 1fr));
-	gap: var(--gap);
-	align-items: center;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	justify-content: center;
-}
-
-	.logo-strip li {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0; /* card supplies its own padding */
-		background: none; /* clear chip styling */
-	}
-
-	/* Global logo defaults (safe fallback) */
-	.logo-strip img {
-		height: var(--logo-h);
-		width: auto;
-		max-width: 100%;
-		object-fit: contain;
-		filter: grayscale(0%) contrast(1.05) brightness(.95);
-		opacity: .85;
-		transition: filter .2s ease, opacity .2s ease, transform .2s ease;
-	}
-
-		.logo-strip img:hover,
-		.logo-strip img:focus {
-			filter: none;
-			opacity: 1;
-			transform: translateY(-1px);
-			outline: none;
-		}
-
 /* Card sizing knobs */
 .integrations {
 	--card-w: 250px;
 	--card-h: 250px;
 }
 
-/* ---------- Grid of logo cards ---------- */
 /* ---------- Grid of logo cards ---------- */
 .logo-strip {
 	display: grid;
@@ -5335,8 +5358,6 @@ header.zoom-header-stack p:last-of-type {
 }
 
 
-
-/* Zoom pop-up sections*/
 
 /* Reusable vertical stack for popup headers */
 /* Define once, then consumed by your sibling rule */

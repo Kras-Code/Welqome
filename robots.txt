@@ -3,6 +3,7 @@
 
 User-agent: *
 # Never block core assets required for rendering/indexing
+Allow: /favicon.ico
 Allow: /*.js$
 Allow: /*.css$
 Allow: /*.png$
@@ -30,4 +31,4 @@ Disallow: /*.gz$
 Sitemap: https://welqome.co.uk/sitemap.xml
 
 # Yandex honours this; others ignore—harmless and can help consolidate host signals
-Host: welqome.co.uk
+Host: www.welqome.co.uk

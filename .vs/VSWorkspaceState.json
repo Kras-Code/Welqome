@@ -4,7 +4,9 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\js",
-    "\\images"
+    "\\images",
+    "\\images\\og"
   ],
+  "SelectedNode": "\\assets\\css\\main.css",
   "PreviewInSolutionExplorer": false
 }
