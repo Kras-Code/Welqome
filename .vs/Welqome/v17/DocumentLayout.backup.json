@@ -11,10 +11,6 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\info.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:info.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\faqs.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:faqs.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
@@ -26,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,27 +50,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "faqs.html",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\faqs.html",
               "RelativeDocumentMoniker": "faqs.html",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\faqs.html",
               "RelativeToolTip": "faqs.html",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAACYAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-09T19:18:54.828Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "info.html",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\info.html",
-              "RelativeDocumentMoniker": "info.html",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\info.html",
-              "RelativeToolTip": "info.html",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAmwIkAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-09T19:15:40.162Z",
+              "WhenOpened": "2025-10-09T19:18:54.828Z",
               "EditorCaption": ""
             },
             {
@@ -85,7 +69,7 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAFgCAAAAAAAAAAAmwHoCAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJABAAAAAAAAAAAYwLcBAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-10-08T16:35:44.446Z",
               "EditorCaption": ""
@@ -98,7 +82,7 @@
               "RelativeDocumentMoniker": "assets\\css\\main.css",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css",
               "RelativeToolTip": "assets\\css\\main.css",
-              "ViewState": "AgIAAJwSAAAAAAAAAAAwwM4SAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAEgVAAAAAAAAAAAYwGAVAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-10-08T17:41:11.55Z",
               "EditorCaption": ""

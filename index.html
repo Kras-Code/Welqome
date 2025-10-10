@@ -203,9 +203,10 @@
             </div>
         </section>
 
-        <!-- Fullscreen templates (kept) -->
+        <!-- Fullscreen templates -->
         <template id="tpl-integrations">
-            <header class="zoom-header-stack">
+            <header class="zoom-header-stack title-inline-grid">
+                <span class="icon solid major fa-link" aria-hidden="true"></span>
                 <h1>WelQome Integrations</h1>
                 <p>Our agents do more than answer questions - they execute tasks across <strong>1000+ integrations</strong> you already use.</p>
                 <p>Below are just a few examples of the most popular tools our clients use, and tasks we can automate within them.</p>
@@ -321,35 +322,129 @@
         </template>
 
         <template id="tpl-calls">
-            <header class="zoom-header-stack"> 
-                <h2>24/7 Call Handling</h2>
-                <p>WelQome AI agents will always answer queries, book meetings and manage tools integrated integrated into your business.</p>
+            <header class="zoom-header-stack title-inline-grid">
+                <span class="icon solid major fa-phone"></span>
+                <h1>24/7 Call Handling</h1>
+                <p>WelQome AI agents will always answer queries, book meetings and execute tasks integrated into your business.</p>
             </header>
-            <div class="content">
-                <h3>Here are the facts:</h3>
-                <ul>
-                    Responding within 1 hour makes firms ~7× more likely to qualify a lead than responding an hour later, and >60× more likely than responding after 24 hours. (Harvard Business Review analysis of 1.25M leads; MIT/InsideSales dataset).
-                </ul>
-            </div>
+
+            <h3>Here are the facts:</h3>
+
+                <figure class="logo-card">
+                    <figcaption>
+                        <h3>Answer instantly, every time.</h3>
+                        <p class="integration-desc"><strong>77%</strong> of customers expect immediate interaction<sup>[1]</sup>; AI reception means zero rings to lost revenue.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="logo-card">
+                    <figcaption>
+                        <h3>Speed qualifies more leads.</h3>
+                        <p class="integration-desc">Responding within an hour yields <strong>~7×</strong> higher qualification odds<sup>[2]</sup>; WelQome makes sub-minute responses the default.</p>
+                    </figcaption>
+                </figure>
+
+                <figure class="logo-card">
+                    <figcaption>
+                        <h3>Never send a prospect to voicemail.</h3>
+                        <p class="integration-desc">Over half of UK callers won’t leave one<sup>[3]</sup>—and <strong>1 in 5</strong> won’t call back<sup>[4]</sup>. WelQome converts those moments into booked revenue.</p>
+                    </figcaption>
+                </figure>
+
+
+                <figure class="logo-card">
+                    <figcaption>
+                        <h3>Protect repeat business.</h3>
+                        <p class="integration-desc"><strong>88%</strong> say great service drives repeat purchase<sup>[5]</sup>; consistent <strong>24/7</strong> pickup safeguards loyalty and referrals<sup>[6]</sup>.</p>
+                    </figcaption>
+                </figure>
+
+
+            <figure class="contact-us-card Contact-us-card">
+                <figcaption>
+                    <h3 class="integration-desc">Turn the evidence into revenue with WelQome</h3>
+                    <ul class="actions">
+                        <li>
+                            <span class="btn-relay" role="button" tabindex="0" data-target="#five">
+                                Contact Us
+                            </span>
+                        </li>
+                    </ul>
+                </figcaption>
+            </figure>
+
+            <aside class="sources" aria-label="Evidence sources">
+                <details> <summary>Sources</summary>
+                    <ol>
+                        <li>Salesforce — “7 Principles for a Better Customer Experience” (citing State of the Connected Customer): 77% expect to interact immediately.</li>
+                        <li>Oldroyd, McElheran & Elkington. <em>Harvard Business Review</em> (2011), “The Short Life of Online Sales Leads”: contacting within 1 hour ≈7× more likely to qualify.</li>
+                        <li>SellCell (2023), “Voicemail Statistics”: only ~20% of callers leave a voicemail; UK breakdown included.</li>
+                        <li>Aircall Blog (citing BT Business research), “Missed Calls: The Real Impact on Your Business”: ~20% won’t make a second call if the first isn’t answered.</li>
+                        <li>Salesforce — “What Are Customer Expectations?” / State of Service/Connected Customer: 88% say good service increases likelihood of repurchase.</li>
+                        <li>Document360 (2025) roundup of CX research: ~75% of customers expect brands to offer 24×7 service.</li>
+                    </ol>
+
+                </details>
+            </aside>
+
         </template>
 
         <template id="tpl-accuracy">
-            <header class="zoom-header-stack">
-                <h2>Accuracy &amp; Brand Quality</h2>
-                <p>Guardrails and retrieval augmentation preserve tone and factual precision.</p>
+            <header class="zoom-header-stack title-inline-grid">
+                <span class="icon solid major fa-bullseye" aria-hidden="true"></span>
+                <h1>Brand Tailoring</h1>
+                <p>Welqome Agents are tailored to your brand</p>
             </header>
             <div class="content">
-                <ul>
-                    <li>Brand-voice prompt packs with example dialogues.</li>
-                    <li>Policy-based refusals and safe escalation.</li>
-                    <li>Grounded answers from your CMS/KB with versioning.</li>
-                </ul>
+                <div class="wq-feature-grid">
+                    <figure class="logo-card wq-feature">
+                        <figcaption>
+                            <h3>Emotionally intelligent</h3>
+                            <p class="integration-desc">Detects sentiment and context, and gracefully hands off to a human when it should.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="logo-card wq-feature">
+                        <figcaption>
+                            <h3>Hallucination-resistant</h3>
+                            <p class="integration-desc">Tight guardrails keep answers accurate, appropriate and on-brand. We thoroughly test your agents before deployment so ensure that they are up to standard.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="logo-card wq-feature">
+                        <figcaption>
+                            <h3>Effortlessly responsive</h3>
+                            <p class="integration-desc">Low-latency turn-taking for natural, human-like conversations.</p>
+                        </figcaption>
+                    </figure>
+
+                    <figure class="logo-card wq-feature">
+                        <figcaption>
+                            <h3>Voices without limits</h3>
+                            <p class="integration-desc">Choose the accent and tone—or use a custom brand voice.</p>
+                        </figcaption>
+                    </figure>
+
+                </div>
+                <figure class="contact-us-card Contact-us-card">
+                    <figcaption>
+                        <h3 class="integration-desc">Get in touch to see how we can tailor AI agents to your brand</h3>
+                        <ul class="actions">
+                            <li>
+                                <span class="btn-relay" role="button" tabindex="0" data-target="#five">
+                                    Contact Us
+                                </span>
+                            </li>
+                        </ul>
+                    </figcaption>
+                </figure>
             </div>
         </template>
 
         <template id="tpl-compliance">
-            <header class="zoom-header-stack">
-                <h2>Security &amp; Compliance</h2>
+            <header class="zoom-header-stack title-inline-grid">
+                <span class="icon solid major fa-lock" aria-hidden="true"></span>
+                <h1>Security &amp; Compliance</h1>
                 <p>Data minimisation, audit logging, and GDPR-aligned processing flows.</p>
             </header>
             <div class="content">
@@ -626,7 +721,6 @@
                                 </div>
 
                             </div>
-
 
 
                             <ul class="actions">

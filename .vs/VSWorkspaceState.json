@@ -4,9 +4,8 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\js",
-    "\\images",
-    "\\images\\og"
+    "\\images"
   ],
-  "SelectedNode": "\\assets\\css\\main.css",
+  "SelectedNode": "\\assets\\js\\flowchart.js",
   "PreviewInSolutionExplorer": false
 }
