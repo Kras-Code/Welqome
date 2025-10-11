@@ -55,10 +55,12 @@
               "url": "https://www.welqome.co.uk/",
               "logo": {
                 "@type": "ImageObject",
+                "@id": "https://www.welqome.co.uk/#logo",
                 "url": "https://www.welqome.co.uk/images/welqome_logo.png",
                 "width": 2881,
                 "height": 489
               },
+              "image": { "@id": "https://www.welqome.co.uk/#logo" },
               "sameAs": [
                 "https://www.tiktok.com/@welqome.ai",
                 "https://www.youtube.com/@welqome-ai",
@@ -66,13 +68,16 @@
                 "https://x.com/Welqome_ai",
                 "https://www.linkedin.com/company/welqome-ai"
               ],
-              "contactPoint": [{
-                "@type": "ContactPoint",
-                "telephone": "+447900000000",
-                "contactType": "customer service",
-                "areaServed": "GB",
-                "availableLanguage": ["en"]
-              }]
+              "email": "enquiries@welqome.co.uk",
+              "contactPoint": [
+                {
+                  "@type": "ContactPoint",
+                  "telephone": "+447450625655",
+                  "contactType": "customer service",
+                  "areaServed": { "@type": "Country", "name": "GB" },
+                  "availableLanguage": ["en-GB"]
+                }
+              ]
             },
             {
               "@type": "WebSite",
@@ -80,7 +85,24 @@
               "url": "https://www.welqome.co.uk/",
               "name": "WelQome",
               "alternateName": "WelQome AI Reception",
-              "publisher": { "@id": "https://www.welqome.co.uk/#org" }
+              "publisher": { "@id": "https://www.welqome.co.uk/#org" },
+              "inLanguage": "en-GB"
+            },
+            {
+              "@type": "WebPage",
+              "@id": "https://www.welqome.co.uk/#homepage",
+              "url": "https://www.welqome.co.uk/",
+              "name": "WelQome | AI Receptionist & Call-Handling Automation for UK Businesses",
+              "isPartOf": { "@id": "https://www.welqome.co.uk/#website" },
+              "about": { "@id": "https://www.welqome.co.uk/#service" },
+              "inLanguage": "en-GB"
+            },
+            {
+              "@type": "Service",
+              "@id": "https://www.welqome.co.uk/#service",
+              "serviceType": "AI receptionist & call-handling automation",
+              "provider": { "@id": "https://www.welqome.co.uk/#org" },
+              "areaServed": { "@type": "Country", "name": "GB" }
             }
           ]
         }
