@@ -5531,3 +5531,103 @@ header.zoom-header-stack p:last-of-type {
 		outline: 2px solid color-mix(in oklab, var(--wq-accent-2) 70%, white);
 		outline-offset: 3px;
 	}
+
+
+	/* FACT CARDS*/
+/* --- Tokens (fall back to your existing ones if present) --- */
+:root {
+	--wq-accent-1: #00c0fa;
+	--wq-accent-2: #0162eb;
+	--wq-card-bg: rgba(255,255,255,0.03);
+	--wq-card-border: rgba(255,255,255,0.15);
+	--wq-text: #ffffff;
+	--wq-muted: rgba(255,255,255,0.78);
+}
+
+/* Visually hidden for headings kept for a11y */
+.visually-hidden {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0,0,0,0);
+	border: 0;
+}
+
+/* Meta updated stamp */
+.evidence-updated {
+	margin: .4rem 0 0;
+	color: var(--wq-muted);
+	font-size: .95rem;
+}
+
+/* Grid of evidence cards */
+.evidence-grid {
+	--gap: clamp(.8rem, 2vw, 1.25rem);
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: var(--gap);
+	list-style: none;
+	padding: 0;
+	margin: 1rem 0 0 0;
+}
+
+/* Card */
+/* Evidence grid = same layout rhythm as .wq-feature-grid */
+.evidence-grid {
+	--gap: clamp(.8rem, 2vw, 1.25rem);
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+	gap: var(--gap);
+	align-items: stretch;
+	margin-bottom: calc(var(--gap) * 2);
+	list-style: none;
+	padding: 0;
+}
+
+/* Evidence card container = clone of .logo-card.wq-feature (visuals only) */
+.evidence-card {
+	position: relative;
+	padding: 1.1rem 1.1rem 1.2rem;
+	border-radius: 18px;
+	border: 1px solid transparent; /* enables gradient border */
+	background: linear-gradient(var(--wq-card-bg), var(--wq-card-bg)) padding-box, linear-gradient(135deg, rgba(0,192,250,.28), rgba(1,98,235,.28)) border-box;
+	box-shadow: 0 6px 18px -10px rgba(0,0,0,.6);
+	transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+	color: var(--wq-text);
+	isolation: isolate; /* keeps glow under control */
+	overflow: hidden;
+}
+
+	/* Hover / focus visuals (text styles remain unchanged) */
+	.evidence-card:hover,
+	.evidence-card:focus-within {
+		transform: translateY(-2px);
+		box-shadow: 0 12px 28px -12px rgba(1,98,235,.45), 0 2px 10px -6px rgba(0,192,250,.35);
+		background: linear-gradient(var(--wq-card-bg), var(--wq-card-bg)) padding-box, linear-gradient(135deg, rgba(0,192,250,.45), rgba(1,98,235,.45)) border-box;
+	}
+
+	/* A11y focus ring */
+	.evidence-card:focus-within {
+		outline: 2px solid color-mix(in oklab, var(--wq-accent-2) 70%, white);
+		outline-offset: 3px;
+	}
+
+.evidence-head {
+	margin: calc(-1.1rem) calc(-1.1rem) .6rem;
+	padding: .85rem 1.1rem;
+	background: #023e8a; /* #1c3d58 banner */
+	border-top-left-radius: 18px;
+	border-top-right-radius: 18px;
+}
+.evidence-kicker { margin:0 0 .25rem 0; font-weight:600; letter-spacing:.02em; color:var(--wq-muted); font-size:.95rem; }
+.evidence-claim { margin:0; line-height:1.15; }
+.evidence-claim .num { font-size:1.6em; font-weight:800; margin-right:.25em; }
+
+/* CTA, unchanged — ensure the full-width card spans the grid like before */
+.evidence-cta-card {
+	grid-column: 1 / -1;
+}
+
