@@ -3645,6 +3645,18 @@ input, select, textarea {
 
 /* Sidebar */
 
+#sidebar .logo {
+	display: block;
+	margin-left: auto; /* center horizontally */
+	margin-right: auto; /* center horizontally */
+	margin-top: auto; /* center on main axis (column) */
+	margin-bottom: 1.5em; /* center on main axis (column) */
+	align-self: center; /* vertical centering when sidebar switches to row */
+	max-width: 100%;
+	height: auto;
+}
+
+
 #sidebar {
 	padding: 2.5em 2.5em 0.5em 2.5em;
 	background: #023e8a;
@@ -3652,7 +3664,7 @@ input, select, textarea {
 	height: 100vh;
 	left: 0;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 	position: fixed;
 	text-align: right;
 	top: 0;
@@ -3923,7 +3935,44 @@ input, select, textarea {
 			opacity: 0;
 		}
 
-		@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1280px) {
+	/* Make the bar height a variable so the logo scales with it */
+	#sidebar {
+		--nav-h: 3.5em; /* single source of truth */
+		height: var(--nav-h);
+		line-height: var(--nav-h);
+	}
+
+		/* Keep items vertically centered in the top bar */
+		#sidebar nav ul {
+			align-items: center; /* ensures the logo aligns like links */
+			flex-wrap: nowrap; /* prevent wrapping that pushes items down */
+		}
+
+			/* Make list items and links align consistently */
+			#sidebar nav ul li {
+				display: flex;
+				align-items: center;
+			}
+
+		#sidebar nav a {
+			display: inline-flex;
+			align-items: center;
+			height: var(--nav-h);
+			line-height: var(--nav-h);
+			padding: 0; /* already in your code; repeated for clarity */
+		}
+
+		/* Logo = full bar height, preserve aspect ratio */
+		#sidebar .logo {
+			display: block;
+			height: var(--nav-h); /* fills the entire bar height */
+			width: auto; /* prevent width stretch */
+			max-height: 100%; /* safety for overflow contexts */
+			flex: 0 0 auto;
+		}
+
+
 
 			#sidebar {
 				height: 3.5em;
@@ -3982,7 +4031,6 @@ input, select, textarea {
 							background-image: none;
 							background-color: #00c0fa;
 						}
-
 		}
 
 		@media screen and (max-width: 736px) {
@@ -4015,7 +4063,28 @@ input, select, textarea {
 /* --- Mobile breakpoint (matches your theme’s 736px) --- */
 @media screen and (max-width: 736px) {
 
-	/* Your existing CSS already hides #sidebar here; leave that rule in place. */
+	/* --- Responsive logo in the mobile drawer --- */
+	#m-sidebar .logo {
+		display: block; /* allow margin centering */
+		max-width: 100%; /* never exceed drawer width */
+		height: auto; /* preserve aspect ratio */
+		width: auto; /* don't upscale small bitmaps */
+		margin: 0 auto 1.25rem; /* center horizontally, space below */
+		flex: 0 0 auto; /* prevent flex grow/shrink */
+	}
+
+	/* If your logo is placed inside the nav list as <li class="logo"> … */
+	#m-sidebar nav > ul > li.logo {
+		margin: 0 0 1rem 0;
+	}
+
+		#m-sidebar nav > ul > li.logo > img,
+		#m-sidebar nav > ul > li.logo > a > img {
+			display: block;
+			max-width: 100%;
+			height: auto;
+		}
+
 
 	/* Show toggle button */
 	#mSidebarToggle {
@@ -4065,16 +4134,26 @@ input, select, textarea {
 		#m-sidebar nav > ul {
 			list-style: none;
 			padding: 0;
+			margin: 0;
+			display: flex; /* force flex on mobile */
+			flex-direction: column; /* stack vertically */
+			align-items: stretch; /* li fills row */
+			flex-wrap: nowrap; /* never wrap horizontally */
 		}
+
 
 			#m-sidebar nav > ul > li {
 				margin: 1.5em 0 0 0;
 				padding: 0;
 				position: relative;
+				display: block; /* ensure a full row */
+				flex: 0 0 auto; /* don’t grow/shrink */
+				width: 100%; /* occupy the whole line */
 				opacity: 1;
 				transform: translateY(0);
 				transition: opacity 0.15s ease, transform 0.75s ease;
 			}
+
 
 				#m-sidebar nav > ul > li:first-child {
 					margin: 0;
@@ -4192,13 +4271,6 @@ body.page-index {
 
 		#intro .inner {
 			text-align: left; /* align all inner content to the left */
-		}
-
-		.logo {
-			max-width: 400px;
-			height: auto;
-			margin: 0 0 20px 0; /* remove centering */
-			display: block;
 		}
 
 
