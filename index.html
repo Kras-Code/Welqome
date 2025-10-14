@@ -118,14 +118,14 @@
 
                 <ul>
                     <li class="logo-item">
-                            <img src="images/welqome_logo_white.png" alt="WelQome logo" class="logo" />
+                        <img src="images/welqome_logo_white.png" alt="WelQome logo" class="logo" />
                     </li>
                     <li><a href="#intro">Home</a></li>
                     <li><a href="#one">What we do</a></li>
                     <li><a href="#two">Automation Workflow</a></li>
                     <li><a href="#three">Our Team</a></li>
                     <li><a href="#four">Try it out &amp; FAQs</a></li>
-                    <li><a href="#five">Get in touch</a></li>
+                    <li><a href="#five">Contact Us</a></li>
                 </ul>
             </nav>
         </div>
@@ -711,7 +711,7 @@
         <!-- Five -->
         <section id="five" class="wrapper style1-alt fade-up">
             <div class="inner">
-                <h2>Get in touch</h2>
+                <h2>Contact Us</h2>
                 <p>Have questions, need a demo, or want a tailored quote? Send us a message and we’ll propose the best automation flow for your business.</p>
                 <div class="split style1">
                     <section>
@@ -823,10 +823,10 @@
                             <li>
                                 <h3>Social</h3>
                                 <ul class="icons">
-                                    <li><a href="https://www.tiktok.com/@welqome.ai" class="icon brands fa-tiktok" aria-label="Twitter (X)"><span class="label">Twitter</span></a></li>
+                                    <li><a href="https://www.tiktok.com/@welqome.ai" class="icon brands fa-tiktok" aria-label="Tiktok"><span class="label">Tiktok</span></a></li>
                                     <li><a href="https://www.youtube.com/@welqome-ai" class="icon brands fa-youtube" aria-label="Facebook"><span class="label">Facebook</span></a></li>
-                                    <li><a href="https://www.instagram.com/welqome.ai/" class="icon brands fa-instagram" aria-label="GitHub"><span class="label">GitHub</span></a></li>
-                                    <li><a href="https://x.com/Welqome_ai" class="icon brands fa-twitter" aria-label="Instagram"><span class="label">Instagram</span></a></li>
+                                    <li><a href="https://www.instagram.com/welqome.ai/" class="icon brands fa-instagram" aria-label="Instagram"><span class="label">Instagram</span></a></li>
+                                    <li><a href="https://x.com/Welqome_ai" class="icon brands fa-twitter" aria-label="twitter (x)"><span class="label">Twitter (x)</span></a></li>
                                     <li><a href="https://linkedin.com/company/welqome-ai" class="icon brands fa-linkedin-in" aria-label="LinkedIn"><span class="label">LinkedIn</span></a></li>
                                 </ul>
                             </li>
@@ -839,13 +839,89 @@
     </div>
 
     <!-- Footer -->
-    <footer id="footer" class="wrapper style1-alt">
+    <footer id="footer" class="wq-footer wrapper style1-alt" role="contentinfo">
         <div class="inner">
-            <ul class="menu">
-                <li>&copy; WelQome. All rights reserved.</li>
-            </ul>
+            <!-- Brand / Intro -->
+            <section class="wq-footer__brand">
+                <a href="/" class="wq-footer__logo" aria-label="WelQome home">
+                    <img src="images/welqome_logo_white.png" alt="WelQome" />
+                </a>
+                <p class="wq-footer__blurb">
+                    WelQome builds AI receptionists which answer calls, converse with human-like warmth and execute tasks integrated with your existing systems, calendars and CRM.
+                </p>
+                <ul class="wq-footer__social" aria-label="Social links">
+                </ul>
+
+                <!-- Meta rows: Trusted & Verified (stacked under social) -->
+                <div class="wq-footer__meta">
+                    <div class="wq-footer__block">
+                        <span class="wq-label">Trusted by</span>
+                        <ul class="wq-logos">
+                            <li><img src="images/hitechgroup.avif" alt="hi tech group" /></li>
+                        </ul>
+                    </div>
+                    <div class="wq-footer__block">
+                        <span class="wq-label">Verified by</span>
+                        <ul class="wq-badges">
+                            <li><img src="images/gdpr.png" alt="GDPR Compliant" /></li>
+                            <li><img src="images/hipaa.png" alt="HIPAA Compliant" /></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Link Columns -->
+            <nav class="wq-footer__nav" aria-label="Footer navigation">
+                <section>
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/brand/">Brand</a></li>
+                        <li><a href="/careers/">Careers</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Platform</h3>
+                    <ul>
+                        <li><a href="/changelog/">Changelog</a></li>
+                        <li><a href="/feedback/">Feedback</a></li>
+                        <li><a href="/security/">Security</a></li>
+                        <li><a href="/status/">Status</a></li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Integrations</h3>
+                </section>
+                <section>
+                    <h3>Use cases</h3>
+                    <ul>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/legal/privacy/">Privacy Policy</a></li>
+                        <li><a href="/legal/terms/">Terms &amp; Conditions</a></li>
+                        <li><a href="/legal/imprint/">Imprint</a></li>
+                        <li><a href="/legal/gdpr/">GDPR</a></li>
+                        <li><a href="/legal/system-status/">System Status</a></li>
+                        <li><a href="/legal/ai-transparency/">AI Transparency Statement</a></li>
+                    </ul>
+                </section>
+            </nav>
+
+            <!-- Bottom line -->
+            <div class="wq-footer__legal">
+                <p>© <span data-year>2025</span> WelQome. All rights reserved.</p>
+            </div>
         </div>
+
+        <script>
+            // Auto-year
+            (function () { var y = document.querySelector('#footer [data-year]'); if (y) { y.textContent = new Date().getFullYear(); } })();
+        </script>
     </footer>
+
 
     <!-- Scripts: defer to avoid render blocking; order preserved -->
     <script src="assets/js/jquery.min.js" defer></script>
