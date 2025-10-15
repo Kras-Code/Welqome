@@ -4617,6 +4617,122 @@ body.page-index {
 		}
 
 
+
+
+
+
+
+
+	/* Section 1 brand tailoring*/
+/* --- Gradient wrapper --- */
+.voice-box {
+	/* full-background gradient using your requested #0161eb */
+	background: linear-gradient(135deg, #0161eb 0%, var(--wq-accent-1, #00c0fa) 100%);
+	padding: 2px; /* gradient border thickness */
+	border-radius: 1.25rem;
+	box-shadow: 0 10px 40px rgba(0,0,0,.25);
+}
+
+.voice-box__inner {
+	background: var(--wq-card-bg, rgba(0,0,0,.35));
+	border: 1px solid var(--wq-card-border, rgba(255,255,255,.15));
+	border-radius: inherit;
+	padding: clamp(1rem, 2vw, 1.5rem);
+	color: var(--wq-text, #fff);
+}
+
+/* --- Headline & subcopy --- */
+.voice-box__title {
+	margin: 0 0 .3rem 0;
+	font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+	font-weight: 700;
+	letter-spacing: .2px;
+	line-height: 1.2;
+}
+
+.voice-box__subtitle {
+	margin: 0 0 1.25rem 0;
+	color: var(--wq-muted, rgba(255,255,255,.78));
+	line-height: 1.55;
+}
+
+/* --- Grid layout --- */
+.voice-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: clamp(0.9rem, 1.6vw, 1.25rem);
+}
+
+/* Tablet → 2 cols, Mobile → 1 col */
+@media (max-width: 1280px) {
+	.voice-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 736px) {
+	.voice-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* --- Cards --- */
+.voice-card {
+	display: flex;
+	flex-direction: column;
+	gap: .75rem;
+	padding: clamp(1rem, 1.5vw, 1.25rem);
+	background: var(--wq-card-bg, rgba(255,255,255,.03));
+	border: 1px solid var(--wq-card-border, rgba(255,255,255,.15));
+	border-radius: 1rem;
+	transition: transform .18s ease, box-shadow .18s ease;
+}
+
+	.voice-card:hover,
+	.voice-card:focus-within {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 28px rgba(0,0,0,.25);
+	}
+
+.voice-name {
+	margin: 0;
+	font-size: 1.06rem;
+	font-weight: 600;
+}
+
+/* --- Audio control --- */
+.voice-card audio {
+	display: block;
+	width: 100%;
+	height: 40px;
+	border-radius: .75rem;
+	outline: none;
+}
+
+	/* WebKit chrome theming (non-breaking elsewhere) */
+	.voice-card audio::-webkit-media-controls-panel {
+		background: rgba(255,255,255,.06);
+		border-radius: .75rem;
+	}
+
+/* Accessible focus ring */
+.voice-card :is(audio, button, a):focus-visible {
+	outline: 2px solid #0161eb;
+	outline-offset: 2px;
+	border-radius: .5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*section 2 */
 /* Hide the default disclosure marker */
 
@@ -5171,6 +5287,28 @@ body.page-index {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*Fulscreen popups*/
 /* ===== Fake Zoom Overlay ===== */
 :root {
@@ -5323,6 +5461,26 @@ html.page-index {
 		clip-path: inset(0 0 0 var(--sidebar-w));
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Info */
 /* ---------- Our Integrations (self-contained) ---------- */
@@ -5745,6 +5903,32 @@ header.zoom-header-stack p:last-of-type {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*Benefits Fullscreen popup*/
 /*TITLE IN LINE WITH ICON*/
 /* Grid that forces: [icon][H1] on row 1; everything else below */
@@ -5946,7 +6130,7 @@ header.zoom-header-stack p:last-of-type {
 }
 .evidence-kicker { margin:0 0 .25rem 0; font-weight:600; letter-spacing:.02em; color:var(--wq-muted); font-size:.95rem; }
 .evidence-claim { margin:0; line-height:1.15; }
-.evidence-claim .num { font-size:1.6em; font-weight:800; margin-right:.25em; }
+.evidence-claim .num { font-size:3em; font-weight:800; margin-right:0; }
 
 /* CTA, unchanged — ensure the full-width card spans the grid like before */
 .evidence-cta-card {

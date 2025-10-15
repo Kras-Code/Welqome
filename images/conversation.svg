@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <style>
+      .label { fill: #000000; font: 600 22px Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .bubble-text { color: #6b7280; font: 400 24px Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.35; }
+      .avatar-shadow { filter: drop-shadow(0 2px 6px rgba(0,0,0,0.25)); }
+      .bubble { fill: #ffffff; stroke: #e5e7eb; stroke-width: 2; rx: 20; }
+      .tail-left { fill: #ffffff; stroke: #e5e7eb; stroke-width: 2; }
+      .tail-right { fill: #ffffff; stroke: #e5e7eb; stroke-width: 2; }
+      .nowrap { white-space: pre-wrap; }
+    </style>
+
+    <!-- Simple "real person" silhouette icon (vector) -->
+    <g id="personIcon">
+      <!-- head -->
+      <circle cx="0" cy="-18" r="18" fill="#cbd5e1"/>
+      <!-- shoulders/chest -->
+      <path d="M -38 22 C -34 -2, 34 -2, 38 22 L 38 44 L -38 44 Z" fill="#cbd5e1"/>
+    </g>
+  </defs>
+
+  <!-- Background is intentionally transparent -->
+
+  <!-- === Message 1: Client (left) === -->
+  <g transform="translate(80,90)">
+    <!-- avatar -->
+    <g class="avatar-shadow">
+      <circle cx="0" cy="0" r="40" fill="url(#gradClient)"/>
+      <!-- subtle gradient for a more 'photo-ish' feel -->
+      <defs>
+        <radialGradient id="gradClient" cx="30%" cy="30%">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </radialGradient>
+      </defs>
+      <g transform="translate(0,8) scale(0.9)">
+        <use href="#personIcon" transform="translate(0,0)" />
+      </g>
+    </g>
+    <!-- label -->
+    <text class="label" x="60" y="-10">Client</text>
+
+    <!-- bubble -->
+    <g transform="translate(60,10)">
+      <rect class="bubble" x="0" y="0" width="920" height="120" rx="20" />
+      <!-- tail -->
+      <path class="tail-left" d="M -14 28 L 0 18 L 0 42 Z" />
+      <!-- text -->
+      <foreignObject x="20" y="18" width="880" height="90">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="bubble-text nowrap">
+          Hi there, how much does your service cost?
+        </div>
+      </foreignObject>
+    </g>
+  </g>
+
+  <!-- === Message 2: Agent (right) === -->
+  <g transform="translate(1520,280)">
+    <!-- avatar (to the right) -->
+    <g class="avatar-shadow" transform="translate(0,0)">
+      <circle cx="0" cy="0" r="40" fill="url(#gradAgent)"/>
+      <defs>
+        <radialGradient id="gradAgent" cx="30%" cy="30%">
+          <stop offset="0%" stop-color="#e2e8f0"/>
+          <stop offset="100%" stop-color="#94a3b8"/>
+        </radialGradient>
+      </defs>
+      <g transform="translate(0,8) scale(0.9)">
+        <use href="#personIcon" transform="translate(0,0)" />
+      </g>
+    </g>
+    <!-- label to the left of the avatar -->
+    <text class="label" x="-120" y="-10" text-anchor="end">Agent</text>
+
+    <!-- bubble aligned right -->
+    <g transform="translate(-1000,10)">
+      <rect class="bubble" x="80" y="0" width="920" height="140" rx="20" />
+      <!-- tail on right -->
+      <path class="tail-right" d="M 1016 28 L 1000 18 L 1000 42 Z" />
+      <foreignObject x="100" y="18" width="880" height="110">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="bubble-text nowrap">
+          We offer £80 for a half service or £150 for a full.
+        </div>
+      </foreignObject>
+    </g>
+  </g>
+
+  <!-- === Message 3: Client (left) === -->
+  <g transform="translate(80,500)">
+    <!-- avatar -->
+    <g class="avatar-shadow">
+      <circle cx="0" cy="0" r="40" fill="url(#gradClient)"/>
+      <g transform="translate(0,8) scale(0.9)">
+        <use href="#personIcon" transform="translate(0,0)" />
+      </g>
+    </g>
+    <!-- label -->
+    <text class="label" x="60" y="-10">Client</text>
+
+    <!-- bubble -->
+    <g transform="translate(60,10)">
+      <rect class="bubble" x="0" y="0" width="920" height="140" rx="20" />
+      <path class="tail-left" d="M -14 28 L 0 18 L 0 42 Z" />
+      <foreignObject x="20" y="18" width="880" height="110">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="bubble-text nowrap">
+          Okay, could I please book a full service on Friday?
+        </div>
+      </foreignObject>
+    </g>
+  </g>
+
+  <!-- === Message 4: Agent (right) === -->
+  <g transform="translate(1520,710)">
+    <!-- avatar -->
+    <g class="avatar-shadow">
+      <circle cx="0" cy="0" r="40" fill="url(#gradAgent)"/>
+      <g transform="translate(0,8) scale(0.9)">
+        <use href="#personIcon" transform="translate(0,0)" />
+      </g>
+    </g>
+    <!-- label -->
+    <text class="label" x="-120" y="-10" text-anchor="end">Agent</text>
+
+    <!-- bubble -->
+    <g transform="translate(-1000,10)">
+      <rect class="bubble" x="80" y="0" width="920" height="120" rx="20" />
+      <path class="tail-right" d="M 1016 28 L 1000 18 L 1000 42 Z" />
+      <foreignObject x="100" y="18" width="880" height="90">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="bubble-text nowrap">
+          Of course—let me just check our availability.
+        </div>
+      </foreignObject>
+    </g>
+  </g>
+</svg>
