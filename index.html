@@ -121,7 +121,20 @@
                         <img src="images/welqome_logo_white.png" alt="WelQome logo" class="logo" />
                     </li>
                     <li><a href="#intro">Home</a></li>
-                    <li><a href="#one">What we do</a></li>
+
+                    <li class="has-submenu">
+                        <a href="#one" aria-haspopup="true">
+                            What we do
+                            <span class="wq-caret" aria-hidden="true"></span>
+                        </a>
+                        <ul class="submenu" aria-label="What we do subsections">
+                            <li><a href="#one-overview">Overview</a></li>
+                            <li><a href="#one-integrations">Integrations</a></li>
+                            <li><a href="#one-security">Security &amp; GDPR</a></li>
+                            <li><a href="#one-pricing">Pricing</a></li>
+                        </ul>
+                    </li>
+
                     <li><a href="#two">Automation Workflow</a></li>
                     <li><a href="#three">Our Team</a></li>
                     <li><a href="#four">Try it out &amp; FAQs</a></li>
@@ -780,34 +793,6 @@
                             <p id="form-status" role="status" aria-live="polite" style="margin-top:.75rem;"></p>
                         </form>
 
-                        <script>
-                            // Optional enhancement: AJAX submit to stay on the page and show a status message
-                            const form = document.getElementById('contact-form');
-                            const statusEl = document.getElementById('form-status');
-
-                            form.addEventListener('submit', async (e) => {
-                                // comment out this block if you prefer a full-page redirect flow
-                                e.preventDefault();
-                                statusEl.textContent = 'Sending…';
-
-                                try {
-                                    const formData = new FormData(form);
-                                    const res = await fetch(form.action, {
-                                        method: 'POST',
-                                        headers: { 'Accept': 'application/json' },
-                                        body: formData
-                                    });
-                                    if (!res.ok) throw new Error('HTTP ' + res.status);
-
-                                    statusEl.textContent = 'Thanks — your message has been sent.';
-                                    form.reset();
-                                } catch (err) {
-                                    statusEl.textContent = 'Sorry — something went wrong. Please try again or email us directly.';
-                                    console.error(err);
-                                }
-                            });
-                        </script>
-
                     </section>
                     <section>
                         <ul class="contact">
@@ -934,5 +919,6 @@
     <script src="assets/js/sidebar.js" defer></script>
     <script src="assets/js/flowchart.js" defer></script>
     <script src="assets/js/fullscreen.js" defer></script>
+    <script src="assets/js/sidebar.submenu.mobile.js" defer></script>
 </body>
 </html>

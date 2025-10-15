@@ -3935,103 +3935,251 @@ input, select, textarea {
 			opacity: 0;
 		}
 
-@media screen and (max-width: 1280px) {
-	/* Make the bar height a variable so the logo scales with it */
-	#sidebar {
-		--nav-h: 3.5em; /* single source of truth */
-		height: var(--nav-h);
-		line-height: var(--nav-h);
-	}
 
-		/* Keep items vertically centered in the top bar */
-		#sidebar nav ul {
-			align-items: center; /* ensures the logo aligns like links */
-			flex-wrap: nowrap; /* prevent wrapping that pushes items down */
+
+			/*Sidebar Dropdown*/
+		/* --- Dropdown host --- */
+		#sidebar nav > ul > li.has-submenu {
+			position: relative;
 		}
 
-			/* Make list items and links align consistently */
-			#sidebar nav ul li {
-				display: flex;
-				align-items: center;
+			/* Space for the caret at the far right */
+			#sidebar nav > ul > li.has-submenu > a {
+				padding-right: 1.6em; /* keeps your underline effect; just adds caret space */
+				position: relative; /* for caret absolute positioning */
 			}
 
-		#sidebar nav a {
-			display: inline-flex;
-			align-items: center;
-			height: var(--nav-h);
-			line-height: var(--nav-h);
-			padding: 0; /* already in your code; repeated for clarity */
+				/* Caret: a right-pointing triangle that rotates down on hover */
+				#sidebar nav > ul > li.has-submenu > a .wq-caret {
+					position: absolute;
+					right: 0;
+					top: 50%;
+					transform: translateY(-50%) rotate(0deg);
+					transition: transform .25s ease;
+					width: .7em;
+					height: .7em;
+					display: inline-block;
+				}
+
+					#sidebar nav > ul > li.has-submenu > a .wq-caret::before {
+						content: '';
+						display: block;
+						width: 0;
+						height: 0;
+						border-style: solid;
+						/* triangle pointing right */
+						border-width: .32em 0 .32em .48em;
+						border-color: transparent transparent transparent currentColor;
+					}
+
+			/* Rotate caret when open (hover/focus-within for keyboard) */
+			#sidebar nav > ul > li.has-submenu:hover > a .wq-caret,
+			#sidebar nav > ul > li.has-submenu:focus-within > a .wq-caret {
+				transform: translateY(-50%) rotate(90deg);
+			}
+
+		/* --- Submenu container --- */
+		#sidebar nav ul.submenu {
+			list-style: none;
+			margin: 0;
+			padding: 0 0 .4em 0;
+			max-height: 0; /* collapsed */
+			overflow: hidden;
+			opacity: 0;
+			transform: translateY(-0.25em);
+			transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
 		}
 
-		/* Logo = full bar height, preserve aspect ratio */
+		/* Open on hover or when links inside receive focus */
+		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
+			max-height: 18em; /* large enough to fit items; adjust if needed */
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		/* Submenu items: indent + gentle cascade animation */
+		#sidebar nav ul.submenu > li {
+			margin: 0;
+			padding: 0;
+			opacity: 0;
+			transform: translateY(-6px);
+			transition: opacity .25s ease, transform .25s ease;
+		}
+
+		#sidebar nav > ul > li.has-submenu:hover ul.submenu > li,
+		#sidebar nav > ul > li.has-submenu:focus-within ul.submenu > li {
+			opacity: 1;
+			transform: none;
+		}
+
+		/* Staggered reveal (50 ms steps) */
+		#sidebar nav ul.submenu > li:nth-child(1) {
+			transition-delay: 50ms;
+		}
+
+		#sidebar nav ul.submenu > li:nth-child(2) {
+			transition-delay: 100ms;
+		}
+
+		#sidebar nav ul.submenu > li:nth-child(3) {
+			transition-delay: 150ms;
+		}
+
+		#sidebar nav ul.submenu > li:nth-child(4) {
+			transition-delay: 200ms;
+		}
+
+		#sidebar nav ul.submenu > li:nth-child(5) {
+			transition-delay: 250ms;
+		}
+
+		/* Submenu link styling (inherits your base link styles, slightly adjusted) */
+		#sidebar nav ul.submenu a {
+			/* inherits color, caps, underline animation from #sidebar nav a */
+			padding: .7em 0 .7em 1em; /* indent */
+			font-size: 0.55em; /* just a touch smaller than 0.6em */
+			letter-spacing: 0.2em;
+			position: relative;
+}
+
+
+@media screen and (max-width: 1280px) {
+	/* Top bar that auto-grows vertically when items wrap */
+	#sidebar {
+		--nav-h: 3.5em;
+		width: 100%;
+		padding: 0;
+		height: auto;
+		min-height: var(--nav-h);
+		overflow: visible;
+		text-align: center;
+	}
+
+		#sidebar > .inner {
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+			height: auto;
+		}
+
+		#sidebar nav {
+			height: auto;
+		}
+
+			#sidebar nav > ul {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 2em;
+				margin: 0;
+				padding: 0;
+			}
+
+			 #sidebar nav > ul > li {
+				display: flex;
+				align-items: center;
+				height: var(--nav-h);
+			}
+
+			#sidebar nav a {
+				display: inline-flex;
+				align-items: center;
+				height: var(--nav-h);
+				line-height: var(--nav-h);
+				padding: 0;
+				white-space: nowrap; /* keep each item on a single row */
+			}
+
+		/* Logo scales to bar height per row */
 		#sidebar .logo {
 			display: block;
-			height: var(--nav-h); /* fills the entire bar height */
-			width: auto; /* prevent width stretch */
-			max-height: 100%; /* safety for overflow contexts */
+			height: var(--nav-h);
+			width: auto;
 			flex: 0 0 auto;
 		}
 
+		/* Keep your active/underline style */
+		#sidebar nav a:after {
+			background-image: none;
+			background-color: #00c0fa;
+		}
 
+		/*sidebar dropdown*/
+		/* Make submenu a vertical dropdown panel independent of the top bar */
+		#sidebar nav > ul > li.has-submenu {
+			position: relative;
+		}
 
-			#sidebar {
-				height: 3.5em;
-				left: 0;
-				line-height: 3.5em;
-				overflow: hidden;
-				padding: 0;
-				text-align: center;
-				top: 0;
-				width: 100%;
+		/* Panel container: align with trigger and match its width */
+		#sidebar nav ul.submenu {
+			position: absolute;
+			top: 100%;
+			left: 0; /* align left edge with parent item */
+			right: auto;
+			width: 100%; /* exactly the width of the parent <li> */
+			min-width: 100%;
+			display: block;
+			background: #023e8a;
+			border: 1px solid rgba(255,255,255,0.12);
+			border-radius: 10px;
+			padding: .35rem 0;
+			z-index: 10002;
+
+			/* animated reveal: start slightly ABOVE and scale down from the top */
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transform-origin: top center;
+			transform: translateY(-.5rem) scaleY(.96);
+			transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
+			box-shadow: 0 8px 22px rgba(0,0,0,.35);
+			will-change: transform, max-height, opacity;
+		}
+
+		/* Open state */
+		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
+			max-height: 80vh;
+			opacity: 1;
+			transform: translateY(0) scaleY(1); /* drops down from the bar */
+		}
+
+		/* Vertical list items + dividers */
+		#sidebar nav ul.submenu > li {
+			display: block;
+			height: auto;
+			margin: 0;
+			padding: 0;
+			opacity: 1; /* keep your stagger if desired; otherwise show immediately */
+			transform: none;
+		}
+
+			#sidebar nav ul.submenu > li + li {
+				border-top: 1px solid rgba(255,255,255,0.14);
 			}
 
-				#sidebar > .inner {
-					-moz-flex-direction: row;
-					-webkit-flex-direction: row;
-					-ms-flex-direction: row;
-					flex-direction: row;
-					-moz-align-items: -moz-stretch;
-					-webkit-align-items: -webkit-stretch;
-					-ms-align-items: -ms-stretch;
-					align-items: stretch;
-					height: inherit;
-					line-height: inherit;
-				}
-
-				#sidebar nav {
-					height: inherit;
-					line-height: inherit;
-				}
-
-					#sidebar nav ul {
-						display: -moz-flex;
-						display: -webkit-flex;
-						display: -ms-flex;
-						display: flex;
-						height: inherit;
-						line-height: inherit;
-						margin: 0;
-					}
-
-						#sidebar nav ul li {
-							display: block;
-							height: inherit;
-							line-height: inherit;
-							margin: 0 0 0 2em;
-							padding: 0;
-						}
-
-					#sidebar nav a {
-						height: inherit;
-						line-height: inherit;
-						padding: 0;
-					}
-
-						#sidebar nav a:after {
-							background-image: none;
-							background-color: #00c0fa;
-						}
+		#sidebar nav ul.submenu a {
+			display: block;
+			padding: .7rem 1rem;
+			box-sizing: border-box; /* keep padding inside width */
+			max-width: 100%; /* never overflow the panel */
+			height: auto;
+			line-height: 1.25; /* a touch more room for wraps */
+			white-space: normal !important;
+			/* Subtle fit for long words */
+			overflow-wrap: anywhere; /* modern, best effort */
+			word-break: break-word; /* wide fallback */
+			hyphens: auto; /* elegant hyphenation when possible */
 		}
+
+
+
+
+}
+
+
+		
 
 		@media screen and (max-width: 736px) {
 
@@ -4215,6 +4363,108 @@ input, select, textarea {
 		opacity: 1;
 		pointer-events: auto;
 	}
+
+
+	/* Mobile Dropdown*/
+	/* Host */
+	#m-sidebar nav > ul > li.has-submenu {
+		position: relative;
+	}
+
+		/* Space for caret */
+		#m-sidebar nav > ul > li.has-submenu > a {
+			padding-right: 1.6em;
+			position: relative;
+		}
+
+			/* Caret */
+			#m-sidebar nav > ul > li.has-submenu > a .wq-caret {
+				position: absolute;
+				right: 0;
+				top: 50%;
+				transform: translateY(-50%) rotate(0deg);
+				transition: transform .25s ease;
+				width: .7em;
+				height: .7em;
+				display: inline-block;
+			}
+
+				#m-sidebar nav > ul > li.has-submenu > a .wq-caret::before {
+					content: '';
+					display: block;
+					width: 0;
+					height: 0;
+					border-style: solid;
+					/* triangle pointing right */
+					border-width: .32em 0 .32em .48em;
+					border-color: transparent transparent transparent currentColor;
+				}
+
+	/* Collapsed submenu */
+	#m-sidebar nav ul.submenu {
+		list-style: none;
+		margin: 0;
+		padding: 0 0 .4em 0;
+		max-height: 0;
+		overflow: hidden;
+		opacity: 0;
+		transform: translateY(-0.25em);
+		transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
+	}
+
+	/* Open state (class-driven on mobile) */
+	#m-sidebar nav > ul > li.has-submenu.is-open > a .wq-caret {
+		transform: translateY(-50%) rotate(90deg);
+	}
+
+	#m-sidebar nav > ul > li.has-submenu.is-open > ul.submenu {
+		/* max-height is set inline by JS for smooth height animation */
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Submenu items + stagger (optional, mirrors desktop) */
+	#m-sidebar nav ul.submenu > li {
+		margin: 0;
+		padding: 0;
+		opacity: 0;
+		transform: translateY(-6px);
+		transition: opacity .25s ease, transform .25s ease;
+	}
+
+	#m-sidebar nav > ul > li.has-submenu.is-open ul.submenu > li {
+		opacity: 1;
+		transform: none;
+	}
+
+	#m-sidebar nav ul.submenu > li:nth-child(1) {
+		transition-delay: 50ms;
+	}
+
+	#m-sidebar nav ul.submenu > li:nth-child(2) {
+		transition-delay: 100ms;
+	}
+
+	#m-sidebar nav ul.submenu > li:nth-child(3) {
+		transition-delay: 150ms;
+	}
+
+	#m-sidebar nav ul.submenu > li:nth-child(4) {
+		transition-delay: 200ms;
+	}
+
+	#m-sidebar nav ul.submenu > li:nth-child(5) {
+		transition-delay: 250ms;
+	}
+
+	/* Submenu link tweaks (inherits your base) */
+	#m-sidebar nav ul.submenu a {
+		padding: .7em 0 .7em 1em;
+		font-size: 0.55em;
+		letter-spacing: 0.2em;
+		position: relative;
+	}
+
 }
 
 /* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */

@@ -4,8 +4,11 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\js",
-    "\\images"
+    "\\faqs",
+    "\\founder-jai",
+    "\\founder-karol",
+    "\\integrations"
   ],
-  "SelectedNode": "\\elements.html",
+  "SelectedNode": "\\founder-jai\\index.html",
   "PreviewInSolutionExplorer": false
 }
