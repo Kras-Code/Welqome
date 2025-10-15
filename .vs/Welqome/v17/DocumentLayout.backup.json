@@ -51,12 +51,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Sidebar.submenu.mobile.js",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\Sidebar.submenu.mobile.js",
-              "RelativeDocumentMoniker": "assets\\js\\Sidebar.submenu.mobile.js",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\Sidebar.submenu.mobile.js",
-              "RelativeToolTip": "assets\\js\\Sidebar.submenu.mobile.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "sidebar.submenu.mobile.js",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\sidebar.submenu.mobile.js",
+              "RelativeDocumentMoniker": "assets\\js\\sidebar.submenu.mobile.js",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\sidebar.submenu.mobile.js",
+              "RelativeToolTip": "assets\\js\\sidebar.submenu.mobile.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF0AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-10-15T11:13:07.826Z",
               "EditorCaption": ""
@@ -69,7 +69,7 @@
               "RelativeDocumentMoniker": "assets\\css\\main.css",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css",
               "RelativeToolTip": "assets\\css\\main.css",
-              "ViewState": "AgIAAEERAAAAAAAAAAAUwHERAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAFERAAAAAAAAAAAAAHERAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-10-14T12:48:21.001Z",
               "EditorCaption": ""
@@ -82,7 +82,7 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAIQAAAAAAAAAAAAAAGAAAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAAH4DAAAAAAAAAAAAAIcAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-10-14T12:32:59.787Z",
               "EditorCaption": ""
