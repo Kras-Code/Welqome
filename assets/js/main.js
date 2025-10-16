@@ -44,6 +44,25 @@
 
 			});
 
+
+	function setSubmenuOpenForLink($link) {
+		// All submenu parents in the sidebar
+		var $allParents = $('#sidebar li.has-submenu');
+
+		// Close all first
+		$allParents.removeClass('is-open')
+			.find('> a').attr('aria-expanded', 'false');
+
+		// If this link sits inside a submenu group, open that group
+		var $parent = $link.closest('li.has-submenu');
+		if ($parent.length) {
+			$parent.addClass('is-open')
+				.find('> a').attr('aria-expanded', 'true');
+		}
+	}
+
+
+
 	// Sidebar.
 		if ($sidebar.length > 0) {
 
@@ -51,23 +70,24 @@
 
 			$sidebar_a
 				.addClass('scrolly')
-				.on('click', function() {
+				.on('click', function () {
 
 					var $this = $(this);
 
 					// External link? Bail.
-						if ($this.attr('href').charAt(0) != '#')
-							return;
+					if ($this.attr('href').charAt(0) != '#')
+						return;
 
 					// Deactivate all links.
-						$sidebar_a.removeClass('active');
+					$sidebar_a.removeClass('active');
 
 					// Activate link *and* lock it (so Scrollex doesn't try to activate other links as we're scrolling to this one's section).
-						$this
-							.addClass('active')
-							.addClass('active-locked');
+					$this.addClass('active').addClass('active-locked');
 
+					// NEW: ensure the correct submenu is opened on click as well
+					setSubmenuOpenForLink($this);
 				})
+
 				.each(function() {
 
 					var	$this = $(this),
@@ -104,7 +124,10 @@
 
 								// Otherwise, if this section's link is the one that's locked, unlock it.
 									else if ($this.hasClass('active-locked'))
-										$this.removeClass('active-locked');
+									$this.removeClass('active-locked');
+
+									// NEW: sync submenu open state when this section becomes active by scroll
+									setSubmenuOpenForLink($this);
 
 							}
 						});

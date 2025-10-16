@@ -3973,10 +3973,12 @@ input, select, textarea {
 					}
 
 			/* Rotate caret when open (hover/focus-within for keyboard) */
-			#sidebar nav > ul > li.has-submenu:hover > a .wq-caret,
-			#sidebar nav > ul > li.has-submenu:focus-within > a .wq-caret {
-				transform: translateY(-50%) rotate(90deg);
-			}
+				#sidebar nav > ul > li.has-submenu:hover > a .wq-caret,
+				#sidebar nav > ul > li.has-submenu:focus-within > a .wq-caret,
+				#sidebar nav > ul > li.has-submenu.is-open > a .wq-caret,
+				#sidebar nav > ul > li.has-submenu > a[aria-expanded="true"] .wq-caret {
+					transform: translateY(-50%) rotate(90deg); /* right-facing ➜ down-facing */
+				}
 
 		/* --- Submenu container --- */
 		#sidebar nav ul.submenu {
@@ -4033,6 +4035,20 @@ input, select, textarea {
 		#sidebar nav ul.submenu > li:nth-child(5) {
 			transition-delay: 250ms;
 		}
+		/* Also open when JS marks the parent as .is-open */
+		#sidebar nav > ul > li.has-submenu.is-open > ul.submenu {
+			max-height: 18em; /* same as hover open */
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		/* Reveal submenu items when .is-open (matches your staggered rules) */
+		#sidebar nav > ul > li.has-submenu.is-open ul.submenu > li {
+			opacity: 1;
+			transform: none;
+		}
+
+
 
 		/* Submenu link styling (inherits your base link styles, slightly adjusted) */
 		#sidebar nav ul.submenu a {
@@ -4041,6 +4057,9 @@ input, select, textarea {
 			font-size: 0.55em; /* just a touch smaller than 0.6em */
 			letter-spacing: 0.2em;
 			position: relative;
+
+
+
 }
 
 
@@ -5484,83 +5503,6 @@ html.page-index {
 
 /* Info */
 /* ---------- Our Integrations (self-contained) ---------- */
-.integrations {
-	/* Safe spacing; background inherits unless you set --integrations-bg */
-	--integrations-bg: transparent;
-	--logo-h: 2.75rem; /* cap height for brand marks */
-	--gap: clamp(.5rem, 2vw, 1.25rem);
-	background: var(--integrations-bg);
-	padding-block: clamp(1rem, 2vw, 3rem);
-	color: inherit;
-}
-
-/* --- Heading separator bar (5px) that follows the title width --- */
-header.zoom-header-stack {
-	--bar-color: #1c3d58;
-	--bar-thickness: 4px;
-	--bar-overhang: .5rem; /* “a little bit” past the text edges */
-	--bar-gap: .6rem; /* space between title and bar */
-	overflow: visible;
-}
-
-	header.zoom-header-stack > :is(h1, h2, .integrations__heading) {
-		position: relative;
-		display: inline-block; /* shrink-wrap to title text */
-		padding-bottom: var(--bar-gap);
-		margin: 0 0 calc(var(--gap, 1rem) - var(--bar-gap)) 0;
-	}
-
-		header.zoom-header-stack > :is(h1, h2, .integrations__heading)::after {
-			content: "";
-			position: absolute;
-			bottom: 0;
-			left: calc(-1 * var(--bar-overhang));
-			height: var(--bar-thickness);
-			width: calc(100% + 2 * var(--bar-overhang));
-			background: var(--bar-color);
-			border-radius: var(--bar-thickness); /* soft caps (optional) */
-		}
-
-	/* keep your existing paragraph spacing */
-	header.zoom-header-stack p:last-of-type {
-		margin-bottom: 1rem;
-	}
-
-
-	/* Match these to your grid */
-	header.zoom-header-stack.title-inline-grid {
-		--title-gap: .6rem; /* = column-gap of your grid */
-		--icon-w: 3.8rem; /* set to the rendered badge width */
-	}
-
-			/* Extend the bar left to include the icon + gap + overhang */
-			header.zoom-header-stack.title-inline-grid > :is(h1, h2, .integrations__heading)::after {
-				content: "";
-				position: absolute;
-				bottom: 0;
-				/* start before the icon */
-				left: calc(-1 * (var(--icon-w) + var(--title-gap) + var(--bar-overhang)));
-				/* keep the right end the same, add the left extension */
-				width: calc( 100% + 2 * var(--bar-overhang) + var(--icon-w) + var(--title-gap) );
-				height: var(--bar-thickness);
-				background: var(--bar-color);
-				border-radius: var(--bar-thickness);
-			}
-
-.integrations__heading {
-	margin: 0 0 .5rem 0;
-	line-height: 1.2;
-	font-size: clamp(1.75rem, 1.2rem + 2vw, 2.5rem);
-}
-
-.integrations__lead {
-	margin: 0 0 1.25rem 0;
-	font-size: clamp(1rem, .2rem + .6vw, 1.125rem);
-}
-
-header.zoom-header-stack p:last-of-type {
-	margin-bottom: 1rem; /* the “1 rem gap below” */
-}
 
 
 /* Card sizing knobs */
@@ -5622,26 +5564,99 @@ header.zoom-header-stack p:last-of-type {
 	/* heading alignment */
 	--h3-rows: 2; /* reserve N lines for the heading */
 	--h3-lh: 1.2; /* heading line-height multiplier */
-	/* divider */
-	--divider-h: 70%; /* constant divider height for 2-logo cards */
 }
 
 /* ---------- Logo card ---------- */
+/* ---------- Logo card (3-D, gradient fill + border) ---------- */
 .logo-card {
+	/* layout (preserved) */
 	display: grid;
-	/* Fixed logo area; caption always begins at same Y-position */
 	grid-template-rows: var(--logo-row-h) auto;
-	grid-template-columns: 1fr; /* 1 column by default (single-logo) */
+	grid-template-columns: 1fr;
 	row-gap: var(--caption-gap);
-	place-items: center; /* centers items within their cells */
-	align-content: start; /* pin rows to top of the card */
+	place-items: center;
+	align-content: start;
+	/* sizing */
 	width: 100%;
 	height: var(--card-h);
 	padding: 1rem;
-	border-radius: .75rem;
-	background: color-mix(in oklab, currentColor 30%, transparent);
-	box-shadow: 0 0 0 1px color-mix(in oklab, currentColor 15%, transparent) inset;
-	--img-gap: clamp(.5rem, 1.5vw, 1rem); /* gap between sibling logos */
+	--r: .75rem; /* corner radius */
+	border-radius: var(--r);
+	/* gradient fill + gradient border (requested) */
+	border: 1px solid transparent; /* required so border-box background shows */
+	/* 3-D foundation */
+	position: relative;
+	transform: perspective(900px) translateZ(0) rotateX(0deg) rotateY(0deg);
+	transform-style: preserve-3d;
+	/* layered elevation: soft ambient + contact shadow + inner micro-contrast */
+	box-shadow:
+	/* contact shadow (close to surface) */
+	0 6px 10px rgba(0,0,0,.20),
+	/* ambient shadow (larger, softer) */
+	0 18px 36px rgba(0,0,0,.22),
+	/* faint inner edge to crispen content */
+	0 0 0 1px rgba(255,255,255,.06) inset;
+	/* motion/interaction */
+	transition: transform .35s cubic-bezier(.2,.65,.2,1), box-shadow .35s ease, filter .35s ease, background .35s ease;
+	will-change: transform, box-shadow, filter;
+}
+
+	/* top “specular” highlight for realism */
+	.logo-card::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		background: linear-gradient( to bottom, rgba(255,255,255,.10), transparent 28% );
+		mix-blend-mode: screen;
+		transform: translateZ(1px); /* sit just above the card face */
+	}
+
+	/* soft floor glow to anchor the card to the page (3-D cue) */
+	.logo-card::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: -12px; /* just below the card */
+		width: 70%;
+		height: 28px;
+		transform: translateX(-50%);
+		border-radius: 50%;
+		background: radial-gradient(ellipse at center, rgba(0,0,0,.35), transparent 70%);
+		filter: blur(6px);
+		opacity: .70;
+	}
+
+	/* Hover/keyboard focus: increase elevation + subtle tilt */
+	.logo-card:is(:hover, :focus-visible) {
+		transform: perspective(900px) translateY(-2px) translateZ(8px) rotateX(3deg) rotateY(-3deg);
+		box-shadow: 0 10px 18px rgba(0,0,0,.22), 0 28px 54px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.08) inset;
+	}
+
+	/* Visible, accessible focus ring that coexists with the gradient border */
+	.logo-card:focus-visible {
+		outline: 2px solid rgba(1,98,235,.85);
+		outline-offset: 2px;
+	}
+
+	/* Optional: lift the logo slightly on hover for added depth */
+	.logo-card img {
+		transition: transform .35s cubic-bezier(.2,.65,.2,1), filter .35s ease;
+		transform: translateZ(0);
+	}
+
+	.logo-card:is(:hover, :focus-visible) img {
+		transform: translateZ(14px) scale(1.03);
+	}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+	.logo-card,
+	.logo-card img {
+		transition: none;
+		transform: none;
+	}
 }
 
 	/* Logos: vertically centered within the fixed logo row */
@@ -5654,7 +5669,7 @@ header.zoom-header-stack p:last-of-type {
 		height: auto;
 		max-height: var(--logo-h);
 		object-fit: contain;
-		filter: grayscale(0%) contrast(1.05) brightness(.95);
+		filter: contrast(1.05) brightness(.95);
 		opacity: .9;
 		transition: transform .2s ease, opacity .2s ease, filter .2s ease;
 	}
@@ -5904,6 +5919,113 @@ header.zoom-header-stack p:last-of-type {
 
 
 
+	/*integration cards marquee*/
+/* Tokens (falls back to sensible defaults if your vars exist elsewhere) */
+:root {
+	--gap: clamp(12px, 1.2vw, 18px);
+	--card-w: clamp(230px, 28vw, 300px);
+	--logo-h: 44px;
+	--radius: 12px;
+	--pad: 16px;
+	--wq-card-bg: rgba(255,255,255,0.03);
+	--wq-card-border: rgba(255,255,255,0.15);
+	--wq-text: #fff;
+}
+
+/* Viewport for the marquee */
+.integrations-marquee {
+	position: relative;
+	overflow: hidden;
+	padding-block: 6px; /* tiny breathing room to avoid clip on focus outline */
+	/* optional soft edge fade; drop if unwanted */
+	-webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+	mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+/* The animated strip = two tracks side-by-side */
+.marquee-content {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: var(--gap);
+	will-change: transform;
+}
+
+/* A single track of cards */
+.marquee-track {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: stretch;
+	gap: var(--gap);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+	/* Each card occupies a fixed inline size so the loop is stable */
+	.marquee-track > li {
+		flex: 0 0 var(--card-w);
+	}
+
+/* Card shell: preserves your internal formatting (h3 + p etc.) */
+.logo-card {
+	height: 100%;
+	padding: var(--pad);
+	border-radius: var(--radius);
+	background: var(--wq-card-bg);
+	outline: 1px solid var(--wq-card-border);
+	color: var(--wq-text);
+	display: grid;
+	grid-template-rows: auto 1fr;
+	row-gap: 12px;
+	text-align: center;
+}
+
+	/* Put multiple brand marks on one row without altering your HTML */
+	.logo-card > img {
+		display: inline-block;
+		vertical-align: middle;
+		max-height: var(--logo-h);
+		width: auto;
+		object-fit: contain;
+		margin: 0 8px 0 0;
+		filter: contrast(1.05) brightness(.95);
+		opacity: .9;
+	}
+
+		.logo-card > img:last-of-type {
+			margin-right: 0;
+		}
+
+	.logo-card figcaption {
+		margin: 0;
+	}
+
+		.logo-card figcaption h3 {
+			margin: 0 0 4px 0;
+			font-size: 1rem;
+			line-height: 1.2;
+		}
+
+		.logo-card figcaption p {
+			margin: 0;
+			font-size: .95rem;
+			line-height: 1.35;
+		}
+
+/* Optional variant for the contact card */
+.contact-us-card {
+	background: #023e8a;
+	outline-color: rgba(255,255,255,.18);
+	color: #fff;
+}
+
+/* Accessibility: if user prefers reduced motion, just stop the animation */
+@media (prefers-reduced-motion: reduce) {
+	.marquee-content {
+		transform: none !important;
+	}
+}
 
 
 
