@@ -5427,15 +5427,6 @@ html.zoom-lock, body.zoom-lock {
 		outline-offset: 2px;
 	}
 
-/* Make cloned content look like the original card.
-   Adjust these to mirror your theme card styles. */
-.zoom-overlay__content .feature-card,
-.zoom-overlay__content .zoomable {
-	background: transparent !important; /* sheet already has bg */
-	box-shadow: none !important;
-	margin: 0 !important;
-}
-
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
 	.zoom-overlay__backdrop,
