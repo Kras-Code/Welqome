@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     const viewport = document.querySelector('.integrations-marquee');
     const content = document.querySelector('#integrationsMarquee');
     const track = document.querySelector('#integrationsTrack');
@@ -7,8 +7,10 @@
 
     if (!viewport || !content || !track) return;
 
-    // Duplicate the track to form a seamless strip [A][A�]
+    // Duplicate the track to form a seamless strip [A][A’]
     const clone = track.cloneNode(true);
+    clone.removeAttribute('id');                // avoid duplicate IDs
+    clone.setAttribute('data-track', 'clone');  // optional marker
     clone.setAttribute('aria-hidden', 'true');
     content.appendChild(clone);
 
@@ -37,13 +39,17 @@
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function measure() {
-        firstWidth = track.getBoundingClientRect().width;
-        // keep x in [-firstWidth, 0] depending on direction
+        // Use intrinsic content width, independent of wrapping
+        firstWidth = track.scrollWidth;
+
+        // Keep x within [−firstWidth, 0]
         if (x > 0) x = 0;
         if (x < -firstWidth) x = -firstWidth;
+
         // Start on the left copy if moving right so we don't wrap on frame 1
         if (dir === +1 && x === 0) x = -firstWidth;
-        content.style.transform = `translateX(${x}px)`;
+
+        content.style.transform = `translate3d(${x}px,0,0)`; // GPU friendly
     }
 
     function holdFactor(tsNow) {
