@@ -5567,7 +5567,6 @@ html.page-index {
 }
 
 /* ---------- Logo card ---------- */
-/* ---------- Logo card (3-D, gradient fill + border) ---------- */
 .logo-card {
 	/* layout (preserved) */
 	display: grid;
@@ -5729,19 +5728,6 @@ html.page-index {
 		.logo-card:has(> img:nth-of-type(2)):not(:has(> img:nth-of-type(3))) > img:last-of-type {
 			grid-column: 3;
 			grid-row: 1;
-		}
-
-		/* Centered, constant-size divider */
-		.logo-card:has(> img:nth-of-type(2)):not(:has(> img:nth-of-type(3)))::before {
-			content: "";
-			grid-column: 2;
-			grid-row: 1;
-			width: 2px;
-			height: var(--divider-h);
-			background: #00c0fa;
-			justify-self: center;
-			align-self: center;
-			border-radius: 1px;
 		}
 
 	/* THREE logos: even columns, level/centered */
@@ -6026,9 +6012,6 @@ html.page-index {
 		transform: none !important;
 	}
 }
-
-
-
 
 
 
