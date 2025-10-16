@@ -6014,6 +6014,30 @@ html.page-index {
 }
 
 
+/* Viewport */
+.integrations-marquee {
+	overflow: hidden; /* clip scrolling strip */
+}
+
+/* The translated container */
+#integrationsMarquee {
+	display: flex;
+	flex-wrap: nowrap; /* force a single row */
+	will-change: transform; /* perf hint; does not affect sizing */
+}
+
+	/* Each track (original + clone) acts as a row, but we do NOT restyle inner cards */
+	#integrationsTrack,
+	#integrationsMarquee [data-track="clone"] {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+
+		/* Critical: prevent items from shrinking onto a second line without changing their dimensions */
+		#integrationsTrack > *,
+		#integrationsMarquee [data-track="clone"] > * {
+			flex-shrink: 0; /* preserves original width/height of your cards */
+		}
 
 
 
