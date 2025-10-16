@@ -5889,21 +5889,6 @@ html.page-index {
 
 
 
-/* Reusable vertical stack for popup headers */
-/* Define once, then consumed by your sibling rule */
-.zoom-header-stack {
-	display: flex;
-	flex-direction: column;
-	gap: 0.1rem; /* the only knob you need */
-}
-
-	.zoom-header-stack h2,
-	.zoom-header-stack p {
-		margin: 0;
-	}
-
-
-
 
 	/*integration cards marquee*/
 /* Tokens (falls back to sensible defaults if your vars exist elsewhere) */
@@ -5933,7 +5918,7 @@ html.page-index {
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: stretch;
-	gap: var(--gap);
+	gap: 0;
 	will-change: transform;
 }
 
@@ -5946,6 +5931,7 @@ html.page-index {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	padding-inline-end: var(--gap);
 }
 
 	/* Each card occupies a fixed inline size so the loop is stable */
@@ -6013,31 +5999,6 @@ html.page-index {
 	}
 }
 
-
-/* Viewport */
-.integrations-marquee {
-	overflow: hidden; /* clip scrolling strip */
-}
-
-/* The translated container */
-#integrationsMarquee {
-	display: flex;
-	flex-wrap: nowrap; /* force a single row */
-	will-change: transform; /* perf hint; does not affect sizing */
-}
-
-	/* Each track (original + clone) acts as a row, but we do NOT restyle inner cards */
-	#integrationsTrack,
-	#integrationsMarquee [data-track="clone"] {
-		display: flex;
-		flex-wrap: nowrap;
-	}
-
-		/* Critical: prevent items from shrinking onto a second line without changing their dimensions */
-		#integrationsTrack > *,
-		#integrationsMarquee [data-track="clone"] > * {
-			flex-shrink: 0; /* preserves original width/height of your cards */
-		}
 
 
 
