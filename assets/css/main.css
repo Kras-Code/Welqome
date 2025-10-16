@@ -5999,6 +5999,28 @@ html.page-index {
 	}
 }
 
+/* Ensure flex items never expand past the fixed var(--card-w) on mobile */
+.marquee-track > li {
+	min-width: 0; /* allow contents to shrink inside the fixed slot */
+	width: var(--card-w); /* explicit width to match flex-basis */
+	flex: 0 0 var(--card-w);
+}
+
+/* Prevent grid children inside the card from forcing overflow */
+.logo-card {
+	min-width: 0; /* key on iOS: let grid shrink below min-content */
+	contain: layout; /* isolate layout to avoid transform + reflow artifacts */
+}
+
+/* Keep the two tracks truly butt-joined (no inter-track gap) */
+.marquee-content {
+	gap: 0;
+}
+
+.marquee-track {
+	gap: var(--gap);
+	padding-inline-end: var(--gap);
+}
 
 
 

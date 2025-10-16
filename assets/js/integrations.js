@@ -9,6 +9,7 @@
 
     // Duplicate the track to form a seamless strip [A][A’]
     const clone = track.cloneNode(true);
+    clone.removeAttribute('id');
     clone.setAttribute('aria-hidden', 'true');
     content.appendChild(clone);
 
@@ -37,7 +38,7 @@
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function measure() {
-        firstWidth = track.getBoundingClientRect().width;
+        firstWidth = Math.ceil(track.scrollWidth);
         // keep x in [-firstWidth, 0] depending on direction
         if (x > 0) x = 0;
         if (x < -firstWidth) x = -firstWidth;
@@ -73,7 +74,7 @@
             if (dir === +1 && x >= 0) x = -firstWidth;
             else if (dir === -1 && x <= -firstWidth) x = 0;
 
-            content.style.transform = `translateX(${x}px)`;
+            content.style.transform = `translate3d(${x}px,0,0)`;
         }
 
         rafId = requestAnimationFrame(step);
@@ -180,5 +181,6 @@
     }
 
     primeAllImagesAndStart();
+    window.addEventListener('resize', measure, { passive: true });
     window.addEventListener('beforeunload', () => cancelAnimationFrame(rafId));
 })();
