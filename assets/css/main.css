@@ -5157,6 +5157,103 @@ body.page-index {
 }
 
 
+
+
+
+/* Quentin Section*/
+/* New Quentin box */
+.Quentin-box,
+.quentin-box { /* alias in case of lowercase usage */
+	--qb-pad: clamp(16px, 3.5vw, 28px);
+	--qb-radius: 16px;
+	--qb-border: rgba(255,255,255,0.15);
+	/* "Much more #0161eb": dominant blue with a short #ffdb58 tail */
+	--qb-grad: linear-gradient(135deg, #0161eb 0%, #0161eb 88%, #ffdb58 100%);
+	position: relative;
+	border-radius: var(--qb-radius);
+	overflow: hidden;
+	border: 1px solid var(--qb-border);
+	background: var(--qb-grad);
+	margin-bottom: 0.5rem;
+}
+
+	/* Subtle dark veil for readability on the gradient */
+	.Quentin-box::before,
+	.quentin-box::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: rgba(0,0,0,0.35);
+		pointer-events: none;
+	}
+
+	.Quentin-box > section,
+	.quentin-box > section {
+		position: relative; /* sit above veil */
+		display: grid;
+		grid-template-columns: minmax(160px, 240px) 1fr;
+		align-items: center;
+		gap: var(--qb-pad); /* = image→text spacing */
+		padding: var(--qb-pad); /* = border→image spacing */
+	}
+
+	.Quentin-box img,
+	.quentin-box img {
+		grid-row: 1 / -1; /* keep image spanning the text rows */
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 12px;
+		margin: 0; /* cancel any legacy margins (e.g., .mascot-margin) */
+		background: rgba(0,0,0,0.15); /* gentle lift on light parts of the gradient */
+	}
+
+	.Quentin-box .qb-copy h3,
+	.Quentin-box .qb-copy p,
+	.Quentin-box .qb-copy a,
+	.quentin-box .qb-copy h3,
+	.quentin-box .qb-copy p,
+	.quentin-box .qb-copy a {
+		color: var(--wq-text, #fff);
+		margin: 0;
+	}
+
+	.Quentin-box .qb-copy h3,
+	.quentin-box .qb-copy h3 {
+		font-weight: 700;
+		margin-bottom: 0.4rem;
+	}
+
+	.Quentin-box .qb-copy p + p,
+	.quentin-box .qb-copy p + p {
+		margin-top: 0.6rem;
+	}
+
+/* Responsive: stack on small screens, preserve equal paddings */
+@media (max-width: 720px) {
+	.Quentin-box > section,
+	.quentin-box > section {
+		grid-template-columns: 1fr;
+	}
+
+	.Quentin-box img,
+	.quentin-box img {
+		max-width: 320px;
+		justify-self: start;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 /*FAQs*/
 
 /* Reset a counter for each FAQ block */
