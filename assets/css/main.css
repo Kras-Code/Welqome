@@ -4650,6 +4650,7 @@ body.page-index {
 	padding: 2px; /* gradient border thickness */
 	border-radius: 1.25rem;
 	box-shadow: 0 10px 40px rgba(0,0,0,.25);
+	margin: 0.5rem
 }
 
 .voice-box__inner {
@@ -6014,8 +6015,45 @@ html.page-index {
 }
 
 
+.marquee-dots {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	margin-top: 14px;
+	/* dots are now interactive */
+	pointer-events: auto;
+}
 
+	.marquee-dots .marquee-dot {
+		/* reset button look */
+		-webkit-appearance: none;
+		appearance: none;
+		border: 0;
+		background: rgba(255,255,255,.28);
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		padding: 0;
+		margin: 0;
+		opacity: .7;
+		cursor: pointer;
+		transform: scale(1);
+		transition: transform .25s ease, opacity .25s ease, background-color .25s ease;
+	}
 
+		.marquee-dots .marquee-dot.is-active {
+			background: var(--wq-accent-2, #0162eb);
+			opacity: 1;
+			transform: scale(1.55);
+		}
+
+		/* accessible focus */
+		.marquee-dots .marquee-dot:focus-visible {
+			outline: 2px solid var(--wq-accent-2, #0162eb);
+			outline-offset: 2px;
+			opacity: 1;
+		}
 
 
 

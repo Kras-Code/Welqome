@@ -4,11 +4,12 @@
     "\\assets",
     "\\assets\\css",
     "\\assets\\js",
+    "\\assets\\webfonts",
     "\\faqs",
     "\\founder-jai",
     "\\founder-karol",
     "\\integrations"
   ],
-  "SelectedNode": "\\assets\\js\\main.js",
+  "SelectedNode": "\\assets\\webfonts\\fa-brands-400.svg",
   "PreviewInSolutionExplorer": false
 }
