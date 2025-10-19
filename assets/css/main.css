@@ -5161,53 +5161,111 @@ body.page-index {
 
 
 /* Quentin Section*/
-/* New Quentin box */
+/* Quentin — 3D elevated card with subtle #ffdb58 highlights */
 .Quentin-box,
 .quentin-box { /* alias in case of lowercase usage */
+	/* Tunables */
 	--qb-pad: clamp(16px, 3.5vw, 28px);
 	--qb-radius: 16px;
-	--qb-border: rgba(255,255,255,0.15);
-	/* "Much more #0161eb": dominant blue with a short #ffdb58 tail */
-	--qb-grad: linear-gradient(135deg, #0161eb 0%, #0161eb 88%, #ffdb58 100%);
+	--qb-gold: var(--wq-gold, #ffdb58);
+	--qb-blue-1: var(--wq-accent-2, #0162eb);
+	--qb-blue-2: var(--wq-accent-1, #00c0fa);
 	position: relative;
+	margin-bottom: 0.5rem;
 	border-radius: var(--qb-radius);
 	overflow: hidden;
-	border: 1px solid var(--qb-border);
-	background: var(--qb-grad);
-	margin-bottom: 0.5rem;
+	/* Gradient border with gold glints */
+	border: 1px solid transparent;
+	background-image:
+	/* fill layers (subtle lighting + depth) */
+	radial-gradient(120% 140% at 8% 0%, rgba(255,219,88,.18), rgba(255,219,88,0) 32%), linear-gradient(140deg, rgba(255,255,255,.06), rgba(255,255,255,.02) 45%, rgba(0,0,0,.08) 100%), linear-gradient(160deg, var(--qb-blue-2) 0%, var(--qb-blue-1) 62%, #0b2f66 100%),
+	/* border layer (conic gold sheen) */
+	conic-gradient(from 210deg at 50% -10%, rgba(255,219,88,.7) 0deg, rgba(255,219,88,0) 60deg, rgba(255,219,88,0) 320deg, rgba(255,219,88,.55) 360deg);
+	background-origin: padding-box, padding-box, padding-box, border-box;
+	background-clip: padding-box, padding-box, padding-box, border-box;
+	/* Depth */
+	box-shadow: 0 22px 36px rgba(1, 20, 60, .45), /* ambient */
+	0 6px 12px rgba(1, 20, 60, .35), /* contact */
+	0 0 0 1px rgba(255,255,255,.05) inset, /* inner micro-contrast */
+	0 1px 0 rgba(255,219,88,.28) inset; /* subtle top bevel */
+	/* 3D hover */
+	transform: perspective(1000px) rotateX(0) rotateY(0) translateY(0);
+	transform-style: preserve-3d;
+	transition: transform .45s cubic-bezier(.2,.6,.2,1), box-shadow .35s ease;
 }
 
-	/* Subtle dark veil for readability on the gradient */
+	/* Inner lighting veil */
 	.Quentin-box::before,
 	.quentin-box::before {
-		content: "";
+		content: '';
 		position: absolute;
-		inset: 0;
-		background: rgba(0,0,0,0.35);
+		inset: 1px;
+		border-radius: calc(var(--qb-radius) - 1px);
 		pointer-events: none;
+		background: linear-gradient(to bottom, rgba(255,255,255,.22), rgba(255,255,255,0) 60%);
+		mix-blend-mode: screen;
+		opacity: .18;
 	}
 
+	/* Moving specular sheen (subtle, gold-tinted) */
+	.Quentin-box::after,
+	.quentin-box::after {
+		content: '';
+		position: absolute;
+		inset: -10%;
+		pointer-events: none;
+		background: linear-gradient(75deg, rgba(255,219,88,0) 35%, rgba(255,219,88,.18) 47%, rgba(255,219,88,0) 60%);
+		filter: blur(14px);
+		transform: translate3d(-28%,0,0) rotate(1deg);
+		transition: transform .6s ease, opacity .4s ease;
+		opacity: .35;
+	}
+
+	/* Hover tilt + slightly stronger lift */
+	.Quentin-box:hover,
+	.quentin-box:hover {
+		transform: perspective(1000px) rotateX(1.2deg) rotateY(-1.2deg) translateY(-2px);
+		box-shadow: 0 28px 44px rgba(1, 20, 60, .50), 0 10px 18px rgba(1, 20, 60, .38), 0 0 0 1px rgba(255,255,255,.06) inset, 0 1px 0 rgba(255,219,88,.30) inset;
+	}
+
+		.Quentin-box:hover::after,
+		.quentin-box:hover::after {
+			transform: translate3d(8%,0,0) rotate(1deg);
+			opacity: .45;
+		}
+
+	/* Layout */
 	.Quentin-box > section,
 	.quentin-box > section {
-		position: relative; /* sit above veil */
+		position: relative;
 		display: grid;
 		grid-template-columns: minmax(160px, 240px) 1fr;
 		align-items: center;
-		gap: var(--qb-pad); /* = image→text spacing */
-		padding: var(--qb-pad); /* = border→image spacing */
+		gap: var(--qb-pad);
+		padding: var(--qb-pad);
 	}
 
+	/* Image: 3D pop + soft frame */
 	.Quentin-box img,
 	.quentin-box img {
-		grid-row: 1 / -1; /* keep image spanning the text rows */
+		grid-row: 1 / -1;
 		width: 100%;
 		height: auto;
 		display: block;
 		border-radius: 12px;
-		margin: 0; /* cancel any legacy margins (e.g., .mascot-margin) */
-		background: rgba(0,0,0,0.15); /* gentle lift on light parts of the gradient */
+		margin: 0; /* cancel legacy margins (e.g., .mascot-margin) */
+		background: linear-gradient(to bottom, rgba(255,255,255,.05), rgba(0,0,0,.15));
+		box-shadow: 0 14px 28px rgba(0,0,0,.35), 0 1px 0 rgba(255,219,88,.22) inset;
+		transform: translateZ(30px);
+		transition: transform .35s ease, box-shadow .35s ease, filter .35s ease;
 	}
 
+	.Quentin-box:hover img,
+	.quentin-box:hover img {
+		transform: translateZ(42px) rotateY(.6deg) rotateX(-.2deg);
+	}
+
+	/* Copy */
 	.Quentin-box .qb-copy h3,
 	.Quentin-box .qb-copy p,
 	.Quentin-box .qb-copy a,
@@ -5221,15 +5279,51 @@ body.page-index {
 	.Quentin-box .qb-copy h3,
 	.quentin-box .qb-copy h3 {
 		font-weight: 700;
-		margin-bottom: 0.4rem;
+		margin-bottom: 0.6rem;
+		position: relative;
 	}
+
+		.Quentin-box .qb-copy h3::after,
+		.quentin-box .qb-copy h3::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: -.35rem;
+			width: clamp(60px, 50%, 120px);
+			height: 3px;
+			border-radius: 2px;
+			background: linear-gradient(90deg, var(--qb-gold) 0%, rgba(255,219,88,0) 90%);
+			opacity: .55;
+		}
 
 	.Quentin-box .qb-copy p + p,
 	.quentin-box .qb-copy p + p {
-		margin-top: 0.6rem;
+		margin-top: 0.75rem;
 	}
 
-/* Responsive: stack on small screens, preserve equal paddings */
+	/* Telephone link: crisp, with focus ring */
+	.Quentin-box .tel-link,
+	.quentin-box .tel-link {
+		text-decoration: none;
+		font-weight: 800;
+		letter-spacing: .3px;
+		text-shadow: 0 0 0 rgba(255,219,88,0);
+		background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat;
+		transition: text-shadow .25s ease, background-size .25s ease, color .25s ease;
+	}
+
+		.Quentin-box .tel-link:hover,
+		.quentin-box .tel-link:hover {
+			text-shadow: 0 0 18px rgba(255,219,88,.45);
+			background-size: 100% 2px;
+		}
+
+	.Quentin-box:focus-within,
+	.quentin-box:focus-within {
+		box-shadow: 0 28px 44px rgba(1, 20, 60, .50), 0 10px 18px rgba(1, 20, 60, .38), 0 0 0 1px rgba(255,255,255,.06) inset, 0 1px 0 rgba(255,219,88,.30) inset, 0 0 0 3px rgba(255,219,88,.28); /* accessible gold focus hint */
+	}
+
+/* Responsive: stack cleanly on small screens */
 @media (max-width: 720px) {
 	.Quentin-box > section,
 	.quentin-box > section {
@@ -5242,6 +5336,32 @@ body.page-index {
 		justify-self: start;
 	}
 }
+
+/* Motion safety */
+@media (prefers-reduced-motion: reduce) {
+	.Quentin-box,
+	.quentin-box {
+		transition: box-shadow .25s ease;
+		transform: none !important;
+	}
+
+		.Quentin-box:hover,
+		.quentin-box:hover {
+			transform: none !important;
+		}
+
+		.Quentin-box::after,
+		.quentin-box::after {
+			transition: none;
+		}
+
+		.Quentin-box img,
+		.quentin-box img {
+			transition: box-shadow .25s ease;
+			transform: none !important;
+		}
+}
+
 
 
 
@@ -6384,14 +6504,7 @@ html.page-index {
 /* FOOTER*/
 /* --- WelQome Footer Layout --- */
 .wq-footer {
-	--wq-footer-bg: #0f1b2d; /* deep navy that complements #023e8a */
-	--wq-footer-accent: #1c3d58; /* your secondary */
-	--wq-footer-text: rgba(255,255,255,0.92);
-	--wq-footer-muted: rgba(255,255,255,0.72);
-	--wq-footer-link: rgba(255,255,255,0.9);
-	--wq-footer-link-hover: #00c0fa;
 	--wq-gap: clamp(1rem, 2vw, 1.5rem);
-	background: var(--wq-footer-bg);
 	color: var(--wq-footer-text);
 }
 
@@ -6403,14 +6516,6 @@ html.page-index {
 		padding-bottom: 2.25rem;
 	}
 
-	.wq-footer a {
-		color: var(--wq-footer-link);
-		text-decoration: none;
-	}
-
-		.wq-footer a:hover {
-			color: var(--wq-footer-link-hover);
-		}
 
 /* Brand block */
 .wq-footer__brand .wq-footer__logo img {
@@ -6449,10 +6554,6 @@ html.page-index {
 		background: rgba(255,255,255,0.08);
 	}
 
-		.wq-footer__social a:hover {
-			background: rgba(255,255,255,0.16);
-		}
-
 /* Link grid */
 .wq-footer__nav {
 	display: grid;
@@ -6477,14 +6578,6 @@ html.page-index {
 	.wq-footer__nav li {
 		margin: .35rem 0;
 	}
-
-	.wq-footer__nav a {
-		color: var(--wq-footer-muted);
-	}
-
-		.wq-footer__nav a:hover {
-			color: var(--wq-footer-link-hover);
-		}
 
 /* Meta rows */
 .wq-footer__meta {
