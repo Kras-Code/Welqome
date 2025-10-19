@@ -5289,7 +5289,7 @@ body.page-index {
 			position: absolute;
 			left: 0;
 			bottom: -.35rem;
-			width: clamp(60px, 50%, 120px);
+			width: clamp(80px, 50%, 160px);
 			height: 3px;
 			border-radius: 2px;
 			background: linear-gradient(90deg, var(--qb-gold) 0%, rgba(255,219,88,0) 90%);
