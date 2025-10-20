@@ -3604,7 +3604,7 @@ input, select, textarea {
 /* Wrapper (main) */
 
 	#sidebar + #wrapper {
-		margin-left: 18em;
+		margin-left: 15em;
 	}
 
 		@media screen and (max-width: 1280px) {
@@ -3631,7 +3631,7 @@ input, select, textarea {
 /* Footer */
 
 	#sidebar + #wrapper + #footer {
-		margin-left: 18em;
+		margin-left: 15em;
 	}
 
 		@media screen and (max-width: 1280px) {
@@ -3684,7 +3684,7 @@ input, select, textarea {
 	position: fixed;
 	text-align: right;
 	top: 0;
-	width: 18em;
+	width: 15em;
 	z-index: 10000;
 }
 
@@ -3952,6 +3952,48 @@ input, select, textarea {
 		}
 
 
+/* --- Sidebar border (white/grey) --- */
+/* Paste AFTER your existing #sidebar rules */
+#sidebar {
+	/* layered edge: inner highlight + inner midline + soft ambient */
+	box-shadow: inset -1px 0 0 rgba(255,255,255,0.65), /* bright hairline on the content edge */
+	inset -2px 0 0 rgba(255,255,255,0.20), /* secondary soft line for depth */
+	8px 0 24px rgba(12,18,32,0.22); /* ambient separation to main canvas */
+	isolation: isolate; /* contain pseudo-element layering */
+}
+
+	/* Gradient hairline for retina crispness */
+	#sidebar::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: 0; /* sits inside, so overflow doesn't clip it */
+		width: 1px;
+		height: 100%;
+		pointer-events: none;
+		background: linear-gradient( to bottom, rgba(255,255,255,0.85) 0%, rgba(240,240,240,0.55) 30%, rgba(220,220,220,0.35) 70%, rgba(200,200,200,0.20) 100% );
+		opacity: 0.95;
+	}
+
+/* Mobile/top-bar layout: convert the edge to a bottom rule */
+@media (max-width: 980px) {
+	#sidebar {
+		box-shadow: inset 0 -1px 0 rgba(255,255,255,0.65), inset 0 -2px 0 rgba(255,255,255,0.20), 0 8px 24px rgba(12,18,32,0.22);
+	}
+
+		#sidebar::after {
+			top: auto;
+			bottom: 0;
+			right: auto;
+			left: 0;
+			width: 100%;
+			height: 1px;
+			background: linear-gradient( to right, rgba(255,255,255,0.85), rgba(220,220,220,0.30) );
+		}
+}
+
+
+
 
 			/*Sidebar Dropdown*/
 		/* --- Dropdown host --- */
@@ -4011,7 +4053,7 @@ input, select, textarea {
 		/* Open on hover or when links inside receive focus */
 		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
 		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
-			max-height: 18em; /* large enough to fit items; adjust if needed */
+			max-height: 15em; /* large enough to fit items; adjust if needed */
 			opacity: 1;
 			transform: translateY(0);
 		}
@@ -4053,7 +4095,7 @@ input, select, textarea {
 		}
 		/* Also open when JS marks the parent as .is-open */
 		#sidebar nav > ul > li.has-submenu.is-open > ul.submenu {
-			max-height: 18em; /* same as hover open */
+			max-height: 15em; /* same as hover open */
 			opacity: 1;
 			transform: translateY(0);
 		}
@@ -4287,7 +4329,7 @@ input, select, textarea {
 		top: 0;
 		bottom: 0;
 		left: 0;
-		width: min(84vw, 18em); /* match desktop width cap */
+		width: min(84vw, 15em); /* match desktop width cap */
 		background: #023e8a; /* same as desktop */
 		text-align: right; /* match desktop alignment */
 		padding: 2.5em 2.5em 0.5em 2.5em; /* match desktop spacing */
@@ -4504,7 +4546,7 @@ input, select, textarea {
 
 /* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
 body.page-index {
-	--sidebar-w: 18em; /* matches #sidebar width used on index */
+	--sidebar-w: 15em; /* matches #sidebar width used on index */
 	--topbar-h: 3.5em; /* matches top bar height on index */
 }
 
@@ -4515,8 +4557,6 @@ body.page-index {
 		padding-left: var(--sidebar-w);
 	}
 
-	/* If you prefer not to pad the whole body, target your main wrapper instead:
-     #wrapper, #main, .site-content { margin-left: var(--sidebar-w); } */
 }
 
 /* 737–1280px: your CSS turns #sidebar into a fixed top bar; push content down */
@@ -5187,7 +5227,7 @@ body.page-index {
 	--qb-blue-1: var(--wq-accent-2, #0162eb);
 	--qb-blue-2: var(--wq-accent-1, #00c0fa);
 	position: relative;
-	margin-bottom: 0.5rem;
+	margin-bottom: 1.75rem;
 	border-radius: var(--qb-radius);
 	overflow: hidden;
 	/* Gradient border with gold glints */
@@ -5672,7 +5712,7 @@ html.zoom-lock, body.zoom-lock {
 /* --- Sidebar-aware fullscreen layout for the zoom overlay --- */
 /* Define your sidebar width once (match your actual sidebar). */
 html.page-index {
-	--sidebar-w: 18em
+	--sidebar-w: 15em
 }
 
 /* Always keep sheet in border-box so padding doesn't cause overflow */
