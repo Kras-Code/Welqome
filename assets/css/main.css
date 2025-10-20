@@ -2087,6 +2087,21 @@ input, select, textarea {
 					opacity: 0.1;
 				}
 
+
+
+		/* Solid, heavier variant (does not alter base .btn-relay) */
+		.btn-relay.btn-relay--solid {
+			background-color: #023e8a; /* solid fill */
+			font-size: 0.9em; /* larger text inside button */
+			font-weight: 800; /* heavier than bold */
+			height: 3rem; /* decouple from em scaling */
+			line-height: 2.75rem; /* keeps vertical centering */
+			padding: 0 2rem; /* narrower pill */
+			border-radius: 2rem; /* proportional rounding */
+		}
+		
+
+
 /* Features */
 
 	.features {
@@ -5171,7 +5186,7 @@ body.page-index {
 	--qb-blue-1: var(--wq-accent-2, #0162eb);
 	--qb-blue-2: var(--wq-accent-1, #00c0fa);
 	position: relative;
-	margin-bottom: 0.5rem;
+	margin-bottom: 2.5rem;
 	border-radius: var(--qb-radius);
 	overflow: hidden;
 	/* Gradient border with gold glints */
