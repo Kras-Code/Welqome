@@ -215,7 +215,7 @@ input, select, textarea {
 			}
 
 	h2 {
-		font-size: 1.75em;
+		font-size: 2.5em;
 	}
 
 	h3 {
@@ -2151,8 +2151,8 @@ input, select, textarea {
 /* Icon treatment */
 .feature-card .icon {
 	position: absolute;
-	left: 1.25rem;
-	top: 1.2rem;
+	left: 1.5rem;
+	top: 1.5rem;
 	width: 2.75rem;
 	height: 2.75rem;
 	line-height: 2.75rem;
@@ -5189,7 +5189,7 @@ body.page-index {
 			height: 3px;
 			border-radius: 2px;
 			background: linear-gradient(90deg, var(--qb-gold) 0%, rgba(255,219,88,0) 90%);
-			opacity: .55;
+			opacity: .60;
 		}
 
 	.Quentin-box .qb-copy p + p,
