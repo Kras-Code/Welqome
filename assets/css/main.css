@@ -4901,10 +4901,13 @@ body.page-index {
 		max-width: fit-content; /* shrink-wrap to the buttons */
 	}
 
-		.features + .center-below-features li {
-			list-style: none;
-			margin: 0;
-		}
+	/* Space the button row below a sunken section */
+	.sunken-section + .center-below-features {
+		margin: 1rem auto 0; /* 1rem gap above; centered horizontally */
+	}
+
+
+
 
 
 /* Founder page */
@@ -5944,8 +5947,6 @@ html.page-index {
 	padding: clamp(1rem, 1.5vw, 1.25rem);
 	border-radius: .75rem;
 	background: #023e8a;
-	color: #fff;
-	box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset;
 	/* Let child text scale by available inline size */
 	container-type: inline-size; /* enables cqi units below */
 	min-width: 0; /* allow content to shrink */
@@ -6007,15 +6008,6 @@ html.page-index {
 	height: var(--contact-h, var(--card-h)); /* fixed vertical size */
 }
 
-/* Ensure Contact Us card keeps its background & border on all viewports */
-.logo-strip > li.contact-us > .contact-us-card,
-.logo-strip > li.contact-us > .Contact-us-card {
-	background: #023e8a;
-	border: 1px solid rgba(255,255,255,.18);
-	border-radius: .75rem;
-	box-shadow: none; /* avoid being overridden by other inset rules */
-	overflow: hidden; /* keep radius crisp */
-}
 
 /* Mobile row span (if you use a mobile override) */
 @media (max-width: 480px) {
@@ -6038,6 +6030,7 @@ html.page-index {
 	--wq-card-bg: rgba(255,255,255,0.03);
 	--wq-card-border: rgba(255,255,255,0.15);
 	--wq-text: #fff;
+	--wq-card-shadow: 0 6px 10px rgba(0,0,0,.20), 0 18px 36px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.06) inset;
 }
 
 /* Viewport for the marquee */
@@ -6215,114 +6208,7 @@ html.page-index {
 
 
 
-/*Benefits Fullscreen popup*/
-/*TITLE IN LINE WITH ICON*/
-/* Grid that forces: [icon][H1] on row 1; everything else below */
-.title-inline-grid {
-	display: grid !important;
-	grid-template-columns: auto minmax(0, 1fr);
-	align-items: end;
-	column-gap: 2rem;
-	row-gap: var(--gap, 1rem);
-}
 
-
-	/* Column 2: the H1 — cancel width:100%/block from theme */
-	.title-inline-grid > h1 {
-		grid-column: 2;
-		grid-row: 1;
-		display: inline-block !important;
-		width: auto !important;
-		max-width: none !important;
-		margin: 0 !important;
-		padding-bottom: var(--bar-gap, .6rem);
-	}
-
-	/* Everything else (e.g., paragraphs) spans full width on next rows */
-	.title-inline-grid > *:not(.icon):not(h1) {
-		grid-column: 1 / -1;
-	}
-
-/*BRANDING CARDS*/
-/* --- WelQome feature cards --- */
-:root {
-	--wq-accent-1: #0077b6;
-	--wq-accent-2: #1c3d58;
-	--wq-card-bg: rgba(255,255,255,0.03);
-	--wq-card-border: rgba(255,255,255,0.12);
-	--wq-text: #ffffff;
-	--wq-muted: rgba(255,255,255,0.78);
-}
-
-/* Optional grid wrapper for a row of cards */
-.wq-feature-grid {
-	--gap: clamp(.8rem, 2vw, 1.25rem);
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-	gap: var(--gap);
-	align-items: stretch;
-	margin-bottom: calc(var(--gap) * 2); /* ← adds space below the grid */
-}
-
-/* Card */
-.logo-card.wq-feature {
-	position: relative;
-	padding: 1.1rem 1.1rem 1.2rem;
-	border-radius: 18px;
-	border: 1px solid transparent; /* enables gradient border */
-	background: linear-gradient(var(--wq-card-bg), var(--wq-card-bg)) padding-box, linear-gradient(135deg, rgba(0,192,250,.28), rgba(1,98,235,.28)) border-box;
-	box-shadow: 0 6px 18px -10px rgba(0,0,0,.6);
-	transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-	color: var(--wq-text);
-	isolation: isolate; /* keeps glow under control */
-}
-
-
-	/* Hover / focus */
-	.logo-card.wq-feature:hover,
-	.logo-card.wq-feature:focus-within {
-		transform: translateY(-2px);
-		box-shadow: 0 12px 28px -12px rgba(1,98,235,.45), 0 2px 10px -6px rgba(0,192,250,.35);
-		background: linear-gradient(var(--wq-card-bg), var(--wq-card-bg)) padding-box, linear-gradient(135deg, rgba(0,192,250,.45), rgba(1,98,235,.45)) border-box;
-	}
-
-	/* Typography */
-	.logo-card.wq-feature figcaption {
-		margin: 0;
-	}
-
-	.logo-card.wq-feature h3 {
-		margin: 0 0 .55rem 0;
-		font-weight: 800;
-		font-size: 1.05rem;
-		letter-spacing: .01em;
-		line-height: 1.2;
-		position: relative;
-	}
-
-		.logo-card.wq-feature h3::after {
-			content: "";
-			display: block;
-			width: 100%;
-			height: 4px;
-			margin-top: .5rem;
-			border-radius: 999px;
-			background: linear-gradient(90deg,var(--wq-accent-1),var(--wq-accent-2));
-			opacity: .95;
-		}
-
-	.logo-card.wq-feature .integration-desc {
-		margin: 0;
-		color: var(--wq-muted);
-		font-weight: 500;
-		line-height: 1.45;
-	}
-
-	/* A11y + motion */
-	.logo-card.wq-feature:focus-within {
-		outline: 2px solid color-mix(in oklab, var(--wq-accent-2) 70%, white);
-		outline-offset: 3px;
-	}
 
 
 	/* FACT CARDS*/
