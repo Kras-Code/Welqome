@@ -830,7 +830,9 @@
 
                     <div class="wq-actions">
                         <!-- Placeholder box styled to look like reCAPTCHA; swap for a real widget if needed -->
-                        <div class="wq-recaptcha" aria-hidden="true">protected by reCAPTCHA</div>
+                        <!-- Real Google reCAPTCHA v2 checkbox -->
+                        <div class="g-recaptcha" data-sitekey="6Lc9b_MrAAAAAExSWVuAKc7oL68rB3VF0Mpk0-mE"></div>
+
                         <button type="submit" class="wq-btn">Submit</button>
                     </div>
 
@@ -968,6 +970,8 @@
         <script src="assets/js/fullscreen.js" defer></script>
         <script src="assets/js/integrations.js" defer></script>
         <script src="assets/js/form.js" defer></script>
-   </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="assets/js/captcha.js" defer></script>
+    </div>
 </body>
 </html>
