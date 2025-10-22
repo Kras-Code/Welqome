@@ -3191,6 +3191,7 @@ button,
 			padding: 5em 5em 3em 5em ;
 			max-width: 100%;
 			width: 75em;
+
 		}
 
 			@media screen and (max-width: 1680px) {
@@ -3406,14 +3407,13 @@ button,
 /* Indigo headings & paragraphs, centred text */
 .darktext-h {
 	color: #023e8a !important;
-	text-align: center; /* horizontally center the text */
 }
 
 
 .darktext-p {
 	color: #375983 !important;
-	text-align: center; /* horizontally center the text */
 }
+
 
 
 
@@ -3477,6 +3477,7 @@ button,
 			display: block;
 			font-size: 1.25em;
 			font-weight: bold;
+
 		}
 
 		#header > nav {
