@@ -3240,7 +3240,7 @@ input, select, textarea {
 		}
 
 		.wrapper.style3 {
-			background-color: #0077b6;
+			background-color: #1c3d58;
 		}
 
 		.wrapper.style3-alt {
@@ -3348,7 +3348,63 @@ input, select, textarea {
 		}
 
 
-	
+
+
+.wq-gradient {
+	--bg-a: #0b1f4b;
+	--bg-b: #023e8a;
+	--bg-c: #0161eb;
+	--ink: #0B1220;
+	--muted: #6b7280;
+	--ring: rgba(1, 97, 235, 0.18);
+	color: #fff;
+	/* gradients on top, SVG at the bottom */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.07), transparent 60%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 46%, var(--bg-c) 100%), url("images/intro.svg") !important;
+	background-repeat: no-repeat, no-repeat, no-repeat;
+	/* tune these to taste */
+	background-position: 100% -10%, center, center;
+	background-size: auto, cover, cover;
+}
+
+
+/* Dark footer gradient that blends with .wq-gradient above it */
+.wq-gradient-alt {
+	/* deeper version of your brand ramp */
+	--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+	--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+	--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+	/* text/accents tuned for dark surfaces */
+	--ink: #eef6ff;
+	--muted: #8fa3c2;
+	--ring: rgba(1, 97, 235, 0.22);
+	color: #fff;
+	position: relative;
+	isolation: isolate;
+	/* keep the same stacking order so it visually relates to .wq-gradient */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+	background-repeat: no-repeat, no-repeat;
+	background-position: 100% -10%, center;
+	background-size: auto, cover;
+	/* solid fallback ensures nothing “wins” over the gradient */
+	background-color: var(--bg-a);
+}
+
+
+/* Helpful footer-specific polish (optional, keep if this class is used on #footer) */
+.wq-footer.wq-gradient-alt a {
+	color: #cfe8ff;
+}
+
+	.wq-footer.wq-gradient-alt a:hover,
+	.wq-footer.wq-gradient-alt a:focus {
+		color: #e9f4ff;
+		text-decoration-color: rgba(0,192,250,0.65);
+	}
+
+.wq-footer.wq-gradient-alt {
+	box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset; /* micro inner lip, hides any seam */
+}
+
 
 
 
@@ -5650,10 +5706,11 @@ html.page-index {
 		inset: 0;
 		border-radius: inherit;
 		pointer-events: none;
-		background: linear-gradient( to bottom, rgba(255,255,255,.10), transparent 28% );
+		background: #0161eb linear-gradient( to bottom, rgba(255,255,255,.10), transparent 28% );
 		mix-blend-mode: screen;
 		transform: translateZ(1px); /* sit just above the card face */
 	}
+
 
 	/* soft floor glow to anchor the card to the page (3-D cue) */
 	.logo-card::after {
@@ -5977,7 +6034,6 @@ html.page-index {
 	height: 100%;
 	padding: var(--pad);
 	border-radius: var(--radius);
-	background: var(--wq-card-bg);
 	outline: 1px solid var(--wq-card-border);
 	color: var(--wq-text);
 	display: grid;
@@ -6018,12 +6074,6 @@ html.page-index {
 			line-height: 1.35;
 		}
 
-/* Optional variant for the contact card */
-.contact-us-card {
-	background: #023e8a;
-	outline-color: rgba(255,255,255,.18);
-	color: #fff;
-}
 
 /* Accessibility: if user prefers reduced motion, just stop the animation */
 @media (prefers-reduced-motion: reduce) {
@@ -6218,8 +6268,268 @@ html.page-index {
 
 
 
-/* FOOTER*/
-/* --- WelQome Footer Layout --- */
+/* Contact Us*/
+/* ===== Contact section (self-contained, no global overrides) ===== */
+.wq-contact {
+	--bg-a: #0b1f4b; /* deep navy */
+	--bg-b: #023e8a; /* brand deep blue */
+	--bg-c: #0161eb; /* brand cobalt */
+	--ink: #0B1220; /* dark text inside white card */
+	--muted: #6b7280; /* subtle helper text */
+	--ring: rgba(1, 97, 235, 0.18);
+	color: #fff;
+	background: linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 46%, var(--bg-c) 100%);
+	padding: clamp(3rem, 6vw, 6rem) 0;
+}
+
+	/* Contact form label colour */
+	.wq-contact .wq-contact__form .wq-field > label {
+		color: #023e8a;
+	}
+
+.wq-contact__inner {
+	width: min(1120px, 100% - 6vw);
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: 1.1fr minmax(460px, 560px);
+	gap: clamp(2rem, 5vw, 6rem);
+	align-items: start;
+}
+
+/* Left copy */
+.wq-contact__eyebrow {
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	opacity: 0.85;
+	margin: 0 0 1rem 0;
+	font-weight: 700;
+}
+
+
+/* If you want it always visible instead of on hover, use this line instead: */
+/* .wq-contact__eyebrow::after{ max-width:100%; } */
+
+
+.wq-contact__headline {
+	margin: 2em, 0 ,0 0;
+	line-height: 1.05;
+	font-size: clamp(2.2rem, 3.8vw, 3.1rem);
+	font-weight: 800;
+
+}
+
+.wq-contact__subheadline {
+	margin: 0rem 0 0 0;
+	line-height: 1.1;
+	font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+	font-weight: 800;
+}
+
+.wq-contact__kicker {
+	margin-top: 1.1rem;
+	font-size: 1rem;
+	opacity: .9;
+}
+
+/* Card/form */
+.wq-contact__form {
+	background: #ffffff;
+	color: var(--ink);
+	border-radius: 14px;
+	padding: clamp(1.25rem, 3vw, 2rem);
+	box-shadow: 0 10px 20px rgba(0,0,0,.18), 0 30px 60px rgba(0,0,0,.22);
+}
+
+.wq-form-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem 1.25rem;
+}
+
+.wq-field {
+	display: flex;
+	flex-direction: column;
+}
+
+	.wq-field.full {
+		grid-column: 1 / -1;
+	}
+
+.wq-contact__form label {
+	font-size: .92rem;
+	font-weight: 600;
+	margin: 0 0 .35rem 0;
+}
+
+.wq-contact__form .req {
+	color: #e11d48;
+	font-weight: 700;
+}
+
+/* Inputs */
+.wq-contact__form input[type="text"],
+.wq-contact__form input[type="email"],
+.wq-contact__form input[type="url"],
+.wq-contact__form select,
+.wq-contact__form textarea {
+	display: block;
+	width: 100%;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	background: #fff;
+	color: var(--ink);
+	padding: .7rem .85rem;
+	font-size: 1rem;
+	line-height: 1.25;
+}
+
+.wq-contact__form select {
+	height: 44px;
+}
+
+.wq-contact__form input[type="text"],
+.wq-contact__form input[type="email"],
+.wq-contact__form input[type="url"] {
+	height: 44px;
+}
+
+.wq-contact__form textarea {
+	min-height: 120px;
+	resize: vertical;
+}
+
+	.wq-contact__form input:focus,
+	.wq-contact__form select:focus,
+	.wq-contact__form textarea:focus {
+		outline: none;
+		border-color: #0161eb;
+		box-shadow: 0 0 0 3px var(--ring);
+	}
+
+/* Strong, scoped override placed AFTER your theme CSS */
+.wq-field.full textarea#message {
+	height: auto; /* cancel any fixed height */
+	min-height: 50px; /* cancel oversized mins */
+	max-height: 350px; /* the cap you want */
+	overflow-y: auto; /* scroll instead of growing */
+	resize: vertical; /* let users resize, but capped by max-height */
+	box-sizing: border-box;
+}
+
+
+
+/* Hidden by default; reveal via [hidden] toggle */
+.wq-field--other[hidden] {
+	display: none !important;
+}
+
+/* If your grid uses narrower columns, allow the “Where?” input to fit well */
+.wq-field--other input {
+	width: 100%;
+}
+
+
+/* Helper/legal + actions */
+.wq-legal {
+	margin: .75rem 0 1rem 0;
+	font-size: .9rem;
+	color: var(--muted);
+}
+
+	.wq-legal a {
+		color: #0161eb;
+		text-decoration: underline;
+	}
+
+.wq-actions {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-top: .25rem;
+}
+
+.wq-recaptcha {
+	width: 304px;
+	height: 78px;
+	border: 1px solid #d1d5db;
+	border-radius: 6px;
+	background: #f9fafb;
+	font-size: .78rem;
+	color: #6b7280;
+	display: grid;
+	place-items: center;
+}
+
+/* Button */
+.wq-btn {
+	appearance: none;
+	border: none;
+	border-radius: 10px;
+	background: #0161eb;
+	color: #fff;
+	height: 44px;
+	padding: 0 1.25rem;
+	font-weight: 700;
+	cursor: pointer;
+	transition: transform .15s ease, filter .15s ease;
+}
+
+	.wq-btn:hover {
+		filter: brightness(1.05);
+	}
+
+	.wq-btn:active {
+		transform: translateY(1px);
+	}
+
+.wq-status {
+	margin-top: .75rem;
+	font-size: .9rem;
+}
+
+/* Anti-bot input */
+.wq-honey {
+	display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+	.wq-contact__inner {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	.wq-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.wq-recaptcha {
+		width: 100%;
+		height: 84px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* FOOTER — compact, non-redundant */
 .wq-footer {
 	--wq-gap: clamp(1rem, 2vw, 1.5rem);
 	color: var(--wq-footer-text);
@@ -6229,28 +6539,46 @@ html.page-index {
 		display: grid;
 		grid-template-columns: minmax(260px, 1.1fr) 3fr;
 		gap: calc(var(--wq-gap) * 2) var(--wq-gap);
-		padding-top: 2.25rem;
-		padding-bottom: 2.25rem;
+		padding-block: 2.25rem;
 	}
 
-
-/* Brand block */
-.wq-footer__brand .wq-footer__logo img {
+/* Brand */
+.wq-footer__logo img {
 	display: block;
 	max-width: 210px;
 	height: auto;
-	margin: 0 0 1rem 0;
-}
-.wq-footer__brand .wq-footer__meta .wq-footer__block + .wq-footer__block {
-	border-top: 1px solid rgba(255,255,255,0.18);
-	margin-top: .75rem;
-	padding-top: .75rem;
+	margin: 0 0 1rem;
 }
 
 .wq-footer__blurb {
 	color: var(--wq-footer-muted);
-	margin: 0 0 1rem 0;
+	margin: 0 0 1rem;
 	line-height: 1.55;
+}
+
+/* Contact stack (Social / Email / Phone / Address) */
+.wq-footer__contacts {
+	margin-top: .5rem;
+	padding-top: .75rem;
+	border-top: 1px solid rgba(255,255,255,.12);
+}
+
+.wq-footer__block {
+	margin: 0;
+}
+
+.wq-footer__contacts .wq-footer__block + .wq-footer__block {
+	border-top: 1px solid rgba(255,255,255,.18);
+	margin-top: .75rem;
+	padding-top: .75rem;
+}
+
+.wq-footer__brand h3 {
+	font-size: .9rem;
+	font-weight: 700;
+	letter-spacing: .02em;
+	color: #fff;
+	margin: 0 0 .45rem;
 }
 
 .wq-footer__social {
@@ -6268,10 +6596,15 @@ html.page-index {
 		width: 36px;
 		height: 36px;
 		border-radius: 999px;
-		background: rgba(255,255,255,0.08);
+		background: rgba(255,255,255,.08);
 	}
 
-/* Link grid */
+.wq-address {
+	font-style: normal;
+	line-height: 1.55;
+}
+
+/* Link columns */
 .wq-footer__nav {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(160px, 1fr));
@@ -6282,7 +6615,7 @@ html.page-index {
 		font-size: .9rem;
 		font-weight: 700;
 		letter-spacing: .02em;
-		color: #ffffff;
+		color: #fff;
 		margin: 0 0 .6rem;
 	}
 
@@ -6296,47 +6629,37 @@ html.page-index {
 		margin: .35rem 0;
 	}
 
-/* Meta rows */
+/* Meta (Trusted by / Verified by side-by-side; images underneath) */
 .wq-footer__meta {
-	grid-column: 1 / -1;
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: var(--wq-gap);
 	padding-top: .75rem;
-	border-top: 1px solid rgba(255,255,255,0.12);
+	border-top: 1px solid rgba(255,255,255,.12);
 }
 
-/* Stack meta when placed inside the brand block */
-.wq-footer__brand .wq-footer__meta {
-	grid-template-columns: 1fr;
-}
+	.wq-footer__meta .wq-label {
+		display: inline-block;
+		font-size: .85rem;
+		font-weight: 700;
+		color: var(--wq-footer-muted);
+		margin-bottom: .5rem;
+	}
 
-.wq-footer__block .wq-label {
-	display: inline-block;
-	font-size: .85rem;
-	font-weight: 700;
-	color: var(--wq-footer-muted);
-	margin-bottom: .5rem;
-}
+	.wq-footer__meta .wq-logos,
+	.wq-footer__meta .wq-badges {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 
-.wq-logos, .wq-badges {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-	.wq-logos img {
+	.wq-footer__meta img {
 		height: 5rem;
 		width: auto;
 		opacity: .9;
-	}
-
-	.wq-badges img {
-		height: 5rem;
-		width: auto;
 	}
 
 /* Bottom line */
@@ -6347,30 +6670,31 @@ html.page-index {
 	align-items: center;
 	margin-top: .75rem;
 	padding-top: .75rem;
-	border-top: 1px solid rgba(255,255,255,0.12);
+	border-top: 1px solid rgba(255,255,255,.12);
 	font-size: .95rem;
 	color: var(--wq-footer-muted);
 }
 
-/* Responsiveness */
+/* Responsive */
 @media (max-width: 1100px) {
 	.wq-footer .inner {
 		grid-template-columns: 1fr;
 	}
 
 	.wq-footer__nav {
-		grid-template-columns: repeat(3, minmax(160px,1fr));
+		grid-template-columns: repeat(3, minmax(160px, 1fr));
 	}
 }
 
 @media (max-width: 820px) {
 	.wq-footer__nav {
-		grid-template-columns: repeat(2, minmax(160px,1fr));
+		grid-template-columns: repeat(2, minmax(160px, 1fr));
 	}
 
 	.wq-footer__meta {
 		grid-template-columns: 1fr;
 	}
+	/* stack trust/verify on small screens */
 }
 
 @media (max-width: 520px) {
