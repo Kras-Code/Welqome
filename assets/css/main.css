@@ -3350,7 +3350,16 @@ button,
 			opacity: 0;
 		}
 
-
+/* Center the fixed-width inner on large screens; fluid on small */
+.wrapper > .inner {
+	/* keep your padding */
+	padding: 5em 5em 3em 5em;
+	/* fluid up to a cap */
+	width: 100%;
+	max-width: 75em;
+	/* the centering bit */
+	margin-inline: auto; /* logical L/R auto */
+}
 
 
 .wq-gradient {
@@ -3371,6 +3380,41 @@ button,
 	background-position: center, 100% -10%, center;
 	background-size: cover, auto, cover;
 }
+
+/* next section: pale bluish off-white */
+.wq-soft {
+	--section-bg: #EFF4FF; /* ice blue */
+	--section-ink: #0B1220; /* your ink */
+	--section-border: #D9E6FF; /* subtle separators */
+	background: var(--section-bg);
+}
+
+	.wq-soft .rule,
+	.wq-soft hr {
+		border-color: var(--section-border);
+	}
+
+	/* optional: slim gradient top divider to tie sections */
+	.wq-soft::before {
+		content: "";
+		display: block;
+		height: 2px;
+		background: linear-gradient(90deg, #0162eb, #00c0fa);
+		opacity: .6;
+	}
+
+/* Indigo headings & paragraphs, centred text */
+.darktext-h {
+	color: #023e8a !important;
+	text-align: center; /* horizontally center the text */
+}
+
+
+.darktext-p {
+	color: #375983 !important;
+	text-align: center; /* horizontally center the text */
+}
+
 
 
 /* Dark footer gradient that blends with .wq-gradient above it */
@@ -3599,6 +3643,17 @@ button,
 	top: 0;
 	width: 15em;
 	z-index: 10000;
+
+	/* gradient background */
+	--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+	--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+	--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+	/* text/accents tuned for dark surfaces */
+	/* keep the same stacking order so it visually relates to .wq-gradient */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+	background-repeat: no-repeat, no-repeat;
+	/* solid fallback ensures nothing “wins” over the gradient */
+	background-color: var(--bg-a);
 }
 
 		#sidebar > .inner {
@@ -3825,7 +3880,7 @@ button,
 			}
 
 			#sidebar nav a:before {
-				background: #023e8a;
+				display: none;
 			}
 
 			#sidebar nav a:after {
