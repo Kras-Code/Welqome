@@ -3363,7 +3363,7 @@ button,
 }
 
 
-.wq-gradient {
+.wq-gradient-intro {
 	--bg-a: #0b1f4b;
 	--bg-b: #023e8a;
 	--bg-c: #0161eb;
@@ -3381,6 +3381,41 @@ button,
 	background-position: center, 100% -10%, center;
 	background-size: cover, auto, cover;
 }
+
+.wq-gradient {
+	--bg-a: #0b1f4b;
+	--bg-b: #023e8a;
+	--bg-c: #0161eb;
+	--ink: #0B1220;
+	--muted: #6b7280;
+	--ring: rgba(1, 97, 235, 0.18);
+	color: #fff;
+	/* SVG on top, gradients underneath */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.07), transparent 60%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 46%, var(--bg-c) 100%);
+	background-repeat: no-repeat, no-repeat, no-repeat;
+	background-position: center, 100% -10%, center;
+	background-size: cover, auto, cover;
+}
+
+.wq-gradient2 {
+	/* push the palette toward #0161eb */
+	--bg-a: #0b2d6e; /* deep blue anchor */
+	--bg-b: #0156e5; /* cobalt-mid */
+	--bg-c: #0161eb; /* brand cobalt (dominant) */
+	--bg-d: #5aa0ff; /* bright blue tail */
+	--ink: #0B1220;
+	--muted: #6b7280;
+	--ring: rgba(1, 97, 235, 0.22);
+	color: #fff;
+	/* SVG on top, gradients underneath */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255, 255, 255, 0.07), transparent 60%),
+	/* heavier weighting toward #0161eb */
+	linear-gradient( 112deg, var(--bg-a) 0%, var(--bg-b) 36%, var(--bg-c) 68%, var(--bg-d) 100% );
+	background-repeat: no-repeat, no-repeat, no-repeat;
+	background-position: center, 100% -10%, center;
+	background-size: cover, auto, cover;
+}
+
 
 /* next section: pale bluish off-white */
 .wq-soft {
