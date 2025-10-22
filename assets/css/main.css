@@ -6305,6 +6305,25 @@ html.page-index {
 	font-weight: 700;
 }
 
+.wq-contact__eyebrow {
+	position: relative;
+	display: inline-block;
+	padding-bottom: .35rem;
+}
+
+	.wq-contact__eyebrow::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: -0.1px;
+		width: 100%;
+		height: 3px; /* subtle thickness */
+		border-radius: 999px;
+		background-image: linear-gradient(to right, #0162eb, #00c0fa);
+		opacity: .85; /* subtle look */
+		transition: none; /* ensure no hover animation */
+	}
+
 
 /* If you want it always visible instead of on hover, use this line instead: */
 /* .wq-contact__eyebrow::after{ max-width:100%; } */
