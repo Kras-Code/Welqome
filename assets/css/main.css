@@ -5533,7 +5533,7 @@ body.page-index {
 	--zoom-dur: 480ms;
 	--zoom-ease: cubic-bezier(.2,.7,.2,1);
 	--zoom-backdrop: rgba(3, 14, 30, 0.58);
-	--zoom-sheet-bg: #0161eb; /* adjust to match your theme */
+	--zoom-sheet-bg: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.07), transparent 60%), linear-gradient( 120deg, var(--bg-a, #0b1f4b) 0%, var(--bg-b, #023e8a) 46%, var(--bg-c, #0161eb) 100% );
 }
 
 /* Prevent background scroll when overlay is open */
