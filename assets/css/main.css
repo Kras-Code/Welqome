@@ -3437,16 +3437,25 @@ button,
 	}
 
 /* alternative: fit width of section, never tied to height */
-.wq-cogs--top {
-	top: 0;
-	left: 50%;
-	width: 100%;
-	height: auto !important;
-	transform: translateX(-50%); /* no scale */
-	transform-origin: center top;
-}
+	.wq-cogs--top {
+		top: 0;
+		left: 50%;
+		width: 100%;
+		height: auto !important;
+		transform: translateX(-50%); /* no scale */
+		transform-origin: center top;
+	}
 
+	.wq-cogs--bottom { 
+	  top:auto; bottom:0; left:50%;
+	  width:100%; height:auto !important;
+	  transform: translateX(-50%); 
+	  transform-origin:center bottom;
+	}
 
+	.wq-soft--cogs:has(> .wq-cogs--bottom) {
+		padding-block-end: clamp(2.5rem, 6vw, 3.5rem);
+	}
 
 
 
