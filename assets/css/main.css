@@ -3421,23 +3421,97 @@ button,
 .wq-soft {
 	--section-bg: #EFF4FF; /* ice blue */
 	--section-ink: #0B1220; /* your ink */
-	--section-border: #D9E6FF; /* subtle separators */
 	background: var(--section-bg);
 }
 
-	.wq-soft .rule,
-	.wq-soft hr {
-		border-color: var(--section-border);
+/* Keep this (or your existing): */
+.wq-soft--cogs {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	/* tune opacity in one place */
+	--cogs-opacity: 1; /* increase/decrease to taste */
+}
+
+	/* Ensure content stays above */
+	.wq-soft--cogs > .inner {
+		position: relative;
+		z-index: 1;
 	}
 
-	/* optional: slim gradient top divider to tie sections */
-	.wq-soft::before {
+/* FULL-HEIGHT decorative images */
+.wq-cogs {
+	position: absolute;
+	top: 0;
+	height: 100%; /* <-- makes image span top-to-bottom of the section */
+	width: auto; /* preserve aspect ratio; prevents “zoomed-in” look */
+	max-height: 100%;
+	max-width: none; /* allow natural width from the height scaling */
+	object-fit: contain; /* safe; not strictly needed with explicit height/width */
+	pointer-events: none;
+	user-select: none;
+	z-index: 0;
+	opacity: var(--cogs-opacity);
+}
+
+/* Pin to edges + keep artwork aligned */
+.wq-cogs--left {
+	left: 0;
+	object-position: left center;
+}
+
+.wq-cogs--right {
+	right: 0;
+	object-position: right center;
+}
+
+/* Utility: per-child feathered shield behind content */
+.wq-feather {
+	position: relative;
+	isolation: isolate; /* local stacking context */
+	--shield-rgb: 239,244,255; /* #EFF4FF as RGB */
+	--shield-alpha: .95; /* centre opacity (0–1) */
+	--feather: 80px; /* width of the fade at edges */
+	--expand: 10px; /* grow shield beyond element bounds */
+	--blur: 2px; /* optional: blur what’s behind */
+	--rx: 130%; /* mask ellipse width  (shape control) */
+	--ry: 120%; /* mask ellipse height (shape control) */
+	--radius: 12px; /* visual rounding; set 0 for square */
+}
+
+	.wq-feather::before {
 		content: "";
-		display: block;
-		height: 2px;
-		background: linear-gradient(90deg, #0162eb, #00c0fa);
-		opacity: .6;
+		position: absolute;
+		inset: calc(var(--expand) * -1);
+		z-index: -1; /* under this child’s content */
+		pointer-events: none;
+		/* light fill + optional backdrop softening */
+		background: rgba(var(--shield-rgb), var(--shield-alpha));
+		backdrop-filter: blur(var(--blur));
+		-webkit-backdrop-filter: blur(var(--blur));
+		/* smooth feather to transparent at edges (no banding) */
+		-webkit-mask-image: radial-gradient( var(--rx) var(--ry) at 50% 50%, #000 calc(100% - var(--feather)), transparent 100% );
+		mask-image: radial-gradient( var(--rx) var(--ry) at 50% 50%, #000 calc(100% - var(--feather)), transparent 100% );
+		border-radius: var(--radius);
 	}
+
+
+
+
+/* Mobile adjustments (if needed) */
+@media (max-width: 980px) {
+	.wq-cogs {
+		opacity: 0.28;
+	}
+}
+
+@media (max-width: 736px) {
+	.wq-cogs {
+		display: none;
+	}
+}
+
+
 
 /* Indigo headings & paragraphs, centred text */
 .darktext-h {
@@ -3966,18 +4040,6 @@ button,
 	isolation: isolate; /* contain pseudo-element layering */
 }
 
-	/* Gradient hairline for retina crispness */
-	#sidebar::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		right: 0; /* sits inside, so overflow doesn't clip it */
-		width: 1px;
-		height: 100%;
-		pointer-events: none;
-		background: linear-gradient( to bottom, rgba(255,255,255,0.85) 0%, rgba(240,240,240,0.55) 30%, rgba(220,220,220,0.35) 70%, rgba(200,200,200,0.20) 100% );
-		opacity: 0.95;
-	}
 
 /* Mobile/top-bar layout: convert the edge to a bottom rule */
 @media (max-width: 980px) {
@@ -3985,15 +4047,6 @@ button,
 		box-shadow: inset 0 -1px 0 rgba(255,255,255,0.65), inset 0 -2px 0 rgba(255,255,255,0.20), 0 8px 24px rgba(12,18,32,0.22);
 	}
 
-		#sidebar::after {
-			top: auto;
-			bottom: 0;
-			right: auto;
-			left: 0;
-			width: 100%;
-			height: 1px;
-			background: linear-gradient( to right, rgba(255,255,255,0.85), rgba(220,220,220,0.30) );
-		}
 }
 
 
