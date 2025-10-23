@@ -319,6 +319,9 @@ input, select, textarea {
 		text-align: left;
 	}
 
+	.align-center {
+		text-align: center;
+	}
 
 	.align-right {
 		text-align: right;
@@ -3184,11 +3187,6 @@ button,
 			width: 75em;
 		}
 
-	@media (min-width: 1281px) {
-		.wrapper > .inner {
-			margin-inline: auto; /* center only when wide */
-		}
-
 	@media screen and (max-width: 1680px) {
 
 		.wrapper > .inner {
@@ -3438,35 +3436,6 @@ button,
 		object-position: right center;
 	}
 
-	/* Utility: per-child feathered shield behind content */
-	.wq-feather {
-		position: relative;
-		isolation: isolate; /* local stacking context */
-		--shield-rgb: 239,244,255; /* #EFF4FF as RGB */
-		--shield-alpha: .95; /* centre opacity (0–1) */
-		--feather: 80px; /* width of the fade at edges */
-		--expand: 10px; /* grow shield beyond element bounds */
-		--blur: 2px; /* optional: blur what’s behind */
-		--rx: 130%; /* mask ellipse width  (shape control) */
-		--ry: 120%; /* mask ellipse height (shape control) */
-		--radius: 12px; /* visual rounding; set 0 for square */
-	}
-
-		.wq-feather::before {
-			content: "";
-			position: absolute;
-			inset: calc(var(--expand) * -1);
-			z-index: -1; /* under this child’s content */
-			pointer-events: none;
-			/* light fill + optional backdrop softening */
-			background: rgba(var(--shield-rgb), var(--shield-alpha));
-			backdrop-filter: blur(var(--blur));
-			-webkit-backdrop-filter: blur(var(--blur));
-			/* smooth feather to transparent at edges (no banding) */
-			-webkit-mask-image: radial-gradient( var(--rx) var(--ry) at 50% 50%, #000 calc(100% - var(--feather)), transparent 100% );
-			mask-image: radial-gradient( var(--rx) var(--ry) at 50% 50%, #000 calc(100% - var(--feather)), transparent 100% );
-			border-radius: var(--radius);
-		}
 
 
 
