@@ -3436,6 +3436,16 @@ button,
 		object-position: right center;
 	}
 
+/* alternative: fit width of section, never tied to height */
+.wq-cogs--top {
+	top: 0;
+	left: 50%;
+	width: 100%;
+	height: auto !important;
+	transform: translateX(-50%); /* no scale */
+	transform-origin: center top;
+}
+
 
 
 
