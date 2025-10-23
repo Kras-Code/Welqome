@@ -3352,16 +3352,6 @@ button,
 			opacity: 0;
 		}
 
-/* Center the fixed-width inner on large screens; fluid on small */
-.wrapper > .inner {
-	/* keep your padding */
-	padding: 5em 5em 3em 5em;
-	/* fluid up to a cap */
-	width: 100%;
-	max-width: 75em;
-	/* the centering bit */
-	margin-inline: auto; /* logical L/R auto */
-}
 
 
 .wq-gradient-intro {
