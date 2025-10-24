@@ -333,52 +333,54 @@
                             display: block;
                         }
                 </style>
+                <!-- Sentinel at the bottom of the video: growth begins when viewport-bottom reaches this -->
+                <div id="flow-sentinel" aria-hidden="true"></div>
 
-                <details class="reveal">
-                    <summary class="reveal-summary">
-                        <span class="button wq-btn">
-                            <span class="label-closed">Show more</span>
-                            <span class="label-open">Show less</span>
-                        </span>
-                    </summary>
+                <!-- Snake flow (no buttons) -->
+                <div id="flow-snake" class="flow" role="list" aria-label="Automation workflow">
+                    <!-- SVG trunk under the cards -->
+                    <svg class="flow-canvas" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="flowGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="var(--bg-a, #0b1f4b)" />
+                                <stop offset="55%" stop-color="var(--bg-b, #023e8a)" />
+                                <stop offset="100%" stop-color="var(--bg-c, #0161eb)" />
+                            </linearGradient>
+                        </defs>
+                        <path id="flowPath" class="flow-path" d="M0 0" />
+                    </svg>
 
-                    <div class="flowchart" role="list" aria-label="Automation workflow">
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 1: Needs Assessment</h3>
-                            <p>We discuss your business needs, customer interaction points and desired outcomes.</p>
-                        </div>
-                        <div class="arrow" aria-hidden="true">↓</div>
+                    <!-- Steps (keep your copy exactly) -->
+                    <article class="step" role="listitem">
+                        <h3>Step 1: Needs Assessment</h3>
+                        <p>We discuss your business needs, customer interaction points and desired outcomes.</p>
+                    </article>
 
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 2: Solution Proposal &amp; Agreement</h3>
-                            <p>We outline the AI receptionist automation plan, including integrations tailored to your business.</p>
-                        </div>
-                        <div class="arrow" aria-hidden="true">↓</div>
+                    <article class="step" role="listitem">
+                        <h3>Step 2: Solution Proposal &amp; Agreement</h3>
+                        <p>We outline the AI receptionist automation plan, including integrations tailored to your business.</p>
+                    </article>
 
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 3: Build-with-you AI Development</h3>
-                            <p>Our engineers build and customise your AI receptionist pipeline with continuous feedback.</p>
-                        </div>
-                        <div class="arrow" aria-hidden="true">↓</div>
+                    <article class="step" role="listitem">
+                        <h3>Step 3: Build-with-you AI Development</h3>
+                        <p>Our engineers build and customise your AI receptionist pipeline with continuous feedback.</p>
+                    </article>
 
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 4: Internal Testing &amp; Quality Assurance</h3>
-                            <p>We simulate real call and scheduling scenarios to ensure accuracy, reliability and GDPR compliance.</p>
-                        </div>
-                        <div class="arrow" aria-hidden="true">↓</div>
+                    <article class="step" role="listitem">
+                        <h3>Step 4: Internal Testing &amp; Quality Assurance</h3>
+                        <p>We simulate real call and scheduling scenarios to ensure accuracy, reliability and GDPR compliance.</p>
+                    </article>
 
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 5: Deployment &amp; Onboarding</h3>
-                            <p>WelQome goes live for your business. We provide training and ensure smooth integration with daily operations.</p>
-                        </div>
-                        <div class="arrow" aria-hidden="true">↓</div>
+                    <article class="step" role="listitem">
+                        <h3>Step 5: Deployment &amp; Onboarding</h3>
+                        <p>WelQome goes live for your business. We provide training and ensure smooth integration with daily operations.</p>
+                    </article>
 
-                        <div class="flow-step" role="listitem">
-                            <h3>Step 6: Ongoing Optimisation &amp; Support</h3>
-                            <p>Post-launch, we monitor performance and provide 24/7 support.</p>
-                        </div>
-                    </div>
-                </details>
+                    <article class="step" role="listitem">
+                        <h3>Step 6: Ongoing Optimisation &amp; Support</h3>
+                        <p>Post-launch, we monitor performance and provide 24/7 support.</p>
+                    </article>
+                </div>
 
             </div>
         </section>

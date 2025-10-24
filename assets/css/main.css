@@ -4825,109 +4825,159 @@ button,
 
 
 
-
-
-
 	/*section 2 */
 	/* Hide the default disclosure marker */
 
-	.reveal {
-		/* use logical property so it works in all writing modes */
-		margin-block-start: clamp(1rem, 3vw, 2.5rem);
-	}
+/* =========================================================
+   ONE-AUTOMATION FLOW (solid #0161eb cards + <h3> banner)
+   ========================================================= */
 
-		.reveal summary::-webkit-details-marker {
-			display: none;
-		}
+/* ===== Flow layout (unchanged) ===== */
+#one-automation .flow {
+	--thick: 3em;
+	--card-w: clamp(240px, 27vw, 320px);
+	--gutter: clamp(6rem, 14vw, 15rem);
+	--row-gap: 5.5em;
+	--stagger-left: 0.75em;
+	--stagger-right: 3.75em;
+	position: relative;
+	max-width: min(1200px, 95vw);
+	margin: calc(var(--top-gap) - var(--thick) * 0.5) auto 0;
+	padding-top: calc(var(--thick) * 0.5);
+	margin-inline: auto;
+	justify-content: center;
+	display: grid;
+	grid-template-columns: var(--card-w) var(--gutter) var(--card-w);
+	column-gap: 0;
+	row-gap: var(--row-gap);
+	z-index: 0;
+}
 
-	.reveal-summary {
-		display: flex; /* enables flex layout */
-		justify-content: center;
-	}
+#flow-snake {
+	--reveal-lead: 180px; /* delay before reveal starts */
+	--reveal-stretch: 1.4; /* >1 = slower overall */
+	--reveal-smooth-alpha: 0.10; /* lower = more glide */
+}
 
-	.reveal summary::marker {
-		content: "";
-	}
+#one-automation {
+	padding-bottom: 3em;
+}
 
-	/* Swap the visible label based on open state */
-	.reveal .label-open {
-		display: none;
-	}
+/* SVG trunk (unchanged) */
+#one-automation .flow-canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 0;
+}
 
-	.reveal[open] .label-open {
-		display: inline;
-	}
+#one-automation .flow-path {
+	fill: none;
+	stroke: url(#flowGrad);
+	stroke-width: var(--thick);
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	filter: drop-shadow(0 12px 24px rgba(1,97,235,.18));
+}
 
-	.reveal[open] .label-closed {
-		display: none;
-	}
+/* ===== Cards: solid + banner-as-h3 ===== */
+#one-automation .step {
+	--stagger-y: 0px; /* set by odd/even */
+	--lift: 0px; /* hover lift */
 
-	/* Optional: spacing above the revealed panel */
-	.reveal > .flowchart {
-		margin-top: 0.75rem;
-	}
+	position: relative;
+	z-index: 1;
+	isolation: isolate;
+	width: 100%;
+	min-height: clamp(10.5em, 9vw, 15em);
+	background: #0161eb; /* solid card */
+	color: #fff; /* default text color */
+	border: 1px solid #023e8a; /* crisp edge */
+	border-radius: 1rem;
+	box-shadow: 0 16px 34px rgba(3,14,30,0.16); /* subtle 3D, no glow */
+	padding: 1rem; /* uniform padding */
 
+	opacity: 0;
+	transform: translateY(calc(var(--stagger-y) + var(--lift)));
+	transition: opacity .25s ease, transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
 
-
-
-
-	/*Section 3*/
-
-	/* Flowchart: always vertical */
-	.flowchart {
-		display: flex;
-		flex-direction: column;
-		gap: 10px; /* smaller spacing */
-		margin-top: 12px; /* smaller top margin */
-	}
-
-	:root {
-		--fs-step-title: clamp(1rem, 0.8rem + 0.6vw, 1.25rem);
-		--fs-step-body: clamp(0.9rem, 0.8rem + 0.3vw, 1.05rem);
-		--fs-arrow: clamp(0.9rem, 0.7rem + 0.4vw, 1rem);
-	}
-
-	.flow-step h3 {
-		font-size: var(--fs-step-title);
-	}
-
-	.flow-step p {
-		font-size: var(--fs-step-body);
-	}
-
-	.arrow {
-		font-size: var(--fs-arrow);
-	}
-
-	/* Step cards (smaller) */
-	.flow-step {
-		width: 90%;
+	/* Banner = the <h3> itself (bleeds to edges; auto height) */
+	#one-automation .step > h3 {
+		position: relative;
 		background: #023e8a;
 		color: #fff;
-		border-radius: 10px; /* slightly tighter corners */
-		box-shadow: 0 4px 10px rgba(0,0,0,0.12); /* lighter shadow */
-		padding: 12px 14px; /* smaller padding */
+		margin: -1rem -1rem 0; /* bleed full width, sit at top */
+		padding: 0.75rem 1rem; /* banner interior spacing */
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+		line-height: 1.25;
 	}
 
-		.flow-step h3 {
-			margin: 0 0 6px; /* tighter spacing */
-			font-weight: 700;
-			line-height: 1.2;
-		}
-
-		.flow-step p {
-			margin: 0;
-			line-height: 1.45; /* slightly tighter line-height */
-		}
-
-	/* Arrows (smaller + colored) */
-	.arrow {
-		text-align: center;
-		font-size: 25px; /* smaller arrow */
-		line-height: 1;
-		padding: 2px 0; /* tighter padding */
-		color: #1c3d58; /* requested color */
+	/* Body copy inside card */
+	#one-automation .step > p,
+	#one-automation .step > ul,
+	#one-automation .step > ol {
+		color: rgba(255,255,255,0.92);
 	}
+
+	/* Stagger columns */
+	#one-automation .step:nth-of-type(odd) {
+		grid-column: 1;
+		--stagger-y: var(--stagger-left);
+	}
+
+	#one-automation .step:nth-of-type(even) {
+		grid-column: 3;
+		--stagger-y: var(--stagger-right);
+	}
+
+	/* Reveal state when touched by trunk */
+	#one-automation .step.is-live {
+		opacity: 1;
+		--lift: 0px;
+		box-shadow: 0 20px 44px rgba(3,14,30,0.18);
+	}
+
+	/* Subtle hover lift */
+	#one-automation .step:where(:hover, :focus-within) {
+		--lift: -2px;
+		box-shadow: 0 22px 48px rgba(3,14,30,0.20);
+	}
+
+/* Mobile: single column, no stagger */
+@media (max-width: 736px) {
+	#one-automation .flow {
+		grid-template-columns: min(92vw, 520px);
+		justify-content: center;
+		row-gap: 2rem;
+	}
+
+	#one-automation .step {
+		--stagger-y: 0px;
+		min-height: auto;
+		box-shadow: 0 18px 36px rgba(3,14,30,0.18);
+	}
+
+	#flow-snake {
+		--reveal-lead: 120px;
+		--reveal-stretch: 1.6;
+		--reveal-smooth-alpha: 0.14;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 	/* Founders section */
