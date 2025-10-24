@@ -5721,46 +5721,6 @@ button,
 		--card-h: 250px;
 	}
 
-	/* ---------- Grid of logo cards ---------- */
-	.logo-strip {
-		display: grid;
-		/* respect card width and center rows */
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--card-w)), 1fr));
-		gap: var(--gap);
-		align-items: center;
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		justify-content: center;
-	}
-
-		.logo-strip li {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0; /* card supplies its own padding */
-			background: none; /* clear chip styling */
-		}
-
-		/* Global logo defaults (safe fallback) */
-		.logo-strip img {
-			height: var(--logo-h);
-			width: auto;
-			max-width: 100%;
-			object-fit: contain;
-			filter: grayscale(0%) contrast(1.05) brightness(.95);
-			opacity: .85;
-			transition: filter .2s ease, opacity .2s ease, transform .2s ease;
-		}
-
-			.logo-strip img:hover,
-			.logo-strip img:focus {
-				filter: none;
-				opacity: 1;
-				transform: translateY(-1px);
-				outline: none;
-			}
-
 	/* ---------- Sizing knobs ---------- */
 	.integrations {
 		--card-w: 200px;
@@ -5980,10 +5940,6 @@ button,
 		}
 	}
 
-	/* Make auto-placement willing to backfill gaps (helps with spanning) */
-	.logo-strip {
-		grid-auto-flow: row dense;
-	}
 
 		/* The grid item that should stretch from its auto start to the end of the row */
 		.logo-strip li.contact-us {
@@ -5993,16 +5949,6 @@ button,
 			min-width: 0;
 		}
 
-	/* Ensure the tile fills whatever columns remain on its current grid row */
-	.logo-strip {
-		grid-auto-flow: row dense;
-	}
-
-		.logo-strip li.contact-us {
-			grid-column: auto / -1;
-			align-self: stretch;
-			justify-self: stretch;
-		}
 
 	/* Fixed-height, width-flexible container + container queries enabled */
 	.contact-us-card {
@@ -6019,21 +5965,6 @@ button,
 		min-width: 0; /* allow content to shrink */
 		min-height: 0;
 	}
-
-			/* soft floor glow to anchor the card to the page (3-D cue) */
-		.logo-card::after {
-			content: "";
-			position: absolute;
-			left: 50%;
-			bottom: -12px; /* just below the card */
-			width: 70%;
-			height: 28px;
-			transform: translateX(-50%);
-			border-radius: 50%;
-			background: radial-gradient(ellipse at center, rgba(0,0,0,.35), transparent 70%);
-			filter: blur(6px);
-			opacity: .70;
-		}
 
 		/* Caption layout; keep content centered inside the fixed-height box */
 		.contact-us-card figcaption {
@@ -6073,14 +6004,6 @@ button,
 	/* If you need spacing above relay button without changing its styling: */
 	.contact-us-card .actions {
 		margin-top: .25rem;
-	}
-
-	/* Make the Contact Us item span the full row, independent of --card-w */
-	.logo-strip > li.contact-us {
-		grid-column: 1 / -1; /* full-width row span */
-		align-self: stretch;
-		justify-self: stretch;
-		width: 100%;
 	}
 
 	/* Keep a constant vertical size; width is free to expand */
