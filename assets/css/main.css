@@ -4197,8 +4197,7 @@ button,
 
 			/* Keep your active/underline style */
 			#sidebar nav a:after {
-				background-image: none;
-				background-color: #00c0fa;
+				background-image: linear-gradient(to right, #0162eb, #00c0fa);
 			}
 
 			/*sidebar dropdown*/
@@ -4216,7 +4215,6 @@ button,
 				width: 100%; /* exactly the width of the parent <li> */
 				min-width: 100%;
 				display: block;
-				background: #023e8a;
 				border: 1px solid rgba(255,255,255,0.12);
 				border-radius: 10px;
 				padding: .35rem 0;
@@ -4230,6 +4228,17 @@ button,
 				transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
 				box-shadow: 0 8px 22px rgba(0,0,0,.35);
 				will-change: transform, max-height, opacity;
+
+				/* gradient background */
+				--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+				--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+				--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+				/* text/accents tuned for dark surfaces */
+				/* keep the same stacking order so it visually relates to .wq-gradient */
+				background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+				background-repeat: no-repeat, no-repeat;
+				/* solid fallback ensures nothing “wins” over the gradient */
+				background-color: var(--bg-a);
 			}
 
 			/* Open state */
@@ -4291,7 +4300,6 @@ button,
 	#m-sidebar-backdrop {
 		position: fixed;
 		inset: 0;
-		background: rgba(0,0,0,0.45);
 		opacity: 0;
 		pointer-events: none;
 		transition: opacity 220ms ease;
@@ -4343,7 +4351,6 @@ button,
 			bottom: 0;
 			left: 0;
 			width: min(84vw, 15em); /* match desktop width cap */
-			background: #023e8a; /* same as desktop */
 			text-align: right; /* match desktop alignment */
 			padding: 2.5em 2.5em 0.5em 2.5em; /* match desktop spacing */
 			overflow-y: auto;
@@ -4352,6 +4359,16 @@ button,
 			transition: transform 240ms ease;
 			box-shadow: 2px 0 18px rgba(0,0,0,0.22);
 			z-index: 10002; /* above backdrop, below toggle */
+			/* gradient background */
+			--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+			--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+			--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+			/* text/accents tuned for dark surfaces */
+			/* keep the same stacking order so it visually relates to .wq-gradient */
+			background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+			background-repeat: no-repeat, no-repeat;
+			/* solid fallback ensures nothing “wins” over the gradient */
+			background-color: var(--bg-a);
 		}
 
 			#m-sidebar.is-open {
@@ -5843,14 +5860,6 @@ button,
 			transform: translateZ(14px) scale(1.03);
 		}
 
-	/* Respect reduced-motion preferences */
-	@media (prefers-reduced-motion: reduce) {
-		.logo-card,
-		.logo-card img {
-			transition: none;
-			transform: none;
-		}
-	}
 
 	/* Logos: vertically centered within the fixed logo row */
 	.logo-card > img {
