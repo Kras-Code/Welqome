@@ -4949,61 +4949,132 @@ button,
 
 /* === FLOWCHART: mobile + narrow desktop fixes (≤1100px) === */
 @media (max-width: 1100px) {
-	/* Stack cards in a single centered column */
+  /* Stack cards in a single centered column */
+  #one-automation .flow {
+    display: grid !important;
+    grid-template-columns: min(92vw, 620px) !important;
+    justify-content: center !important;
+    row-gap: 2rem !important;
+    margin-inline: auto !important;
+  }
+
+  /* Neutralise left/right placement + stagger so nothing collides */
+  #one-automation .step,
+  #one-automation .step:nth-of-type(odd),
+  #one-automation .step:nth-of-type(even) {
+    grid-column: 1 !important;
+    transform: none !important;   /* kill stagger */
+    opacity: 1 !important;        /* visible even if JS reveal didn't run */
+    width: 100% !important;
+    min-height: auto !important;
+  }
+
+  /* Re-assert the solid card look */
+  #one-automation .step {
+    background: #0161eb !important;
+    color: #fff !important;
+    border: 1px solid #023e8a !important;
+    border-radius: 1rem !important;
+    padding: 1rem !important;
+    box-shadow: 0 18px 36px rgba(3,14,30,0.18) !important; /* subtle depth */
+    isolation: isolate;
+    z-index: 1;
+  }
+
+  /* Banner = the <h3> itself (auto height, wraps naturally) */
+  #one-automation .step > h3 {
+    background: #023e8a !important;
+    color: #fff !important;
+    margin: -1rem -1rem 0 !important;  /* bleed full width */
+    padding: 0.75rem 1rem !important;
+    line-height: 1.25 !important;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+
+  /* Body copy legibility on dark cards */
+  #one-automation .step > p,
+  #one-automation .step > ul,
+  #one-automation .step > ol {
+    color: rgba(255,255,255,0.92) !important;
+  }
+
+  /* Bottom spacing so the section doesn't collide with the next */
+  #one-automation { padding-bottom: 2em !important; }
+}
+
+/* === MOBILE-ONLY flow trunk + ports (≤736px) === */
+/* === MOBILE-ONLY flow trunk + ports (≤736px) === */
+@media (max-width: 736px) {
+	/* Flow container + canvas layering */
 	#one-automation .flow {
-		display: grid !important;
-		grid-template-columns: min(92vw, 620px) !important;
-		justify-content: center !important;
-		row-gap: 2rem !important;
-		margin-inline: auto !important;
+		position: relative;
+		row-gap: 3.5em !important; /* space for trunk between cards */
 	}
 
-	/* Neutralise left/right placement + stagger so nothing collides */
-	#one-automation .step,
-	#one-automation .step:nth-of-type(odd),
-	#one-automation .step:nth-of-type(even) {
-		grid-column: 1 !important;
-		transform: none !important; /* kill stagger */
-		opacity: 1 !important; /* visible even if JS reveal didn't run */
-		width: 100% !important;
-		min-height: auto !important;
+		#one-automation .flow .flow-canvas {
+			position: absolute !important;
+			inset: 0 !important;
+			width: 100% !important;
+			height: 100% !important;
+			pointer-events: none !important;
+			z-index: 0 !important; /* stays behind cards */
+		}
+
+	/* Trunk stroke */
+	#one-automation #flowPath {
+		stroke: #0161eb !important;
+		stroke-width: 3em !important; /* keep in sync with --portR*2 below */
+		stroke-linecap: round !important;
+		stroke-linejoin: round !important;
+		fill: none !important;
+		opacity: 1 !important;
 	}
 
-	/* Re-assert the solid card look */
+	/* Card baseline: sits above the canvas */
 	#one-automation .step {
-		background: #0161eb !important;
-		color: #fff !important;
-		border: 1px solid #023e8a !important;
-		border-radius: 1rem !important;
-		padding: 1rem !important;
-		box-shadow: 0 18px 36px rgba(3,14,30,0.18) !important; /* subtle depth */
-		isolation: isolate;
+		position: relative;
 		z-index: 1;
+		overflow: visible !important;
 	}
 
-		/* Banner = the <h3> itself (auto height, wraps naturally) */
-		#one-automation .step > h3 {
-			background: #023e8a !important;
-			color: #fff !important;
-			margin: -1rem -1rem 0 !important; /* bleed full width */
-			padding: 0.75rem 1rem !important;
-			line-height: 1.25 !important;
-			border-top-left-radius: inherit;
-			border-top-right-radius: inherit;
+	/* TRUE “ports”: punch-through holes so the trunk behind is visible
+     - Centers at 50% horizontally
+     - One at the top edge, one at the bottom edge
+     - Uses CSS mask so nothing is painted above the card face
+  */
+	@supports (-webkit-mask: none) or (mask: none) {
+		#one-automation .step {
+			--portR: 1.5em; /* radius = half of 3em stroke */
+			--holeH: calc(var(--portR) * 2);
+			/* Two radial masks (top & bottom) + a full-rect mask layer */
+			-webkit-mask: radial-gradient(circle var(--portR) at 50% -1px, transparent 98%, #000 99%) top center / 100% var(--holeH) no-repeat, radial-gradient(circle var(--portR) at 50% calc(100% + 1px), transparent 98%, #000 99%) bottom center / 100% var(--holeH) no-repeat, linear-gradient(#000, #000);
+			mask: radial-gradient(circle var(--portR) at 50% -1px, transparent 98%, #000 99%) top center / 100% var(--holeH) no-repeat, radial-gradient(circle var(--portR) at 50% calc(100% + 1px), transparent 98%, #000 99%) bottom center / 100% var(--holeH) no-repeat, linear-gradient(#000, #000);
 		}
+			/* Hide the old “blue dot” fallbacks entirely */
+			#one-automation .step::before,
+			#one-automation .step::after {
+				display: none !important;
+				content: none !important;
+			}
+			/* Optional: no bottom port on the very last card */
+			#one-automation .step:last-of-type {
+				-webkit-mask: radial-gradient(circle var(--portR) at 50% -1px, transparent 98%, #000 99%) top center / 100% var(--holeH) no-repeat, linear-gradient(#000, #000);
+				mask: radial-gradient(circle var(--portR) at 50% -1px, transparent 98%, #000 99%) top center / 100% var(--holeH) no-repeat, linear-gradient(#000, #000);
+			}
+	}
 
-		/* Body copy legibility on dark cards */
-		#one-automation .step > p,
-		#one-automation .step > ul,
-		#one-automation .step > ol {
-			color: rgba(255,255,255,0.92) !important;
+	/* Fallback when mask isn’t supported: remove visible ports to avoid dots on top */
+	@supports not ((-webkit-mask: none) or (mask: none)) {
+		#one-automation .step::before,
+		#one-automation .step::after {
+			display: none !important;
+			content: none !important;
 		}
-
-	/* Bottom spacing so the section doesn't collide with the next */
-	#one-automation {
-		padding-bottom: 2em !important;
 	}
 }
+
+
 
 
 
