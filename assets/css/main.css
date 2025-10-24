@@ -5777,89 +5777,102 @@ button,
 	}
 
 	/* ---------- Logo card ---------- */
-	.logo-card {
-		/* layout (preserved) */
-		display: grid;
-		grid-template-rows: var(--logo-row-h) auto;
-		grid-template-columns: 1fr;
-		row-gap: var(--caption-gap);
-		place-items: center;
-		align-content: start;
-		/* sizing */
-		width: 100%;
-		height: var(--card-h);
-		padding: 1rem;
-		--r: .75rem; /* corner radius */
-		border-radius: var(--r);
-		/* gradient fill + gradient border (requested) */
-		border: 1px solid transparent; /* required so border-box background shows */
-		/* 3-D foundation */
-		position: relative;
-		transform: perspective(900px) translateZ(0) rotateX(0deg) rotateY(0deg);
-		transform-style: preserve-3d;
-		/* layered elevation: soft ambient + contact shadow + inner micro-contrast */
-		box-shadow:
-		/* contact shadow (close to surface) */
-		0 6px 10px rgba(0,0,0,.20),
-		/* ambient shadow (larger, softer) */
-		0 18px 36px rgba(0,0,0,.22),
-		/* faint inner edge to crispen content */
-		0 0 0 1px rgba(255,255,255,.06) inset;
-		/* motion/interaction */
-		transition: transform .35s cubic-bezier(.2,.65,.2,1), box-shadow .35s ease, filter .35s ease, background .35s ease;
-		will-change: transform, box-shadow, filter;
+/* Card container */
+.logo-card {
+	/* layout (preserved) */
+	display: grid;
+	grid-template-rows: var(--logo-row-h) auto;
+	grid-template-columns: 1fr;
+	row-gap: var(--caption-gap);
+	place-items: center;
+	align-content: start;
+	/* sizing */
+	width: 100%;
+	height: var(--card-h);
+	padding: 1rem;
+	--r: .75rem; /* corner radius */
+	border-radius: var(--r);
+	/* gradient fill + gradient border (requested) */
+	border: 1px solid transparent; /* required so border-box background shows */
+	/* 3-D foundation */
+	position: relative;
+	transform: perspective(900px) translateZ(0) rotateX(0deg) rotateY(0deg);
+	transform-style: preserve-3d;
+	/* layered elevation: soft ambient + contact shadow + inner micro-contrast */
+	box-shadow:
+	/* contact shadow (close to surface) */
+	0 6px 10px rgba(0,0,0,.20),
+	/* ambient shadow (larger, softer) */
+	0 18px 36px rgba(0,0,0,.22),
+	/* faint inner edge to crispen content */
+	0 0 0 1px rgba(255,255,255,.06) inset;
+	/* motion/interaction */
+	transition: transform .35s cubic-bezier(.2,.65,.2,1), box-shadow .35s ease, filter .35s ease, background .35s ease;
+	will-change: transform, box-shadow, filter;
+	/* contain blending/compositing within the card (fix mobile wash) */
+	isolation: isolate;
+}
+
+	/* top “specular” highlight for realism — now UNDER content */
+	.logo-card::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		pointer-events: none;
+		/* retain look; sits below content so it won't wash images */
+		background: #0161eb linear-gradient(to bottom, rgba(255,255,255,.10), transparent 28%);
+		mix-blend-mode: screen;
+		/* remove 3D depth; use paint order instead */
+		transform: none;
+		z-index: 0;
 	}
 
-		/* top “specular” highlight for realism */
-		.logo-card::before {
-			content: "";
-			position: absolute;
-			inset: 0;
-			border-radius: inherit;
-			pointer-events: none;
-			background: #0161eb linear-gradient( to bottom, rgba(255,255,255,.10), transparent 28% );
-			mix-blend-mode: screen;
-			transform: translateZ(1px); /* sit just above the card face */
-		}
+	/* soft floor glow to anchor the card to the page (3-D cue) */
+	.logo-card::after {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: -12px; /* just below the card */
+		width: 70%;
+		height: 28px;
+		transform: translateX(-50%);
+		border-radius: 50%;
+		background: radial-gradient(ellipse at center, rgba(0,0,0,.35), transparent 70%);
+		filter: blur(6px);
+		opacity: .70;
+		pointer-events: none;
+		z-index: 0;
+	}
 
+	/* Ensure real content paints above ::before/::after overlays */
+	.logo-card > img,
+	.logo-card > figcaption {
+		position: relative;
+		z-index: 1;
+	}
 
-		/* soft floor glow to anchor the card to the page (3-D cue) */
-		.logo-card::after {
-			content: "";
-			position: absolute;
-			left: 50%;
-			bottom: -12px; /* just below the card */
-			width: 70%;
-			height: 28px;
-			transform: translateX(-50%);
-			border-radius: 50%;
-			background: radial-gradient(ellipse at center, rgba(0,0,0,.35), transparent 70%);
-			filter: blur(6px);
-			opacity: .70;
-		}
+	/* Hover/keyboard focus: increase elevation + subtle tilt */
+	.logo-card:is(:hover, :focus-visible) {
+		transform: perspective(900px) translateY(-2px) translateZ(8px) rotateX(3deg) rotateY(-3deg);
+		box-shadow: 0 10px 18px rgba(0,0,0,.22), 0 28px 54px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.08) inset;
+	}
 
-		/* Hover/keyboard focus: increase elevation + subtle tilt */
-		.logo-card:is(:hover, :focus-visible) {
-			transform: perspective(900px) translateY(-2px) translateZ(8px) rotateX(3deg) rotateY(-3deg);
-			box-shadow: 0 10px 18px rgba(0,0,0,.22), 0 28px 54px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.08) inset;
-		}
+	/* Visible, accessible focus ring that coexists with the gradient border */
+	.logo-card:focus-visible {
+		outline: 2px solid rgba(1,98,235,.85);
+		outline-offset: 2px;
+	}
 
-		/* Visible, accessible focus ring that coexists with the gradient border */
-		.logo-card:focus-visible {
-			outline: 2px solid rgba(1,98,235,.85);
-			outline-offset: 2px;
-		}
+	/* Optional: lift the logo slightly on hover for added depth */
+	.logo-card img {
+		transition: transform .35s cubic-bezier(.2,.65,.2,1), filter .35s ease;
+		transform: translateZ(0);
+	}
 
-		/* Optional: lift the logo slightly on hover for added depth */
-		.logo-card img {
-			transition: transform .35s cubic-bezier(.2,.65,.2,1), filter .35s ease;
-			transform: translateZ(0);
-		}
-
-		.logo-card:is(:hover, :focus-visible) img {
-			transform: translateZ(14px) scale(1.03);
-		}
-
+	.logo-card:is(:hover, :focus-visible) img {
+		transform: translateZ(14px) scale(1.03);
+	}
 
 	/* Logos: vertically centered within the fixed logo row */
 	.logo-card > img {
@@ -5913,6 +5926,15 @@ button,
 			margin: 0;
 			align-self: start;
 		}
+
+/* Mobile/touch safeguard: soften the highlight & disable blend artifacts */
+@media (pointer: coarse) {
+	.logo-card::before {
+		mix-blend-mode: normal;
+		background: linear-gradient(to bottom, rgba(255,255,255,.06), transparent 22%);
+	}
+}
+
 
 	/* ---------- Multi-image layout ---------- */
 	/* Exactly TWO logos: symmetric grid with middle divider */
