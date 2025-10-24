@@ -4947,9 +4947,11 @@ button,
 		box-shadow: 0 22px 48px rgba(3,14,30,0.20);
 	}
 
-/* === MOBILE PATCHES ONLY (≤736px) === */
+/* ===========================
+   MOBILE (≤736px) — enforce stack + styling
+   =========================== */
 @media (max-width: 736px) {
-	/* Stack cards, full width of container */
+	/* Stack as a single column and center */
 	#one-automation .flow {
 		display: grid !important;
 		grid-template-columns: min(92vw, 520px) !important;
@@ -4959,58 +4961,68 @@ button,
 		max-width: 100% !important;
 	}
 
-	/* Ensure odd/even placement doesn't fight single column */
+	/* Kill stagger/left-right placement */
+	#one-automation .step,
 	#one-automation .step:nth-of-type(odd),
 	#one-automation .step:nth-of-type(even) {
 		grid-column: 1 !important;
-		transform: none !important; /* kill stagger on mobile */
+		transform: none !important;
+		opacity: 1 !important;
+		width: 100% !important;
 	}
 
-	/* Make cards visible and styled even if reveal JS doesn't run */
-	#one-automation article.step,
-	#one-automation .flow > .step {
-		opacity: 1 !important;
-		transform: none !important;
-		/* Solid card + clean edge */
+	/* Re-assert solid card + banner */
+	#one-automation .step {
 		background: #0161eb !important;
 		color: #fff !important;
 		border: 1px solid #023e8a !important;
 		border-radius: 1rem !important;
 		padding: 1rem !important;
 		min-height: auto !important;
-		width: 100% !important;
-		/* Subtle depth (no glow) */
 		box-shadow: 0 18px 36px rgba(3,14,30,0.18) !important;
 		isolation: isolate;
 		z-index: 1;
 	}
 
-		/* Banner = the <h3> itself (auto height, wraps naturally) */
-		#one-automation article.step > h3,
-		#one-automation .flow > .step > h3 {
-			display: block !important;
+		#one-automation .step > h3 {
 			background: #023e8a !important;
 			color: #fff !important;
-			margin: -1rem -1rem 0 !important; /* bleed full width */
+			margin: -1rem -1rem 0 !important; /* full-width banner */
 			padding: 0.75rem 1rem !important;
 			line-height: 1.25 !important;
-			border-top-left-radius: inherit !important;
-			border-top-right-radius: inherit !important;
+			border-top-left-radius: inherit;
+			border-top-right-radius: inherit;
 		}
 
-		#one-automation article.step > p,
-		#one-automation article.step > ul,
-		#one-automation article.step > ol {
-			color: rgba(255,255,255,0.92) !important;
-		}
-
-	/* Keep bottom breathing room on mobile too */
+	/* Keep bottom breathing room on phones */
 	#one-automation {
 		padding-bottom: 2em !important;
 	}
 }
 
+/* ============================================
+   NARROW DESKTOP / TABLET (737–1100px) — stack
+   ============================================ */
+@media (min-width: 737px) and (max-width: 1100px) {
+	/* Treat like mobile to avoid collisions */
+	#one-automation .flow {
+		display: grid !important;
+		grid-template-columns: min(92vw, 620px) !important;
+		justify-content: center !important;
+		row-gap: 2rem !important;
+		margin-inline: auto !important;
+	}
 
+	/* Force single column; disable stagger */
+	#one-automation .step,
+	#one-automation .step:nth-of-type(odd),
+	#one-automation .step:nth-of-type(even) {
+		grid-column: 1 !important;
+		transform: none !important;
+		opacity: 1 !important;
+		width: 100% !important;
+	}
+}
 
 
 
