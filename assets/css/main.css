@@ -4947,52 +4947,68 @@ button,
 		box-shadow: 0 22px 48px rgba(3,14,30,0.20);
 	}
 
-/* === Bulletproof mobile styling & reveal === */
+/* === MOBILE PATCHES ONLY (≤736px) === */
 @media (max-width: 736px) {
-	/* single column stays */
+	/* Stack cards, full width of container */
 	#one-automation .flow {
-		grid-template-columns: min(92vw, 520px);
-		justify-content: center;
-		row-gap: 2rem;
+		display: grid !important;
+		grid-template-columns: min(92vw, 520px) !important;
+		justify-content: center !important;
+		row-gap: 2rem !important;
+		margin-inline: auto !important;
+		max-width: 100% !important;
 	}
 
-		/* force cards to be visible and styled even if JS "is-live" doesn't fire */
-		#one-automation article.step,
-		#one-automation .flow > .step {
-			opacity: 1 !important;
-			transform: none !important;
-			/* re-assert solid look */
-			background: #0161eb !important;
+	/* Ensure odd/even placement doesn't fight single column */
+	#one-automation .step:nth-of-type(odd),
+	#one-automation .step:nth-of-type(even) {
+		grid-column: 1 !important;
+		transform: none !important; /* kill stagger on mobile */
+	}
+
+	/* Make cards visible and styled even if reveal JS doesn't run */
+	#one-automation article.step,
+	#one-automation .flow > .step {
+		opacity: 1 !important;
+		transform: none !important;
+		/* Solid card + clean edge */
+		background: #0161eb !important;
+		color: #fff !important;
+		border: 1px solid #023e8a !important;
+		border-radius: 1rem !important;
+		padding: 1rem !important;
+		min-height: auto !important;
+		width: 100% !important;
+		/* Subtle depth (no glow) */
+		box-shadow: 0 18px 36px rgba(3,14,30,0.18) !important;
+		isolation: isolate;
+		z-index: 1;
+	}
+
+		/* Banner = the <h3> itself (auto height, wraps naturally) */
+		#one-automation article.step > h3,
+		#one-automation .flow > .step > h3 {
+			display: block !important;
+			background: #023e8a !important;
 			color: #fff !important;
-			border: 1px solid #023e8a !important;
-			border-radius: 1rem;
-			padding: 1rem !important;
-			min-height: auto;
-			/* subtle depth (no glow) */
-			box-shadow: 0 18px 36px rgba(3,14,30,0.18);
-			isolation: isolate;
-			z-index: 1;
+			margin: -1rem -1rem 0 !important; /* bleed full width */
+			padding: 0.75rem 1rem !important;
+			line-height: 1.25 !important;
+			border-top-left-radius: inherit !important;
+			border-top-right-radius: inherit !important;
 		}
 
-			/* keep banner as the <h3> itself; full-width bleed */
-			#one-automation article.step > h3 {
-				background: #023e8a !important;
-				color: #fff !important;
-				margin: -1rem -1rem 0 !important; /* bleed to edges */
-				padding: 0.75rem 1rem !important;
-				line-height: 1.25;
-				border-top-left-radius: inherit;
-				border-top-right-radius: inherit;
-			}
+		#one-automation article.step > p,
+		#one-automation article.step > ul,
+		#one-automation article.step > ol {
+			color: rgba(255,255,255,0.92) !important;
+		}
 
-			#one-automation article.step > p,
-			#one-automation article.step > ul,
-			#one-automation article.step > ol {
-				color: rgba(255,255,255,0.92) !important;
-			}
+	/* Keep bottom breathing room on mobile too */
+	#one-automation {
+		padding-bottom: 2em !important;
+	}
 }
-
-
 
 
 
