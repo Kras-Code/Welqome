@@ -6140,11 +6140,6 @@ button,
 		contain: layout; /* isolate layout to avoid transform + reflow artifacts */
 	}
 
-	/* Keep the two tracks truly butt-joined (no inter-track gap) */
-	.marquee-content {
-		gap: 0;
-	}
-
 	.marquee-track {
 		gap: var(--gap);
 		padding-inline-end: var(--gap);
