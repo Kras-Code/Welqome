@@ -4140,7 +4140,7 @@ button,
 	}
 
 
-@media screen and (max-width: 1280px) {
+@media screen and (min-width: 737px) and (max-width: 1280px) {
 	/* ───────── Top bar layout (unchanged) ───────── */
 	#sidebar {
 		--nav-h: 3.5em;
