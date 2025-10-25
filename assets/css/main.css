@@ -4140,122 +4140,111 @@ button,
 	}
 
 
-	@media screen and (max-width: 1280px) {
-		/* Top bar that auto-grows vertically when items wrap */
-		#sidebar {
-			--nav-h: 3.5em;
-			width: 100%;
-			padding: 0;
+@media screen and (max-width: 1280px) {
+	/* ───────── Top bar layout (unchanged) ───────── */
+	#sidebar {
+		--nav-h: 3.5em;
+		width: 100%;
+		padding: 0;
+		height: auto;
+		min-height: var(--nav-h);
+		overflow: visible;
+		text-align: center;
+	}
+
+		#sidebar > .inner {
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
 			height: auto;
-			min-height: var(--nav-h);
-			overflow: visible;
-			text-align: center;
 		}
 
-			#sidebar > .inner {
+		#sidebar nav {
+			height: auto;
+		}
+
+			#sidebar nav > ul {
 				display: flex;
-				flex-direction: row;
-				align-items: stretch;
-				height: auto;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 2em;
+				margin: 0;
+				padding: 0;
 			}
 
-			#sidebar nav {
-				height: auto;
-			}
-
-				#sidebar nav > ul {
+				#sidebar nav > ul > li {
 					display: flex;
 					align-items: center;
-					flex-wrap: wrap;
-					gap: 2em;
-					margin: 0;
-					padding: 0;
-				}
-
-					#sidebar nav > ul > li {
-						display: flex;
-						align-items: center;
-						height: var(--nav-h);
-					}
-
-				#sidebar nav a {
-					display: inline-flex;
-					align-items: center;
 					height: var(--nav-h);
-					line-height: var(--nav-h);
-					padding: 0;
-					white-space: nowrap; /* keep each item on a single row */
 				}
 
-			/* Logo scales to bar height per row */
-			#sidebar .logo {
-				display: block;
+			#sidebar nav a {
+				display: inline-flex;
+				align-items: center;
 				height: var(--nav-h);
-				width: auto;
-				flex: 0 0 auto;
+				line-height: var(--nav-h);
+				padding: 0;
+				white-space: nowrap; /* keep each item on a single row */
 			}
 
-			/* Keep your active/underline style */
-			#sidebar nav a:after {
-				background-image: linear-gradient(to right, #0162eb, #00c0fa);
-			}
+		/* Logo scales to bar height per row */
+		#sidebar .logo {
+			display: block;
+			height: var(--nav-h);
+			width: auto;
+			flex: 0 0 auto;
+		}
 
-			/*sidebar dropdown*/
-			/* Make submenu a vertical dropdown panel independent of the top bar */
-			#sidebar nav > ul > li.has-submenu {
-				position: relative;
-			}
+		/* Keep your active/underline style */
+		#sidebar nav a:after {
+			background-image: linear-gradient(to right, #0162eb, #00c0fa);
+		}
 
-			/* Panel container: align with trigger and match its width */
-			#sidebar nav ul.submenu {
-				position: absolute;
-				top: 100%;
-				left: 0; /* align left edge with parent item */
-				right: auto;
-				width: 100%; /* exactly the width of the parent <li> */
-				min-width: 100%;
-				display: block;
-				border: 1px solid rgba(255,255,255,0.12);
-				border-radius: 10px;
-				padding: .35rem 0;
-				z-index: 10002;
-				/* animated reveal: start slightly ABOVE and scale down from the top */
-				max-height: 0;
-				overflow: hidden;
-				opacity: 0;
-				transform-origin: top center;
-				transform: translateY(-.5rem) scaleY(.96);
-				transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
-				box-shadow: 0 8px 22px rgba(0,0,0,.35);
-				will-change: transform, max-height, opacity;
+		/* ───────── Submenu panel styling (visuals preserved) ───────── */
+		#sidebar nav > ul > li.has-submenu {
+			position: relative;
+		}
 
-				/* gradient background */
-				--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
-				--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
-				--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
-				/* text/accents tuned for dark surfaces */
-				/* keep the same stacking order so it visually relates to .wq-gradient */
-				background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
-				background-repeat: no-repeat, no-repeat;
-				/* solid fallback ensures nothing “wins” over the gradient */
-				background-color: var(--bg-a);
-			}
+		/* Panel container: default = closed */
+		#sidebar nav ul.submenu {
+			position: absolute;
+			top: 100%;
+			left: 0; /* align left edge with parent item */
+			right: auto;
+			width: 100%; /* exactly the width of the parent <li> */
+			min-width: 100%;
+			display: block;
+			border: 1px solid rgba(255,255,255,0.12);
+			border-radius: 10px;
+			padding: .35rem 0;
+			z-index: 10002;
+			/* animated reveal: start slightly ABOVE and scale down from the top */
+			max-height: 0;
+			overflow: hidden;
+			opacity: 0;
+			transform-origin: top center;
+			transform: translateY(-.5rem) scaleY(.96);
+			transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
+			box-shadow: 0 8px 22px rgba(0,0,0,.35);
+			will-change: transform, max-height, opacity;
+			/* gradient background (as before) */
+			--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+			--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+			--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+			background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+			background-repeat: no-repeat, no-repeat;
+			background-color: var(--bg-a);
+			/* prevent incidental hover hits while closed */
+			pointer-events: none !important;
+		}
 
-			/* Open state */
-			#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
-			#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
-				max-height: 80vh;
-				opacity: 1;
-				transform: translateY(0) scaleY(1); /* drops down from the bar */
-			}
-
-			/* Vertical list items + dividers */
+			/* Vertical list items + dividers (visual) */
 			#sidebar nav ul.submenu > li {
 				display: block;
 				height: auto;
 				margin: 0;
 				padding: 0;
-				opacity: 1; /* keep your stagger if desired; otherwise show immediately */
+				opacity: 1; /* immediate (no stagger on mobile bar) */
 				transform: none;
 			}
 
@@ -4266,17 +4255,70 @@ button,
 			#sidebar nav ul.submenu a {
 				display: block;
 				padding: .7rem 1rem;
-				box-sizing: border-box; /* keep padding inside width */
-				max-width: 100%; /* never overflow the panel */
+				box-sizing: border-box;
+				max-width: 100%;
 				height: auto;
-				line-height: 1.25; /* a touch more room for wraps */
+				line-height: 1.25;
 				white-space: normal !important;
-				/* Subtle fit for long words */
-				overflow-wrap: anywhere; /* modern, best effort */
-				word-break: break-word; /* wide fallback */
-				hyphens: auto; /* elegant hyphenation when possible */
+				overflow-wrap: anywhere;
+				word-break: break-word;
+				hyphens: auto;
 			}
+
+		/* ───────── Interaction policy at ≤1280px ─────────
+     Only explicit toggle (.is-open or [aria-expanded="true"]) may open the panel.
+     All implicit states (hover, focus-within, scroll-spy .active) are hard-blocked.
+  */
+
+		/* ALLOW: explicit open states */
+		#sidebar nav > ul > li.has-submenu.is-open > ul.submenu,
+		#sidebar nav > ul > li.has-submenu > a[aria-expanded="true"] + ul.submenu {
+			max-height: 80vh !important;
+			opacity: 1 !important;
+			transform: translateY(0) scaleY(1) !important;
+			pointer-events: auto !important;
+		}
+
+		/* BLOCK: hover/focus auto-open */
+		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
+			max-height: 0 !important;
+			opacity: 0 !important;
+			transform: translateY(-.5rem) scaleY(.96) !important;
+			pointer-events: none !important;
+		}
+
+	/* BLOCK: scroll-spy opening via .active anywhere under the li */
+	@supports selector(:has(*)) {
+		#sidebar nav > ul > li.has-submenu:has(> a.active) > ul.submenu,
+		#sidebar nav > ul > li.has-submenu:has(> ul.submenu a.active) > ul.submenu {
+			max-height: 0 !important;
+			opacity: 0 !important;
+			transform: translateY(-.5rem) scaleY(.96) !important;
+			pointer-events: none !important;
+		}
 	}
+
+	/* Caret behaviour: rotate ONLY on explicit open */
+	#sidebar nav > ul > li.has-submenu > a .wq-caret {
+		transform: translateY(-50%) rotate(0deg) !important;
+	}
+
+	#sidebar nav > ul > li.has-submenu.is-open > a .wq-caret,
+	#sidebar nav > ul > li.has-submenu > a[aria-expanded="true"] .wq-caret {
+		transform: translateY(-50%) rotate(90deg) !important;
+	}
+
+	@supports selector(:has(*)) {
+		/* ensure scroll-spy alone never rotates caret */
+		#sidebar nav > ul > li.has-submenu:has(> ul.submenu a.active) > a .wq-caret,
+		#sidebar nav > ul > li.has-submenu:has(> a.active) > a .wq-caret {
+			transform: translateY(-50%) rotate(0deg) !important;
+		}
+	}
+}
+
+
 
 
 
