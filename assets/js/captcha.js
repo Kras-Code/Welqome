@@ -1,17 +1,21 @@
-
-    (function () {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
+(function () {
+    const SITE_KEY = '6Lc9b_MrAAAAAExSWVuAKc7oL68rB3VF0Mpk0-mE';            // paste your v3 site key
+    const ACTION = 'contact_submit';               // any string; must match server check
+    const form = document.getElementById('contactForm');
+    const tokenEl = document.getElementById('gRecaptchaToken');
 
     form.addEventListener('submit', function (e) {
-      // Require a reCAPTCHA token before posting to Formspree
-      const ok = (typeof grecaptcha !== 'undefined') && (grecaptcha.getResponse().length > 0);
-    if (!ok) {
         e.preventDefault();
-    const status = document.getElementById('form-status');
-    if (status) status.textContent = 'Please complete the reCAPTCHA to prove you are human.';
-    try {document.querySelector('.g-recaptcha iframe')?.focus(); } catch (_) { }
-      }
+        grecaptcha.ready(function () {
+            grecaptcha.execute(SITE_KEY, { action: ACTION })
+                .then(function (token) {
+                    tokenEl.value = token;
+                    form.submit();
+                })
+                .catch(function (err) {
+                    console.error('reCAPTCHA v3 execute() failed', err);
+                    alert('reCAPTCHA could not run. Please refresh and try again.');
+                });
+        });
     });
-  })();
-
+})();
