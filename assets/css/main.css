@@ -4444,6 +4444,7 @@ button,
 
 				#m-sidebar nav a::before {
 					background: #023e8a;
+					display: none;
 				}
 
 				#m-sidebar nav a::after {
