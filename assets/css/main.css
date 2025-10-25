@@ -4633,17 +4633,22 @@ body.page-index {
 			position: relative;
 		}
 
-	/* Auto-open submenu when a descendant link is active (scroll position) */
+	/* Auto-open when scroll-spy marks a submenu link .active */
 	@supports selector(:has(*)) {
+		/* Open the panel (override any inline max-height from the click logic) */
 		#m-sidebar nav > ul > li.has-submenu:has(ul.submenu a.active) > ul.submenu {
-			/* replicate your open state */
 			opacity: 1;
 			transform: translateY(0);
-			max-height: 66vh; /* generous cap for smooth transition */
+			max-height: 80vh !important; /* beats inline max-height: 0 */
 		}
-
+		/* Rotate caret to the open state */
 		#m-sidebar nav > ul > li.has-submenu:has(ul.submenu a.active) > a .wq-caret {
 			transform: translateY(-50%) rotate(90deg);
+		}
+		/* Reveal submenu items (match your .is-open stagger end-state) */
+		#m-sidebar nav > ul > li.has-submenu:has(ul.submenu a.active) ul.submenu > li {
+			opacity: 1;
+			transform: none;
 		}
 	}
 
