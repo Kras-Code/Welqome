@@ -4840,10 +4840,11 @@ button,
 	--row-gap: 5.5em;
 	--stagger-left: 0.75em;
 	--stagger-right: 3.75em;
+	--headroom: clamp(2rem, 8vh, 6rem);
 	position: relative;
 	max-width: min(1200px, 95vw);
 	margin: calc(var(--top-gap) - var(--thick) * 0.5) auto 0;
-	padding-top: calc(var(--thick) * 0.5);
+	padding-top: calc(var(--thick) * 0.5 + var(--headroom));
 	margin-inline: auto;
 	justify-content: center;
 	display: grid;
@@ -4857,6 +4858,27 @@ button,
 	--reveal-lead: 180px; /* delay before reveal starts */
 	--reveal-stretch: 1.4; /* >1 = slower overall */
 	--reveal-smooth-alpha: 0.10; /* lower = more glide */
+}
+
+#one-automation #flow-snake {
+	/* Slightly faster reveal until the first box */
+	--pre-first-boost: 2; /* 1 = off/
+	/* Optional: uncomment to force where “early” ends (otherwise auto-detected)
+     --pre-first-end-frac: 0.18;  /* 0..1 along the path */
+}
+
+.h3-step-word {
+	color: #ffffff !important;
+	font-size: 0.85em;
+	font-weight: bold;
+	letter-spacing: 0.25em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	text-decoration: none;
+	/* keep baseline alignment within the line */
+	line-height: inherit; /* deliberately NOT 4.75em */
+	display: inline-block;
+	vertical-align: baseline;
 }
 
 #one-automation {
