@@ -4516,9 +4516,7 @@ body.page-index {
 				border-radius: 0.2em;
 			}
 
-			#m-sidebar nav a::before {
-				background: #023e8a;
-			}
+
 
 			#m-sidebar nav a::after {
 				background-image: linear-gradient(to right, #0162eb, #00c0fa);
@@ -4634,45 +4632,27 @@ body.page-index {
 			letter-spacing: 0.2em;
 			position: relative;
 		}
+
+	/* Auto-open submenu when a descendant link is active (scroll position) */
+	@supports selector(:has(*)) {
+		#m-sidebar nav > ul > li.has-submenu:has(ul.submenu a.active) > ul.submenu {
+			/* replicate your open state */
+			opacity: 1;
+			transform: translateY(0);
+			max-height: 66vh; /* generous cap for smooth transition */
+		}
+
+		#m-sidebar nav > ul > li.has-submenu:has(ul.submenu a.active) > a .wq-caret {
+			transform: translateY(-50%) rotate(90deg);
+		}
+	}
+
 }
 
 /* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
 @media screen and (max-width: 736px) {
 	body {
 		padding: 0;
-	}
-}
-
-/* Hide both underline bars on non-selected items (mobile drawer) */
-@media screen and (max-width: 736px) {
-	#m-sidebar nav a::before,
-	#m-sidebar nav a::after {
-		opacity: 0;
-		transition: opacity .2s ease, max-width .2s ease;
-	}
-
-	/* Keep the gradient bar collapsed by default (safety, in case earlier rules set width) */
-	#m-sidebar nav a::after {
-		max-width: 0;
-	}
-
-	/* Only the selected (active) item displays underlines */
-	#m-sidebar nav a.active::before,
-	#m-sidebar nav a.active::after {
-		opacity: 1;
-	}
-
-	#m-sidebar nav a.active::after {
-		max-width: 100%;
-	}
-
-	/* Optional: do NOT reveal underlines on hover/focus for non-active items */
-	#m-sidebar nav a:hover::before,
-	#m-sidebar nav a:hover::after,
-	#m-sidebar nav a:focus-visible::before,
-	#m-sidebar nav a:focus-visible::after {
-		opacity: 0;
-		max-width: 0;
 	}
 }
 
