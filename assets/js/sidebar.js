@@ -1,173 +1,185 @@
+﻿/* sidebar.js — drop-in rewrite with CSS-coexistence fixes
+   - Caret (<span class="wq-caret">) is the ONLY toggle on mobile
+   - Inline max-height (px) + .is-open drive open state (beats CSS)
+   - Adds .user-opened to #m-sidebar after first manual toggle so your :has() auto-open rules stop overriding user intent
+   - Drawer toggle no longer opens/closes submenus implicitly
+*/
 (function () {
     const desktopList = document.querySelector('#sidebar nav > ul');
     const mobileList = document.querySelector('#m-sidebar nav > ul.menu');
     const toggle = document.getElementById('mSidebarToggle');
     const drawer = document.getElementById('m-sidebar');
     const backdrop = document.getElementById('m-sidebar-backdrop');
+
     if (!mobileList || !toggle || !drawer || !backdrop) return;
 
-    // Clone desktop items into mobile on first load
+    // Clone desktop items into mobile on first load (keeps authoring single source)
     if (desktopList && !mobileList.children.length) {
         mobileList.innerHTML = desktopList.innerHTML;
     }
 
-    const mm = window.matchMedia('(max-width: 736px)');
-    const isMobile = () => mm.matches;
+    const mmMobile = window.matchMedia('(max-width: 736px)');
+    const isMobile = () => mmMobile.matches;
+    const px = n => `${Math.max(0, Math.round(n))}px`;
 
-    // Prepare submenu (caret, ARIA, collapsed)
+    // --- Submenu preparation: ARIA, caret, collapsed state ---
     function prepareSubmenus(root) {
-        root.querySelectorAll('li.has-submenu').forEach(li => {
+        root.querySelectorAll('li.has-submenu').forEach((li, i) => {
             const a = li.querySelector(':scope > a');
             const submenu = li.querySelector(':scope > ul.submenu');
             if (!a || !submenu) return;
 
-            if (!a.querySelector('.wq-caret')) {
-                const caret = document.createElement('span');
-                caret.className = 'wq-caret';
-                caret.setAttribute('aria-hidden', 'true');
-                a.appendChild(caret);
-            }
-            a.setAttribute('aria-haspopup', 'true');
+            // ARIA wiring
+            const id = submenu.id || `m-submenu-${i}`;
+            submenu.id = id;
+            a.setAttribute('aria-controls', id);
             a.setAttribute('aria-expanded', 'false');
 
-            // Start collapsed (CSS animates via max-height)
+            // Ensure caret element exists inside the link (matches your CSS selectors)
+            let caret = a.querySelector('.wq-caret');
+            if (!caret) {
+                caret = document.createElement('span');
+                caret.className = 'wq-caret';
+                a.appendChild(caret);
+            }
+            caret.setAttribute('role', 'button');
+            caret.setAttribute('tabindex', '0');
+            caret.setAttribute('aria-label', 'Toggle submenu');
+
+            // Collapsed initial state
+            li.classList.remove('is-open');
             submenu.style.maxHeight = '0px';
         });
     }
     prepareSubmenus(mobileList);
 
-    // Drawer open/close with focus management (unchanged behavior)
-    let lastFocus = null;
-
-    function openDrawer() {
-        lastFocus = document.activeElement;
-        drawer.classList.add('is-open');
-        backdrop.hidden = false;
-        backdrop.classList.add('is-visible');
-        toggle.setAttribute('aria-expanded', 'true');
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-        const firstFocusable = drawer.querySelector('a,button,[tabindex]:not([tabindex="-1"])');
-        (firstFocusable || drawer).focus({ preventScroll: true });
+    // --- Measurement helper for smooth height animation ---
+    function measure(submenu) {
+        const prev = submenu.style.maxHeight;
+        submenu.style.maxHeight = 'none';
+        const h = submenu.scrollHeight;
+        submenu.style.maxHeight = prev;
+        return h;
     }
 
+    // --- Accordion open/close (JS owns the state) ---
+    function openSubmenu(li) {
+        const a = li.querySelector(':scope > a');
+        const submenu = li.querySelector(':scope > ul.submenu');
+        if (!submenu || li.classList.contains('is-open')) return;
+
+        // Close siblings
+        li.parentElement.querySelectorAll(':scope > li.has-submenu.is-open').forEach(sib => {
+            if (sib !== li) closeSubmenu(sib);
+        });
+
+        li.classList.add('is-open');
+        a?.setAttribute('aria-expanded', 'true');
+        submenu.style.maxHeight = px(measure(submenu));
+
+        // Signal manual interaction — disables CSS :has() auto-open via the companion CSS gate
+        drawer.classList.add('user-opened');
+    }
+
+    function closeSubmenu(li) {
+        const a = li.querySelector(':scope > a');
+        const submenu = li.querySelector(':scope > ul.submenu');
+        if (!submenu) return;
+        li.classList.remove('is-open');
+        a?.setAttribute('aria-expanded', 'false');
+        submenu.style.maxHeight = '0px';
+    }
+
+    function closeAllSubmenus() {
+        mobileList.querySelectorAll('li.has-submenu.is-open').forEach(closeSubmenu);
+    }
+
+    // --- Drawer controls (no implicit submenu mutations here) ---
+    function openDrawer() {
+        drawer.classList.add('is-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        backdrop.removeAttribute('hidden');
+    }
     function closeDrawer() {
         drawer.classList.remove('is-open');
+        drawer.classList.remove('user-opened'); // reset: allow CSS auto-open next time
         toggle.setAttribute('aria-expanded', 'false');
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        backdrop.classList.remove('is-visible');
-        setTimeout(() => { backdrop.hidden = true; }, 240);
-        (lastFocus && lastFocus.focus ? lastFocus : toggle).focus({ preventScroll: true });
+        backdrop.setAttribute('hidden', '');
+        closeAllSubmenus();
+    }
+    function toggleDrawer() {
+        drawer.classList.contains('is-open') ? closeDrawer() : openDrawer();
     }
 
-    toggle.addEventListener('click', () => {
-        const open = drawer.classList.contains('is-open');
-        open ? closeDrawer() : openDrawer();
+    // --- Events: drawer ---
+    toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleDrawer();
     });
     backdrop.addEventListener('click', closeDrawer);
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
-            e.preventDefault(); closeDrawer();
-        }
+        if (e.key === 'Escape' && drawer.classList.contains('is-open')) closeDrawer();
     });
 
-    // Keep "active" class in sync with desktop (optional, as in your script)
-    const observer = new MutationObserver(() => {
-        if (!desktopList) return;
-        const activeHrefs = new Set(
-            [...desktopList.querySelectorAll('a.active')].map(a => a.getAttribute('href'))
-        );
-        mobileList.querySelectorAll('a').forEach(a => {
-            activeHrefs.has(a.getAttribute('href')) ? a.classList.add('active') : a.classList.remove('active');
-        });
-    });
-    if (desktopList) observer.observe(desktopList, { subtree: true, attributes: true, attributeFilter: ['class'] });
-
-    // === SINGLE unified click handler for the mobile menu ===
-    // Behaviour:
-    // - On mobile, first tap on a submenu parent opens it (prevents navigation and prevents drawer close)
-    // - On mobile, second tap on the same parent navigates and then drawer closes
-    // - Any child link (submenu item) navigates and then drawer closes
-    // - Non-submenu links behave as before: navigate and then drawer closes
+    // --- Events: delegated menu interactions ---
+    // Design choice: caret is the only intended toggle in mobile ≤736px.
     mobileList.addEventListener('click', (e) => {
-        const a = e.target.closest('a');
-        if (!a) return;
+        const caret = e.target.closest('.wq-caret');
+        const link = e.target.closest('a');
 
-        const li = a.closest('li');
-        const isParentWithSubmenu = !!(li && li.classList.contains('has-submenu'));
-        const submenu = isParentWithSubmenu ? li.querySelector(':scope > ul.submenu') : null;
-
-        if (isMobile() && isParentWithSubmenu && submenu) {
-            const isOpen = li.classList.contains('is-open');
-
-            if (!isOpen) {
-                // FIRST TAP on parent: open instead of navigating; DO NOT close drawer
-                e.preventDefault();
-                e.stopPropagation();
-                if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-
-                li.classList.add('is-open');
-                a.setAttribute('aria-expanded', 'true');
-                submenu.style.maxHeight = submenu.scrollHeight + 'px';
-
-                // Close open siblings (accordion behavior)
-                Array.from(li.parentElement.children).forEach(sib => {
-                    if (sib !== li && sib.classList.contains('is-open')) {
-                        sib.classList.remove('is-open');
-                        const sa = sib.querySelector(':scope > a[aria-expanded]');
-                        const s = sib.querySelector(':scope > ul.submenu');
-                        if (sa) sa.setAttribute('aria-expanded', 'false');
-                        if (s) s.style.maxHeight = '0px';
-                    }
-                });
-                return;
-            }
-
-            // SECOND TAP on parent: allow navigation; close drawer after click
-            // Let the browser handle the actual navigation (hash or URL)
-            setTimeout(closeDrawer, 0);
+        // Caret toggles submenu (mobile only)
+        if (caret && isMobile()) {
+            e.preventDefault();
+            const li = caret.closest('li.has-submenu');
+            if (!li) return;
+            li.classList.contains('is-open') ? closeSubmenu(li) : openSubmenu(li);
             return;
         }
 
-        // Otherwise (child links, non-submenu links):
-        if (isMobile()) {
-            // For in-page anchors or same-origin links, close after click
-            const href = a.getAttribute('href') || '';
-            // We close the drawer after the navigation intent has been registered
-            // (hash change or route). Timeout ensures deterministic order.
-            if (href.startsWith('#') || href === '' || href.startsWith(location.origin) || !isParentWithSubmenu) {
-                setTimeout(closeDrawer, 0);
+        // Parent text tap with inert href should also toggle (graceful fallback)
+        if (link && isMobile()) {
+            const li = link.closest('li.has-submenu');
+            const href = link.getAttribute('href') || '';
+            if (li && (href === '' || href === '#' || href === '#!')) {
+                e.preventDefault();
+                li.classList.contains('is-open') ? closeSubmenu(li) : openSubmenu(li);
+                return;
             }
         }
-    }, true); // capture: outruns any global "close on link click" listeners
 
-    // Keyboard support for accessibility: Enter/Space opens parent on mobile
-    mobileList.addEventListener('keydown', (e) => {
-        if (!isMobile()) return;
-        if (e.key !== 'Enter' && e.key !== ' ') return;
-        const a = e.target.closest('li.has-submenu > a');
-        if (!a) return;
-        e.preventDefault();
-        a.click();
-    });
-
-    // When leaving mobile, collapse any open submenus to avoid odd heights
-    mm.addEventListener?.('change', () => {
-        if (!isMobile()) {
-            mobileList.querySelectorAll('li.has-submenu.is-open').forEach(li => {
-                li.classList.remove('is-open');
-                const a = li.querySelector(':scope > a[aria-expanded]');
-                const ul = li.querySelector(':scope > ul.submenu');
-                if (a) a.setAttribute('aria-expanded', 'false');
-                if (ul) ul.style.maxHeight = '0px';
-            });
-        } else {
-            // Recompute heights if fonts/layout changed
-            mobileList.querySelectorAll('li.has-submenu.is-open > ul.submenu').forEach(ul => {
-                ul.style.maxHeight = ul.scrollHeight + 'px';
-            });
+        // Any real navigation inside the drawer closes it (submenu items or parent links with URLs)
+        if (link) {
+            const href = link.getAttribute('href') || '';
+            if (href && href !== '#' && href !== '#!') {
+                // Let the browser navigate; just close the drawer for perceived responsiveness
+                closeDrawer();
+            }
         }
     });
 
+    // Keyboard support for caret
+    mobileList.addEventListener('keydown', (e) => {
+        const caret = e.target.closest('.wq-caret');
+        if (!caret || !isMobile()) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const li = caret.closest('li.has-submenu');
+            if (!li) return;
+            li.classList.contains('is-open') ? closeSubmenu(li) : openSubmenu(li);
+        }
+    });
+
+    // Keep open submenu heights correct if content resizes (fonts, dynamic items)
+    const ro = new ResizeObserver(() => {
+        mobileList.querySelectorAll('li.has-submenu.is-open > ul.submenu').forEach(sub => {
+            sub.style.maxHeight = px(measure(sub));
+        });
+    });
+    ro.observe(mobileList);
+
+    // Reset on breakpoint changes to avoid stale inline heights and states
+    mmMobile.addEventListener('change', () => {
+        closeDrawer();
+        mobileList.querySelectorAll('ul.submenu').forEach(sub => (sub.style.maxHeight = '0px'));
+    });
 })();

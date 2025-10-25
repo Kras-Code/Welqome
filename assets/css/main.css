@@ -4140,7 +4140,7 @@ button,
 	}
 
 
-@media screen and (min-width: 737px) and (max-width: 1280px) {
+@media screen and (max-width: 1280px) {
 	/* ───────── Top bar layout (unchanged) ───────── */
 	#sidebar {
 		--nav-h: 3.5em;
@@ -4416,11 +4416,6 @@ body.page-index {
 		pointer-events: auto;
 	}
 
-	/* Optional global flag: add .has-open-drawer to <body> if desired */
-	body.has-open-drawer #m-sidebar-backdrop {
-		opacity: 1;
-		pointer-events: auto;
-	}
 
 	/* Optional scroll-lock when drawer is open (toggle .no-scroll on html/body) */
 	html.no-scroll,
@@ -4559,7 +4554,6 @@ body.page-index {
 			}
 
 
-
 			#m-sidebar nav a::after {
 				background-image: linear-gradient(to right, #0162eb, #00c0fa);
 				max-width: 0;
@@ -4577,6 +4571,7 @@ body.page-index {
 				#m-sidebar nav a.active::after {
 					max-width: 100%;
 				}
+
 
 		/* --- Mobile Dropdowns --- */
 		#m-sidebar nav > ul > li.has-submenu {
@@ -4675,40 +4670,42 @@ body.page-index {
 			position: relative;
 		}
 
-	/* Scroll-driven submenu state (merged) */
+	/* Scroll-driven submenu state (coexists with JS click state) */
 	@supports selector(:has(*)) {
-		/* OPEN when a descendant submenu link is active */
-		#m-sidebar.is-open nav > ul > li.has-submenu:has(ul.submenu a.active) > ul.submenu {
+		/* 1) Auto-open the group that contains the active link,
+        but ONLY when the user hasn't manually opened anything.
+        We'll add .user-opened on the drawer when the user taps. */
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu:has(ul.submenu a.active) > ul.submenu {
 			opacity: 1;
 			transform: translateY(0);
-			max-height: 80vh !important; /* override any inline JS max-height */
+			max-height: 80vh; /* no !important — let JS inline heights win */
 		}
 
-		#m-sidebar.is-open nav > ul > li.has-submenu:has(ul.submenu a.active) > a .wq-caret {
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu:has(ul.submenu a.active) > a .wq-caret {
 			transform: translateY(-50%) rotate(90deg);
 		}
 
-		#m-sidebar.is-open nav > ul > li.has-submenu:has(ul.submenu a.active) ul.submenu > li {
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu:has(ul.submenu a.active) ul.submenu > li {
 			opacity: 1;
 			transform: none;
 		}
-		/* CLOSE when the active link is NOT inside this submenu */
-		#m-sidebar.is-open nav > ul > li.has-submenu:not(:has(ul.submenu a.active)) > ul.submenu {
-			max-height: 0 !important; /* defeats click-open inline max-height */
+		/* 2) Default-close groups that are neither active nor JS-open.
+        Crucially: do NOT target .is-open, and avoid !important. */
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(:has(ul.submenu a.active)) > ul.submenu {
+			max-height: 0; /* no !important — JS can open via inline px */
 			opacity: 0;
 			transform: translateY(-0.25em);
 		}
 
-		#m-sidebar.is-open nav > ul > li.has-submenu:not(:has(ul.submenu a.active)) > a .wq-caret {
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(:has(ul.submenu a.active)) > a .wq-caret {
 			transform: translateY(-50%) rotate(0deg);
 		}
 
-		#m-sidebar.is-open nav > ul > li.has-submenu:not(:has(ul.submenu a.active)) ul.submenu > li {
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(:has(ul.submenu a.active)) ul.submenu > li {
 			opacity: 0;
 			transform: translateY(-6px);
 		}
 	}
-
 
 }
 

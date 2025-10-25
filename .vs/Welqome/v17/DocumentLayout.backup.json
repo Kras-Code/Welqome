@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\flowchart.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\js\\flowchart.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\sidebar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\js\\sidebar.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\util.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\js\\util.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -57,8 +57,17 @@
               "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "util.js",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\util.js",
+              "RelativeDocumentMoniker": "assets\\js\\util.js",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\util.js",
+              "RelativeToolTip": "assets\\js\\util.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-25T18:13:06.834Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -70,8 +79,7 @@
               "RelativeToolTip": "assets\\js\\jquery.scrolly.min.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-25T17:24:19.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T17:24:19.663Z"
             },
             {
               "$type": "Document",
@@ -83,33 +91,19 @@
               "RelativeToolTip": "assets\\js\\jquery.scrollex.min.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-25T17:24:18.244Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-25T17:24:18.244Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "sidebar.js",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\sidebar.js",
               "RelativeDocumentMoniker": "assets\\js\\sidebar.js",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\sidebar.js",
               "RelativeToolTip": "assets\\js\\sidebar.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKwAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAUwLgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-10-25T17:23:47.056Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "flowchart.js",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\flowchart.js",
-              "RelativeDocumentMoniker": "assets\\js\\flowchart.js",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\flowchart.js",
-              "RelativeToolTip": "assets\\js\\flowchart.js",
-              "ViewState": "AgIAACcBAAAAAAAAAAAcwFoBAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-24T16:07:54.632Z",
               "EditorCaption": ""
             },
             {
@@ -120,20 +114,19 @@
               "RelativeDocumentMoniker": "index.html",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html",
               "RelativeToolTip": "index.html",
-              "ViewState": "AgIAANUDAAAAAAAAAAAAAJIAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAMcCAAAAAAAAAAAowOADAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-14T12:32:59.787Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T12:32:59.787Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "main.css",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css",
               "RelativeDocumentMoniker": "assets\\css\\main.css",
               "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css",
               "RelativeToolTip": "assets\\css\\main.css",
-              "ViewState": "AgIAAAgQAAAAAAAAAAAcwN8QAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADkSAAAAAAAAAAAYwGISAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-10-14T12:48:21.001Z",
               "EditorCaption": ""
