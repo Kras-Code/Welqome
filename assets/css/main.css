@@ -4670,11 +4670,44 @@ body.page-index {
 			position: relative;
 		}
 
-	/* Scroll-driven submenu state (coexists with JS click state) */
+		/* ===== Scroll-driven submenu state (coexists with JS click state) ===== */
+
+		/* --- Fallback for browsers WITHOUT :has() — uses .spy-open from scroll-spy JS --- */
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu.spy-open > ul.submenu {
+			opacity: 1;
+			transform: translateY(0);
+			max-height: 80vh; /* no !important — let JS inline heights win */
+		}
+
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu.spy-open > a .wq-caret {
+			transform: translateY(-50%) rotate(90deg);
+		}
+
+		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu.spy-open ul.submenu > li {
+			opacity: 1;
+			transform: none;
+		}
+
+		/* Default-close when neither JS-open nor spy-open */
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(.spy-open) > ul.submenu {
+			max-height: 0; /* no !important — JS can open via inline px */
+			opacity: 0;
+			transform: translateY(-0.25em);
+		}
+
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(.spy-open) > a .wq-caret {
+			transform: translateY(-50%) rotate(0deg);
+		}
+
+		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(.spy-open) ul.submenu > li {
+			opacity: 0;
+			transform: translateY(-6px);
+		}
+
+	/* --- Progressive enhancement when :has() is supported --- */
 	@supports selector(:has(*)) {
 		/* 1) Auto-open the group that contains the active link,
-        but ONLY when the user hasn't manually opened anything.
-        We'll add .user-opened on the drawer when the user taps. */
+     but ONLY when the user hasn't manually opened anything. */
 		#m-sidebar.is-open:not(.user-opened) nav > ul > li.has-submenu:has(ul.submenu a.active) > ul.submenu {
 			opacity: 1;
 			transform: translateY(0);
@@ -4689,8 +4722,7 @@ body.page-index {
 			opacity: 1;
 			transform: none;
 		}
-		/* 2) Default-close groups that are neither active nor JS-open.
-        Crucially: do NOT target .is-open, and avoid !important. */
+		/* 2) Default-close groups that are neither active nor JS-open. */
 		#m-sidebar.is-open nav > ul > li.has-submenu:not(.is-open):not(:has(ul.submenu a.active)) > ul.submenu {
 			max-height: 0; /* no !important — JS can open via inline px */
 			opacity: 0;
@@ -4706,6 +4738,8 @@ body.page-index {
 			transform: translateY(-6px);
 		}
 	}
+
+
 
 }
 
