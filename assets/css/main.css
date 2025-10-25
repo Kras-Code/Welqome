@@ -4643,6 +4643,39 @@ body.page-index {
 	}
 }
 
+/* Hide both underline bars on non-selected items (mobile drawer) */
+@media screen and (max-width: 736px) {
+	#m-sidebar nav a::before,
+	#m-sidebar nav a::after {
+		opacity: 0;
+		transition: opacity .2s ease, max-width .2s ease;
+	}
+
+	/* Keep the gradient bar collapsed by default (safety, in case earlier rules set width) */
+	#m-sidebar nav a::after {
+		max-width: 0;
+	}
+
+	/* Only the selected (active) item displays underlines */
+	#m-sidebar nav a.active::before,
+	#m-sidebar nav a.active::after {
+		opacity: 1;
+	}
+
+	#m-sidebar nav a.active::after {
+		max-width: 100%;
+	}
+
+	/* Optional: do NOT reveal underlines on hover/focus for non-active items */
+	#m-sidebar nav a:hover::before,
+	#m-sidebar nav a:hover::after,
+	#m-sidebar nav a:focus-visible::before,
+	#m-sidebar nav a:focus-visible::after {
+		opacity: 0;
+		max-width: 0;
+	}
+}
+
 
 
 
