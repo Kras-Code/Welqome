@@ -6739,6 +6739,11 @@ button,
 		display: none !important;
 	}
 
+.wq-contact__form.was-validated .wq-field :is(input, select, textarea):invalid {
+	outline: 2px solid #e63946;
+	outline-offset: 2px;
+}
+
 	/* Responsive */
 	@media (max-width: 980px) {
 		.wq-contact__inner {
