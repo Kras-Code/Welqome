@@ -4288,38 +4288,168 @@ button,
 		}
 	}
 
-	/* Mobile Sidebar */
-	/* --- Defaults: hide mobile UI on desktop --- */
-	#m-sidebar,
-	#m-sidebar-backdrop,
-	#mSidebarToggle {
-		display: none;
-	}
+/* =========================================================
+   MOBILE SIDEBAR (REWRITTEN WITH VEIL / FOCUS EMPHASIS)
+   DOM expectation (order): #mSidebarToggle, #m-sidebar, #m-sidebar-backdrop
+   Z-order: toggle(10003) > drawer(10002) > veil(10001) > page
+   ========================================================= */
 
-	/* --- Backdrop base --- */
+/* --- Defaults: hide mobile UI on desktop --- */
+#m-sidebar,
+#m-sidebar-backdrop,
+#mSidebarToggle {
+	display: none;
+}
+
+/* --- Backdrop (veil) base: present but inert until mobile rules apply --- */
+#m-sidebar-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0,0,0,0.55); /* neutral grey veil */
+	backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(2px);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 220ms ease, background-color 220ms ease;
+	z-index: 10001; /* below drawer */
+}
+
+/* Respect users preferring fewer transparency effects */
+@media (prefers-reduced-transparency: reduce) {
 	#m-sidebar-backdrop {
-		position: fixed;
-		inset: 0;
-		opacity: 0;
-		pointer-events: none;
-		transition: opacity 220ms ease;
-		z-index: 10001; /* below drawer */
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		background: rgba(0,0,0,0.6);
+	}
+}
+
+/* High-contrast systems */
+@media (forced-colors: active) {
+	#m-sidebar-backdrop {
+		background: CanvasText;
+		opacity: 0.75;
+	}
+}
+
+/* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
+body.page-index {
+	--sidebar-w: 15em; /* matches desktop sidebar width */
+	--topbar-h: 3.5em; /* matches desktop top bar height */
+}
+
+/* ≥1281px: fixed left sidebar; push page content right so it sits alongside */
+@media screen and (min-width: 1281px) {
+	body {
+		padding-left: var(--sidebar-w);
+	}
+}
+
+/* 737–1280px: desktop sidebar becomes top bar; push content down */
+@media screen and (max-width: 1280px) and (min-width: 737px) {
+	body {
+		padding-left: 0;
+		padding-top: var(--topbar-h);
+	}
+}
+
+/* ≤736px: mobile drawer + veil take over */
+@media screen and (max-width: 736px) {
+
+	/* Always instantiate the backdrop on mobile so sibling selectors can animate it */
+	#m-sidebar-backdrop {
+		display: block;
 	}
 
-	/* --- Mobile breakpoint (matches your theme’s 736px) --- */
-	@media screen and (max-width: 736px) {
+		/* Visible state via class (JS) */
+		#m-sidebar-backdrop.is-visible {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+	/* Pure-CSS activation: show veil when drawer is open or focused.
+     Requires #m-sidebar … #m-sidebar-backdrop sibling ordering. */
+	#m-sidebar.is-open ~ #m-sidebar-backdrop,
+	#m-sidebar:focus-within ~ #m-sidebar-backdrop {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Optional global flag: add .has-open-drawer to <body> if desired */
+	body.has-open-drawer #m-sidebar-backdrop {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	/* Optional scroll-lock when drawer is open (toggle .no-scroll on html/body) */
+	html.no-scroll,
+	body.no-scroll {
+		overflow: hidden;
+		overscroll-behavior: contain;
+		touch-action: none;
+	}
+
+	/* --- Toggle button --- */
+	#mSidebarToggle {
+		display: inline-flex;
+		align-items: center;
+		gap: .5rem;
+		position: fixed;
+		top: .75rem;
+		left: .75rem;
+		z-index: 10003; /* above drawer + veil */
+	}
+
+	/* --- Off-canvas drawer --- */
+	#m-sidebar {
+		display: block;
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: min(84vw, 15em); /* cap matches desktop width */
+		padding: 2.5em 2.5em 0.5em; /* mirrors desktop spacing */
+		text-align: right; /* mirrors desktop alignment */
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		transform: translateX(-100%); /* hidden by default */
+		transition: transform 240ms ease;
+		box-shadow: 2px 0 18px rgba(0,0,0,0.22);
+		z-index: 10002;
+		/* Darkened gradient (harmonised with brand) */
+		--bg-a: #050f27; /* deeper than #0b1f4b */
+		--bg-b: #0a1b3d; /* deeper than #023e8a */
+		--bg-c: #0a2f7a; /* muted cobalt vs #0161eb */
+		background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+		background-repeat: no-repeat, no-repeat;
+		background-color: var(--bg-a); /* solid fallback */
+	}
+
+		#m-sidebar.is-open {
+			transform: translateX(0);
+		}
+
+		/* Drawer inner scaffold */
+		#m-sidebar .inner {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			min-height: 100%;
+			width: 100%;
+			opacity: 1;
+			transition: opacity 1s ease; /* matches desktop fade rhythm */
+		}
 
 		/* --- Responsive logo in the mobile drawer --- */
 		#m-sidebar .logo {
-			display: block; /* allow margin centering */
-			max-width: 100%; /* never exceed drawer width */
-			height: auto; /* preserve aspect ratio */
-			width: auto; /* don't upscale small bitmaps */
-			margin: 0 auto 1.25rem; /* center horizontally, space below */
-			flex: 0 0 auto; /* prevent flex grow/shrink */
+			display: block;
+			max-width: 100%;
+			height: auto;
+			width: auto;
+			margin: 0 auto 1.25rem; /* center + spacing */
+			flex: 0 0 auto;
 		}
 
-		/* If your logo is placed inside the nav list as <li class="logo"> … */
+		/* If logo is placed as <li class="logo"> … */
 		#m-sidebar nav > ul > li.logo {
 			margin: 0 0 1rem 0;
 		}
@@ -4331,150 +4461,84 @@ button,
 				height: auto;
 			}
 
-
-		/* Show toggle button */
-		#mSidebarToggle {
-			display: inline-flex;
-			align-items: center;
-			gap: .5rem;
-			position: fixed;
-			top: .75rem;
-			left: .75rem;
-			z-index: 10003; /* above drawer */
+		/* --- Nav list structure (mirrors desktop) --- */
+		#m-sidebar nav > ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+			display: flex; /* enforce flex on mobile */
+			flex-direction: column; /* vertical stack */
+			align-items: stretch; /* li fills row */
+			flex-wrap: nowrap;
 		}
 
-		/* Off-canvas drawer */
-		#m-sidebar {
-			display: block;
-			position: fixed;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			width: min(84vw, 15em); /* match desktop width cap */
-			text-align: right; /* match desktop alignment */
-			padding: 2.5em 2.5em 0.5em 2.5em; /* match desktop spacing */
-			overflow-y: auto;
-			-webkit-overflow-scrolling: touch;
-			transform: translateX(-100%); /* hidden by default */
-			transition: transform 240ms ease;
-			box-shadow: 2px 0 18px rgba(0,0,0,0.22);
-			z-index: 10002; /* above backdrop, below toggle */
-			/* gradient background */
-			--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
-			--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
-			--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
-			/* text/accents tuned for dark surfaces */
-			/* keep the same stacking order so it visually relates to .wq-gradient */
-			background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
-			background-repeat: no-repeat, no-repeat;
-			/* solid fallback ensures nothing “wins” over the gradient */
-			background-color: var(--bg-a);
-		}
-
-			#m-sidebar.is-open {
-				transform: translateX(0);
-			}
-
-			#m-sidebar .inner {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				min-height: 100%;
+			#m-sidebar nav > ul > li {
+				margin: 1.5em 0 0 0;
+				padding: 0;
+				position: relative;
+				display: block;
+				flex: 0 0 auto;
 				width: 100%;
 				opacity: 1;
-				transition: opacity 1s ease; /* mirrors desktop fade */
+				transform: translateY(0);
+				transition: opacity .15s ease, transform .75s ease;
 			}
 
-			/* Nav list structure (mirrors desktop) */
-			#m-sidebar nav > ul {
-				list-style: none;
-				padding: 0;
-				margin: 0;
-				display: flex; /* force flex on mobile */
-				flex-direction: column; /* stack vertically */
-				align-items: stretch; /* li fills row */
-				flex-wrap: nowrap; /* never wrap horizontally */
-			}
-
-
-				#m-sidebar nav > ul > li {
-					margin: 1.5em 0 0 0;
-					padding: 0;
-					position: relative;
-					display: block; /* ensure a full row */
-					flex: 0 0 auto; /* don’t grow/shrink */
-					width: 100%; /* occupy the whole line */
-					opacity: 1;
-					transform: translateY(0);
-					transition: opacity 0.15s ease, transform 0.75s ease;
+				#m-sidebar nav > ul > li:first-child {
+					margin-top: 0;
 				}
 
-
-					#m-sidebar nav > ul > li:first-child {
-						margin: 0;
-					}
-
-			/* Links (copied from desktop and kept in sync) */
-			#m-sidebar nav a {
-				transition: color 0.2s ease;
-				border: 0;
-				color: rgba(255, 255, 255, 0.35);
-				display: block;
-				font-size: 0.6em;
-				font-weight: bold;
-				letter-spacing: 0.25em;
-				line-height: 1.75;
-				outline: 0;
-				padding: 1.35em 0;
-				position: relative;
-				text-decoration: none;
-				text-transform: uppercase;
-			}
-
-				#m-sidebar nav a::before,
-				#m-sidebar nav a::after {
-					border-radius: 0.2em;
-					bottom: 0;
-					content: '';
-					height: 0.2em;
-					position: absolute;
-					right: 0;
-					width: 100%;
-				}
-
-				#m-sidebar nav a::before {
-					background: #023e8a;
-					display: none;
-				}
-
-				#m-sidebar nav a::after {
-					background-image: linear-gradient(to right, #0162eb, #00c0fa);
-					transition: max-width 0.2s ease;
-					max-width: 0;
-				}
-
-				#m-sidebar nav a:hover {
-					color: rgba(255, 255, 255, 0.55);
-				}
-
-				#m-sidebar nav a.active {
-					color: #ffffff;
-				}
-
-					#m-sidebar nav a.active::after {
-						max-width: 100%;
-					}
-
-		/* Backdrop visible state */
-		#m-sidebar-backdrop.is-visible {
+		/* --- Links (kept in sync with desktop) --- */
+		#m-sidebar nav a {
+			border: 0;
 			display: block;
-			opacity: 1;
-			pointer-events: auto;
+			color: rgba(255,255,255,0.35);
+			font-size: 0.6em;
+			font-weight: bold;
+			letter-spacing: 0.25em;
+			line-height: 1.75;
+			padding: 1.35em 0;
+			text-decoration: none;
+			text-transform: uppercase;
+			position: relative;
+			outline: 0;
+			transition: color .2s ease;
 		}
 
+			#m-sidebar nav a::before,
+			#m-sidebar nav a::after {
+				content: '';
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				width: 100%;
+				height: 0.2em;
+				border-radius: 0.2em;
+			}
 
-		/* Mobile Dropdown*/
-		/* Host */
+			#m-sidebar nav a::before {
+				background: #023e8a;
+			}
+
+			#m-sidebar nav a::after {
+				background-image: linear-gradient(to right, #0162eb, #00c0fa);
+				max-width: 0;
+				transition: max-width .2s ease;
+			}
+
+			#m-sidebar nav a:hover {
+				color: rgba(255,255,255,0.55);
+			}
+
+			#m-sidebar nav a.active {
+				color: #fff;
+			}
+
+				#m-sidebar nav a.active::after {
+					max-width: 100%;
+				}
+
+		/* --- Mobile Dropdowns --- */
 		#m-sidebar nav > ul > li.has-submenu {
 			position: relative;
 		}
@@ -4490,10 +4554,10 @@ button,
 					position: absolute;
 					right: 0;
 					top: 50%;
-					transform: translateY(-50%) rotate(0deg);
-					transition: transform .25s ease;
 					width: .7em;
 					height: .7em;
+					transform: translateY(-50%) rotate(0deg);
+					transition: transform .25s ease;
 					display: inline-block;
 				}
 
@@ -4503,8 +4567,7 @@ button,
 						width: 0;
 						height: 0;
 						border-style: solid;
-						/* triangle pointing right */
-						border-width: .32em 0 .32em .48em;
+						border-width: .32em 0 .32em .48em; /* triangle → */
 						border-color: transparent transparent transparent currentColor;
 					}
 
@@ -4520,18 +4583,17 @@ button,
 			transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
 		}
 
-		/* Open state (class-driven on mobile) */
+		/* Open state (class-driven on mobile; JS sets inline max-height) */
 		#m-sidebar nav > ul > li.has-submenu.is-open > a .wq-caret {
 			transform: translateY(-50%) rotate(90deg);
 		}
 
 		#m-sidebar nav > ul > li.has-submenu.is-open > ul.submenu {
-			/* max-height is set inline by JS for smooth height animation */
 			opacity: 1;
 			transform: translateY(0);
 		}
 
-		/* Submenu items + stagger (optional, mirrors desktop) */
+		/* Submenu items + stagger (optional) */
 		#m-sidebar nav ul.submenu > li {
 			margin: 0;
 			padding: 0;
@@ -4565,43 +4627,24 @@ button,
 			transition-delay: 250ms;
 		}
 
-		/* Submenu link tweaks (inherits your base) */
+		/* Submenu link tweaks */
 		#m-sidebar nav ul.submenu a {
 			padding: .7em 0 .7em 1em;
 			font-size: 0.55em;
 			letter-spacing: 0.2em;
 			position: relative;
 		}
-	}
+}
 
-	/* ---- Layout constants so width/height stay in sync with your sidebar rules ---- */
-	body.page-index {
-		--sidebar-w: 15em; /* matches #sidebar width used on index */
-		--topbar-h: 3.5em; /* matches top bar height on index */
+/* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
+@media screen and (max-width: 736px) {
+	body {
+		padding: 0;
 	}
+}
 
-	/* ≥1281px: fixed left sidebar; push page content to the right so it sits alongside */
-	@media screen and (min-width: 1281px) {
-		/* Fastest universal fix: pad the page at the left by the sidebar width */
-		body {
-			padding-left: var(--sidebar-w);
-		}
-	}
 
-	/* 737–1280px: your CSS turns #sidebar into a fixed top bar; push content down */
-	@media screen and (max-width: 1280px) and (min-width: 737px) {
-		body {
-			padding-left: 0;
-			padding-top: var(--topbar-h);
-		}
-	}
 
-	/* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
-	@media screen and (max-width: 736px) {
-		body {
-			padding: 0;
-		}
-	}
 
 
 	/* Intro */
