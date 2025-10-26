@@ -4234,8 +4234,6 @@ button,
 			background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
 			background-repeat: no-repeat, no-repeat;
 			background-color: var(--bg-a);
-			/* prevent incidental hover hits while closed */
-			pointer-events: none !important;
 		}
 
 			/* Vertical list items + dividers (visual) */
@@ -4265,18 +4263,14 @@ button,
 				hyphens: auto;
 			}
 
-		/* ───────── Interaction policy at ≤1280px ─────────
-     Only explicit toggle (.is-open or [aria-expanded="true"]) may open the panel.
-     All implicit states (hover, focus-within, scroll-spy .active) are hard-blocked.
-  */
 
-		/* ALLOW: explicit open states */
-		#sidebar nav > ul > li.has-submenu.is-open > ul.submenu,
-		#sidebar nav > ul > li.has-submenu > a[aria-expanded="true"] + ul.submenu {
+		/* ───────── Interaction policy at ≤1280px ─────────
+		/* Hover opens submenu; panel stays open while hovered */
+		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		#sidebar nav > ul > li.has-submenu > ul.submenu:hover {
 			max-height: 80vh !important;
 			opacity: 1 !important;
 			transform: translateY(0) scaleY(1) !important;
-			pointer-events: auto !important;
 		}
 
 		/* BLOCK: focus auto-open */
@@ -4284,29 +4278,10 @@ button,
 			max-height: 0 !important;
 			opacity: 0 !important;
 			transform: translateY(-.5rem) scaleY(.96) !important;
-			pointer-events: none !important;
 		}
 
-	/* BLOCK: scroll-spy opening via .active anywhere under the li */
-	@supports selector(:has(*)) {
-		#sidebar nav > ul > li.has-submenu:has(> a.active) > ul.submenu,
-		#sidebar nav > ul > li.has-submenu:has(> ul.submenu a.active) > ul.submenu {
-			max-height: 0 !important;
-			opacity: 0 !important;
-			transform: translateY(-.5rem) scaleY(.96) !important;
-			pointer-events: none !important;
-		}
-	}
-
-
-	@supports selector(:has(*)) {
-		/* ensure scroll-spy alone never rotates caret */
-		#sidebar nav > ul > li.has-submenu:has(> ul.submenu a.active) > a .wq-caret,
-		#sidebar nav > ul > li.has-submenu:has(> a.active) > a .wq-caret {
-			transform: translateY(-50%) rotate(0deg) !important;
-		}
-	}
 }
+
 
 
 
