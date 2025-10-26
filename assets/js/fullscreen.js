@@ -352,81 +352,95 @@
     // Run once after parse (your file is loaded with `defer`)
     bindNavMinimisers();
 
-    /* === Auto-open FAQs across redirect ==========================
-       When clicking a .js-faqs-link (which navigates to "/#four"),
-       mark the intent and, on the landing page, auto-open the
-       fullscreen FAQs overlay sourced from data-zoom-template="#tpl-faqs".
-       ------------------------------------------------------------------ */
-    (function bindAutoFaqAcrossRedirect() {
-        const FLAG = 'wq:autoOpenFaqs';
-        const FAQ_SELECTOR = 'a.js-faqs-link[data-zoom-template="#tpl-faqs"]';
 
-        // Mark intent and ensure ?autofaq=1 is present in outgoing URL
-        document.addEventListener('click', (e) => {
-            const a = e.target && e.target.closest(FAQ_SELECTOR);
-            if (!a) return;
-            try { sessionStorage.setItem(FLAG, '1'); } catch { }
+    /* ================= FAQ deep-link: /#four then open fullscreen ================= */
+    (function setupFaqDeepLink() {
+        const FLAG = 'wq_open_faqs_after_nav';
 
-            try {
-                const url = new URL(a.getAttribute('href'), location.href);
-                url.searchParams.set('autofaq', '1');
-                a.setAttribute('href', url.pathname + url.search + url.hash);
-            } catch { }
-            // Let navigation proceed normally.
-        }, { capture: true });
+        // Programmatically open the FAQ overlay using your existing openZoom wrapper (tags _sourceEl)
+        function openFaqsOverlay() {
+            const source = document.querySelector('#four') || document.body;
 
-        function autoOpenFaq() {
-            const url = new URL(location.href);
-            const hasParam = url.searchParams.get('autofaq') === '1';
-            let hasFlag = false;
-            try { hasFlag = sessionStorage.getItem(FLAG) === '1'; } catch { }
-
-            if (!hasParam && !hasFlag) return;
-
-            // Clean up so refresh doesn't re-open
-            try { sessionStorage.removeItem(FLAG); } catch { }
-            if (hasParam) {
-                url.searchParams.delete('autofaq');
-                try { history.replaceState(null, '', url.pathname + url.hash); } catch { }
+            // Ensure hash (so native hash-scroll + FLIP origin align)
+            if (location.hash !== '#four') {
+                try { history.replaceState(null, '', '#four'); } catch { }
             }
 
-            // Prefer the real trigger so the existing interceptor runs
-            const trigger = document.querySelector(FAQ_SELECTOR);
-            if (trigger) {
-                if (!/\bzoom-open\b/.test(trigger.className)) {
-                    trigger.classList.add('zoom-open');
-                }
-                const open = () => {
-                    // Tiny delay so hash jump to #four completes
-                    setTimeout(() => {
-                        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
-                    }, 40);
-                };
-                if (document.readyState === 'complete') open();
-                else window.addEventListener('load', open, { once: true });
+            // Let the layout settle before measuring in openZoom
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    const trigger = document.createElement('button');
+                    trigger.type = 'button';
+                    trigger.className = 'zoom-open';
+                    trigger.setAttribute('data-zoom-template', '#tpl-faqs');
+
+                    // Call the patched global to keep overlay tagging consistent
+                    if (typeof window.openZoom === 'function') {
+                        window.openZoom(source, trigger);
+                    } else {
+                        // Fallback (shouldn't happen in this file)
+                        openZoom(source, trigger);
+                    }
+                });
+            });
+        }
+
+        // Intercept clicks on your FAQs link (no special class required)
+        document.addEventListener('click', function onFaqLink(e) {
+            const a = e.target && e.target.closest('a[href]');
+            if (!a) return;
+
+            // Respect modified clicks (new tab/window)
+            const modified = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
+            if (modified) return;
+
+            // Resolve the link safely
+            let url;
+            try { url = new URL(a.getAttribute('href'), location.href); } catch { return; }
+
+            // Match exactly: go to /#four AND looks like a dialog/fullscreen trigger
+            const isFaqDestination = (url.pathname === '/' && url.hash === '#four');
+            const looksLikeFaqTrigger =
+                a.matches('[data-zoom-template="#tpl-faqs"], [aria-haspopup="dialog"]');
+
+            if (!isFaqDestination || !looksLikeFaqTrigger) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            // One-shot flag so the destination page opens the overlay after navigation
+            try { sessionStorage.setItem(FLAG, '1'); } catch { }
+
+            if (location.pathname !== '/') {
+                // We are on a subpage: navigate home and open there on arrival
+                location.assign(url.href);
                 return;
             }
 
-            // Fallback: call window.openZoom with a synthetic trigger
-            const fallback = () => {
-                if (typeof window.openZoom === 'function') {
-                    const fake = document.createElement('a');
-                    fake.className = 'zoom-open';
-                    fake.setAttribute('data-zoom-template', '#tpl-faqs');
-                    const source = document.querySelector('#four') || document.body;
-                    window.openZoom(source, fake);
-                }
-            };
-            if (document.readyState === 'complete') fallback();
-            else window.addEventListener('load', fallback, { once: true });
+            // Already on home: ensure native hash scroll, then open shortly after
+            if (location.hash !== '#four') location.hash = '#four';
+            setTimeout(openFaqsOverlay, 80);
+        }, { capture: true, passive: false });
+
+        // If we arrived at /#four with the flag set, open automatically after DOM is ready
+        function maybeAutoOpenOnArrival() {
+            let shouldOpen = false;
+            try {
+                shouldOpen = sessionStorage.getItem(FLAG) === '1';
+                if (shouldOpen) sessionStorage.removeItem(FLAG);
+            } catch { }
+
+            if (!shouldOpen) return;
+
+            if (location.hash !== '#four') location.hash = '#four';
+            setTimeout(openFaqsOverlay, 120);
         }
 
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', autoOpenFaq, { once: true });
+            document.addEventListener('DOMContentLoaded', maybeAutoOpenOnArrival, { once: true });
         } else {
-            autoOpenFaq();
+            maybeAutoOpenOnArrival();
         }
     })();
-    /* === /Auto-open FAQs across redirect ========================= */
 
 })();
