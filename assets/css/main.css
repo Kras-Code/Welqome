@@ -4279,8 +4279,7 @@ button,
 			pointer-events: auto !important;
 		}
 
-		/* BLOCK: hover/focus auto-open */
-		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		/* BLOCK: focus auto-open */
 		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
 			max-height: 0 !important;
 			opacity: 0 !important;
@@ -4299,15 +4298,6 @@ button,
 		}
 	}
 
-	/* Caret behaviour: rotate ONLY on explicit open */
-	#sidebar nav > ul > li.has-submenu > a .wq-caret {
-		transform: translateY(-50%) rotate(0deg) !important;
-	}
-
-	#sidebar nav > ul > li.has-submenu.is-open > a .wq-caret,
-	#sidebar nav > ul > li.has-submenu > a[aria-expanded="true"] .wq-caret {
-		transform: translateY(-50%) rotate(90deg) !important;
-	}
 
 	@supports selector(:has(*)) {
 		/* ensure scroll-spy alone never rotates caret */
