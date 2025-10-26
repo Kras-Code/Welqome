@@ -2,13 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\assets",
-    "\\assets\\css",
-    "\\assets\\js",
-    "\\assets\\webfonts",
-    "\\faqs",
-    "\\founder-jai",
-    "\\founder-karol",
-    "\\integrations"
+    "\\assets\\js"
   ],
+  "SelectedNode": "\\assets\\js\\sidebar.js",
   "PreviewInSolutionExplorer": false
 }
