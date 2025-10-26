@@ -5324,28 +5324,41 @@ body.page-index {
 			margin: 0 0 20px 0; /* keep your bottom spacing */
 		}
 
-	@media (max-width: 736px) {
-		/* Stack logo above nav and center it */
-		#header {
-			display: flex; /* if it's already flex, this just overrides direction */
-			flex-direction: column; /* stack children vertically */
-			align-items: center; /* center the logo horizontally */
+
+		/* --- Kill any underline on the logo link, even if it propagates from ancestors --- */
+		#header a.slogo-link,
+		#header a.slogo-link * {
+			/* neutralise any propagated text-decoration */
+			text-decoration: none !important;
+			text-decoration-line: none !important;
+			text-decoration-style: solid !important;
+			text-decoration-color: transparent !important;
+			text-underline-offset: 0 !important;
+			text-decoration-thickness: 0 !important;
 		}
 
-			/* Center the logo block itself */
-			#header .slogo {
-				margin: 0 auto 20px; /* centered, keep your bottom spacing */
+			@media (max-width: 736px) {
+				/* Stack logo above nav and center it */
+				#header {
+					display: flex; /* if it's already flex, this just overrides direction */
+					flex-direction: column; /* stack children vertically */
+					align-items: center; /* center the logo horizontally */
+				}
+
+					/* Center the logo block itself */
+					#header .slogo {
+						margin: 0 auto 20px; /* centered, keep your bottom spacing */
+					}
 			}
-	}
 
-	@media (max-width: 736px) {
-		#header {
-			padding-top: 1.5rem;
-			--slogo-h: 3.5rem;
-		}
-	}
+			@media (max-width: 736px) {
+				#header {
+					padding-top: 1.5rem;
+					--slogo-h: 3.5rem;
+				}
+			}
 
-	#header nav a.match-slogo {
+			#header nav a.match-slogo {
 		display: inline-flex; /* flex container for the text */
 		align-items: center; /* vertical centre */
 		justify-content: center; /* horizontal centre */
