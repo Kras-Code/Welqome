@@ -17,7 +17,7 @@
     };
     const clamp01 = t => Math.max(0, Math.min(1, t));
     const easeInOutCubic = t => (t < 0.5) ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    const mmMobile = window.matchMedia('(max-width: 736px)');
+    const mmMobile = window.matchMedia('(max-width: 1280px)');
     const px = v => Math.round(v * 100) / 100;
     const absRect = el => {
         const r = el.getBoundingClientRect();
@@ -26,11 +26,15 @@
 
     let totalLen = 0;
     let lengthsAtAnchors = [];
-    let currReveal = 0;   // revealed path length (px)
+    let currReveal = 0;        // revealed path length (px)
     let builtOnce = false;
-    let firstAnchorFrac = 0; // 0..1, fraction where we hit the first card’s top-entry
+    let firstAnchorFrac = 0;   // 0..1 fraction where we hit first card’s top-entry
+    let suppressTicks = false; // pause tick during rebuilds
 
-    // Progress: lock to a fixed reveal line in the viewport (robust to fast scroll)
+    // Track DPR to rebuild on monitor/zoom changes
+    let lastDPR = window.devicePixelRatio || 1;
+
+    // Progress: lock to a fixed reveal line in the viewport
     function progressFractionFromScroll() {
         const flowAbs = absRect(flow);
         const sentinelAbs = absRect(sentinel);
@@ -51,7 +55,7 @@
         return clamp01((revealLineY - startY) / span);
     }
 
-    // Anchor helpers for a local rect
+    // Anchors for a local rect
     function anchorsFor(r, half, outClear) {
         const cx = r.x + r.w / 2;
         const cy = r.y + r.h / 2;
@@ -69,6 +73,8 @@
     }
 
     function buildPathAndSnapToProgress() {
+        suppressTicks = true;
+
         const p = progressFractionFromScroll();
         const pE = easeInOutCubic(p);
 
@@ -94,9 +100,9 @@
         // Start exactly at video bottom-centre to keep “touch”
         const start = { x: vid.x + vid.w / 2, y: vid.y + vid.h };
 
-        // Read desired vertical drop from CSS (fallback to a sensible visible run)
+        // Vertical drop distance after the video
         const videoDrop = (() => {
-            const d = cssNumber(flow, '--video-drop', NaN); // e.g., 28..48px typical
+            const d = cssNumber(flow, '--video-drop', NaN);
             return Number.isNaN(d) ? Math.max(half * 1.35, 48) : Math.max(0, d);
         })();
 
@@ -112,14 +118,13 @@
         lengthsAtAnchors = new Array(cardsLocal.length).fill(0);
 
         if (mmMobile.matches) {
-            // ----- MOBILE: single column, enter via top-centre, exit bottom -----
+            // ===== NARROW: single column; enter top-centre, exit bottom =====
             const ordered = cardsLocal
                 .map((r, i) => ({ i, r, cy: r.y + r.h / 2 }))
                 .sort((a, b) => a.cy - b.cy);
 
             if (ordered.length) {
                 const firstA = anchorsFor(ordered[0].r, half, outClr);
-                // First, drop vertically from the video before any turn
                 const approachY = Math.min(firstA.topIn.y - (half + 2), start.y + videoDrop);
                 if (approachY > start.y) vline(approachY);
             }
@@ -128,48 +133,44 @@
                 const item = ordered[idx];
                 const A = anchorsFor(item.r, half, outClr);
 
-                // Align X to card centre, then vertical top entry
-                hline(A.center.x);
-                vline(A.topIn.y);
+                hline(A.center.x);   // align to card centre X
+                vline(A.topIn.y);    // enter from top
                 lengthsAtAnchors[item.i] = cumLen;
 
-                // Cross through the centre
-                vline(A.center.y);
+                vline(A.center.y);   // through centre
 
                 const isLast = (idx === ordered.length - 1);
                 if (isLast) break;
 
-                // Exit bottom then head toward next card’s centre X
-                vline(A.bottomIn.y);
+                vline(A.bottomIn.y); // exit bottom
                 vline(A.bottomOut.y);
 
                 const next = ordered[idx + 1];
                 const N = anchorsFor(next.r, half, outClr);
-                hline(N.center.x);
+                hline(N.center.x);   // short horizontal hop
             }
 
         } else {
-            // ----- DESKTOP: pairwise L-R routing -----
+            // ===== DESKTOP: pairwise L/R routing =====
             const ordered = cardsLocal
                 .map((r, i) => ({ i, r, cx: r.x + r.w / 2, cy: r.y + r.h / 2 }))
                 .sort((a, b) => a.cy - b.cy);
 
             const midX = start.x;
 
-            // Pre-drop vertically from the video before any horizontal turn (k=0)
+            // pre-drop
             if (ordered.length) {
                 const A0 = ordered[0];
                 const B0 = ordered[1];
                 let left0;
                 if (B0) {
-                    // decide left among first pair
                     if (Math.min(A0.cx, B0.cx) < midX && Math.max(A0.cx, B0.cx) > midX) {
                         left0 = (A0.cx < B0.cx) ? A0 : B0;
                     } else {
                         left0 = (A0.cx <= B0.cx) ? A0 : B0;
                     }
                 } else {
-                    left0 = A0; // single first card behaves like LEFT
+                    left0 = A0;
                 }
                 const L0 = anchorsFor(left0.r, half, outClr);
                 const approachY = Math.min(L0.topIn.y - (half + 2), start.y + videoDrop);
@@ -181,7 +182,6 @@
                 const B = ordered[k + 1];
 
                 if (!B) {
-                    // Single trailing card -> treat as LEFT: enter via top-centre, cross centre
                     const L = anchorsFor(A.r, half, outClr);
                     hline(L.center.x);
                     vline(L.topIn.y);
@@ -190,7 +190,6 @@
                     break;
                 }
 
-                // Decide left/right by cx relative to midline (fallback by cx)
                 let left, right;
                 if (Math.min(A.cx, B.cx) < midX && Math.max(A.cx, B.cx) > midX) {
                     left = (A.cx < B.cx) ? A : B;
@@ -203,7 +202,7 @@
                 const L = anchorsFor(left.r, half, outClr);
                 const R = anchorsFor(right.r, half, outClr);
 
-                // LEFT card: enter via top-centre (align X first → vertical drop), cross centre, exit right
+                // LEFT: enter top, cross, exit right → gutter → RIGHT enter left, cross centre
                 hline(L.center.x);
                 vline(L.topIn.y);
                 lengthsAtAnchors[left.i] = cumLen;
@@ -211,7 +210,6 @@
                 hline(L.rightIn.x);
                 hline(L.rightOut.x);
 
-                // Hop across gutter at L.center.y to RIGHT outer-left, then into centre
                 hline(R.leftOut.x);
                 vline(R.center.y);
                 hline(R.leftIn.x);
@@ -221,7 +219,6 @@
                 const isFinalPair = (k + 1 === ordered.length - 1);
                 if (isFinalPair) break;
 
-                // Exit bottom of RIGHT, then aim toward next LEFT’s top-centre
                 vline(R.bottomIn.y);
                 vline(R.bottomOut.y);
 
@@ -232,7 +229,7 @@
                     if (nextB) nextLeft = (nextA.cx <= (nextB?.cx ?? nextA.cx)) ? nextA : nextB;
                     const NL = anchorsFor(nextLeft.r, half, outClr);
                     hline(NL.center.x);
-                    vline(NL.topIn.y - (half + 1)); // stage just above; next loop drops in
+                    vline(NL.topIn.y - (half + 1));
                 }
             }
         }
@@ -245,34 +242,33 @@
         totalLen = Math.max(1, path.getTotalLength());
         path.style.strokeDasharray = `${totalLen} ${totalLen}`;
 
-        // --- locate first positive anchor (earliest card top-entry along path) ---
-        const firstPx = lengthsAtAnchors
-            .filter(v => v > 0)
-            .reduce((m, v) => Math.min(m, v), Infinity);
+        // earliest positive anchor (first card top-entry)
+        const firstPx = lengthsAtAnchors.filter(v => v > 0).reduce((m, v) => Math.min(m, v), Infinity);
         firstAnchorFrac = (Number.isFinite(firstPx) && totalLen > 0) ? clamp01(firstPx / totalLen) : 0;
 
-        // Snap to current (boosted) progress for first paint correctness
+        // Snap to current progress for first paint correctness
         const f0 = boostedFractionBeforeFirstBox(pE);
         currReveal = f0 * totalLen;
         path.style.strokeDashoffset = Math.max(0, totalLen - currReveal);
 
-        // Sync card states immediately at build time
+        // Sync card states at build time
         for (let i = 0; i < steps.length; i++) {
             if (currReveal + 2 >= lengthsAtAnchors[i]) steps[i].classList.add('is-live');
             else steps[i].classList.remove('is-live');
         }
 
         builtOnce = true;
+        suppressTicks = false;
     }
 
     function tick() {
-        if (!builtOnce || totalLen <= 1) return;
+        if (suppressTicks || !builtOnce || totalLen <= 1) return;
 
         const pE = easeInOutCubic(progressFractionFromScroll());
         const f = boostedFractionBeforeFirstBox(pE);
         const target = f * totalLen;
 
-        // Adaptive smoothing: snap on large gaps or near extremes
+        // Adaptive smoothing
         const alpha = clamp01(cssNumber(flow, '--reveal-smooth-alpha', 0.12));
         const snapFrac = clamp01(cssNumber(flow, '--reveal-snap-gap', 0.20));
         const snapGap = snapFrac * totalLen;
@@ -281,7 +277,6 @@
         const shouldSnap = (gap >= snapGap) || pE <= 0.0001 || pE >= 0.9999;
 
         currReveal = shouldSnap ? target : (currReveal + (target - currReveal) * alpha);
-
         path.style.strokeDashoffset = Math.max(0, totalLen - currReveal);
 
         for (let i = 0; i < steps.length; i++) {
@@ -296,7 +291,7 @@
         const early = clamp01(cssNumber(flow, '--pre-first-end-frac', firstAnchorFrac || 0));
         if (early <= 0 || boost <= 1) return f;
 
-        const fSwitch = early / boost; // boundary where the early segment ends pre-remap
+        const fSwitch = early / boost; // boundary where early segment ends pre-remap
         if (f <= fSwitch) return f * boost;
 
         const restIn = 1 - fSwitch;
@@ -305,26 +300,76 @@
         return early + t * restOut;       // smooth to 1 at f=1
     }
 
-    // ---------- rebuild + listeners ----------
+    // ---------- robust rebuild orchestration ----------
     let rebuildRaf = null;
-    const scheduleRebuild = () => {
-        if (rebuildRaf) cancelAnimationFrame(rebuildRaf);
-        rebuildRaf = requestAnimationFrame(() => { rebuildRaf = null; buildPathAndSnapToProgress(); });
-    };
+    let settleTimer = null;
 
-    const ro = new ResizeObserver(scheduleRebuild);
+    // Double-RAF settle pass: rebuild now, then once more next frame (after reflow)
+    function rebuildWithSettle() {
+        if (rebuildRaf) cancelAnimationFrame(rebuildRaf);
+        suppressTicks = true;
+        rebuildRaf = requestAnimationFrame(() => {
+            buildPathAndSnapToProgress();
+            requestAnimationFrame(() => {
+                buildPathAndSnapToProgress();
+                suppressTicks = false;
+                tick();
+            });
+        });
+    }
+
+    // Debounced settle for bursts (e.g., window resize dragging)
+    function debouncedRebuild(delay = 140) {
+        rebuildWithSettle();
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(rebuildWithSettle, delay);
+    }
+
+    const scheduleRebuild = () => debouncedRebuild(140);
+
+    // ResizeObserver on key elements
+    const ro = new ResizeObserver(() => scheduleRebuild());
     ro.observe(flow);
     if (video) ro.observe(video);
     steps.forEach(s => ro.observe(s));
 
+    // Listen for layout mode flips
     if (mmMobile.addEventListener) mmMobile.addEventListener('change', scheduleRebuild);
     else if (mmMobile.addListener) mmMobile.addListener(scheduleRebuild);
 
-    window.addEventListener('resize', scheduleRebuild, { passive: true });
-    window.addEventListener('orientationchange', scheduleRebuild, { passive: true });
-    window.addEventListener('pageshow', scheduleRebuild); // bfcache restores
+    // Visual viewport changes (mobile zoom / on-screen kb)
+    if (window.visualViewport) {
+        visualViewport.addEventListener('resize', scheduleRebuild, { passive: true });
+        visualViewport.addEventListener('scroll', scheduleRebuild, { passive: true });
+    }
 
-    // Scroll/throttle + handle large navigation jumps
+    // Window resize & orientation changes
+    window.addEventListener('resize', () => {
+        const dpr = window.devicePixelRatio || 1;
+        if (Math.abs(dpr - lastDPR) > 1e-3) lastDPR = dpr;
+        scheduleRebuild();
+    }, { passive: true });
+    window.addEventListener('orientationchange', scheduleRebuild, { passive: true });
+
+    // Pageshow (bfcache) + visibility
+    window.addEventListener('pageshow', scheduleRebuild);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) scheduleRebuild(); });
+
+    // Monitor explicit DPR changes via media queries
+    [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3, 4].forEach(v => {
+        try {
+            const mq = window.matchMedia(`(resolution: ${v}dppx)`);
+            if (mq.addEventListener) mq.addEventListener('change', scheduleRebuild);
+            else if (mq.addListener) mq.addListener(scheduleRebuild);
+        } catch (_) { }
+    });
+
+    // Rebuild when images inside the section finish loading
+    section.querySelectorAll('img').forEach(img => {
+        if (!img.complete) img.addEventListener('load', scheduleRebuild, { once: true, passive: true });
+    });
+
+    // Scroll throttling
     let raf = null;
     const onScroll = () => {
         if (raf) return;
@@ -337,11 +382,13 @@
         if (['PageDown', 'PageUp', 'End', 'Home', 'ArrowDown', 'ArrowUp', 'Space'].includes(e.code)) onScroll();
     }, { passive: true });
 
+    // Fonts settle
     if ('fonts' in document) document.fonts.ready.then(scheduleRebuild);
+
     if (document.readyState === 'complete') scheduleRebuild();
     else window.addEventListener('load', scheduleRebuild, { once: true });
 
     // init
-    buildPathAndSnapToProgress();
+    rebuildWithSettle();
     tick();
 })();
