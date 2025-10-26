@@ -354,35 +354,62 @@
 
 
     /* ================= FAQ deep-link: /#four then open fullscreen ================= */
+    /* ================= FAQ deep-link: /#four then open fullscreen ================= */
     (function setupFaqDeepLink() {
         const FLAG = 'wq_open_faqs_after_nav';
+        const QP = 'open';
+        const QV = 'faqs';
 
-        // Programmatically open the FAQ overlay using your existing openZoom wrapper (tags _sourceEl)
         function openFaqsOverlay() {
             const source = document.querySelector('#four') || document.body;
 
-            // Ensure hash (so native hash-scroll + FLIP origin align)
+            // Ensure hash is correct for native scroll + FLIP origin
             if (location.hash !== '#four') {
                 try { history.replaceState(null, '', '#four'); } catch { }
             }
 
-            // Let the layout settle before measuring in openZoom
+            // Defer twice for stable layout before measuring in openZoom
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     const trigger = document.createElement('button');
                     trigger.type = 'button';
                     trigger.className = 'zoom-open';
+                    // Prefer template if present; otherwise you can switch to fetch (see note below)
                     trigger.setAttribute('data-zoom-template', '#tpl-faqs');
 
-                    // Call the patched global to keep overlay tagging consistent
                     if (typeof window.openZoom === 'function') {
                         window.openZoom(source, trigger);
                     } else {
-                        // Fallback (shouldn't happen in this file)
                         openZoom(source, trigger);
                     }
                 });
             });
+        }
+
+        function markForOpenNextPage() {
+            try { sessionStorage.setItem(FLAG, '1'); } catch { }
+        }
+
+        function shouldOpenNow() {
+            // EITHER session flag OR ?open=faqs in the URL
+            let byFlag = false, byQuery = false;
+            try {
+                byFlag = sessionStorage.getItem(FLAG) === '1';
+                if (byFlag) sessionStorage.removeItem(FLAG);
+            } catch { }
+
+            const usp = new URLSearchParams(location.search);
+            byQuery = (usp.get(QP) === QV);
+
+            return { byFlag, byQuery, usp };
+        }
+
+        function cleanQuery(usp) {
+            if (!usp || !usp.has(QP)) return;
+            usp.delete(QP);
+            const newQs = usp.toString();
+            const newUrl = location.pathname + (newQs ? '?' + newQs : '') + location.hash;
+            try { history.replaceState(null, '', newUrl); } catch { }
         }
 
         // Intercept clicks on your FAQs link (no special class required)
@@ -390,15 +417,15 @@
             const a = e.target && e.target.closest('a[href]');
             if (!a) return;
 
-            // Respect modified clicks (new tab/window)
+            // Respect modified clicks
             const modified = e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1;
             if (modified) return;
 
-            // Resolve the link safely
+            // Resolve the link
             let url;
             try { url = new URL(a.getAttribute('href'), location.href); } catch { return; }
 
-            // Match exactly: go to /#four AND looks like a dialog/fullscreen trigger
+            // Must be /#four and also look like a dialog/fullscreen trigger
             const isFaqDestination = (url.pathname === '/' && url.hash === '#four');
             const looksLikeFaqTrigger =
                 a.matches('[data-zoom-template="#tpl-faqs"], [aria-haspopup="dialog"]');
@@ -408,39 +435,46 @@
             e.preventDefault();
             e.stopPropagation();
 
-            // One-shot flag so the destination page opens the overlay after navigation
-            try { sessionStorage.setItem(FLAG, '1'); } catch { }
+            // Set both: session flag (same-origin) + URL param (cross-host fallback)
+            markForOpenNextPage();
+            url.searchParams.set(QP, QV);
 
             if (location.pathname !== '/') {
-                // We are on a subpage: navigate home and open there on arrival
+                // Navigate to home, e.g. /?open=faqs#four
                 location.assign(url.href);
                 return;
             }
 
-            // Already on home: ensure native hash scroll, then open shortly after
+            // Already on home: set hash and open shortly after
             if (location.hash !== '#four') location.hash = '#four';
             setTimeout(openFaqsOverlay, 80);
         }, { capture: true, passive: false });
 
-        // If we arrived at /#four with the flag set, open automatically after DOM is ready
+        // Auto-open on arrival (covers fresh nav, reload, and bfcache restore)
         function maybeAutoOpenOnArrival() {
-            let shouldOpen = false;
-            try {
-                shouldOpen = sessionStorage.getItem(FLAG) === '1';
-                if (shouldOpen) sessionStorage.removeItem(FLAG);
-            } catch { }
-
-            if (!shouldOpen) return;
+            const { byFlag, byQuery, usp } = shouldOpenNow();
+            if (!(byFlag || byQuery)) return;
 
             if (location.hash !== '#four') location.hash = '#four';
-            setTimeout(openFaqsOverlay, 120);
+            setTimeout(() => {
+                openFaqsOverlay();
+                cleanQuery(usp);
+            }, 120);
         }
 
+        // Fire for all relevant lifecycle moments
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', maybeAutoOpenOnArrival, { once: true });
         } else {
+            // Script loaded after DOM parsed
             maybeAutoOpenOnArrival();
         }
+        window.addEventListener('load', maybeAutoOpenOnArrival, { once: true, passive: true });
+        window.addEventListener('pageshow', (ev) => {
+            // bfcache restore path
+            if (ev.persisted) maybeAutoOpenOnArrival();
+        }, { passive: true });
     })();
+
 
 })();
