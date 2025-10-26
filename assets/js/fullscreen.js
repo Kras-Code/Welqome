@@ -352,4 +352,81 @@
     // Run once after parse (your file is loaded with `defer`)
     bindNavMinimisers();
 
+    /* === Auto-open FAQs across redirect ==========================
+       When clicking a .js-faqs-link (which navigates to "/#four"),
+       mark the intent and, on the landing page, auto-open the
+       fullscreen FAQs overlay sourced from data-zoom-template="#tpl-faqs".
+       ------------------------------------------------------------------ */
+    (function bindAutoFaqAcrossRedirect() {
+        const FLAG = 'wq:autoOpenFaqs';
+        const FAQ_SELECTOR = 'a.js-faqs-link[data-zoom-template="#tpl-faqs"]';
+
+        // Mark intent and ensure ?autofaq=1 is present in outgoing URL
+        document.addEventListener('click', (e) => {
+            const a = e.target && e.target.closest(FAQ_SELECTOR);
+            if (!a) return;
+            try { sessionStorage.setItem(FLAG, '1'); } catch { }
+
+            try {
+                const url = new URL(a.getAttribute('href'), location.href);
+                url.searchParams.set('autofaq', '1');
+                a.setAttribute('href', url.pathname + url.search + url.hash);
+            } catch { }
+            // Let navigation proceed normally.
+        }, { capture: true });
+
+        function autoOpenFaq() {
+            const url = new URL(location.href);
+            const hasParam = url.searchParams.get('autofaq') === '1';
+            let hasFlag = false;
+            try { hasFlag = sessionStorage.getItem(FLAG) === '1'; } catch { }
+
+            if (!hasParam && !hasFlag) return;
+
+            // Clean up so refresh doesn't re-open
+            try { sessionStorage.removeItem(FLAG); } catch { }
+            if (hasParam) {
+                url.searchParams.delete('autofaq');
+                try { history.replaceState(null, '', url.pathname + url.hash); } catch { }
+            }
+
+            // Prefer the real trigger so the existing interceptor runs
+            const trigger = document.querySelector(FAQ_SELECTOR);
+            if (trigger) {
+                if (!/\bzoom-open\b/.test(trigger.className)) {
+                    trigger.classList.add('zoom-open');
+                }
+                const open = () => {
+                    // Tiny delay so hash jump to #four completes
+                    setTimeout(() => {
+                        trigger.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+                    }, 40);
+                };
+                if (document.readyState === 'complete') open();
+                else window.addEventListener('load', open, { once: true });
+                return;
+            }
+
+            // Fallback: call window.openZoom with a synthetic trigger
+            const fallback = () => {
+                if (typeof window.openZoom === 'function') {
+                    const fake = document.createElement('a');
+                    fake.className = 'zoom-open';
+                    fake.setAttribute('data-zoom-template', '#tpl-faqs');
+                    const source = document.querySelector('#four') || document.body;
+                    window.openZoom(source, fake);
+                }
+            };
+            if (document.readyState === 'complete') fallback();
+            else window.addEventListener('load', fallback, { once: true });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', autoOpenFaq, { once: true });
+        } else {
+            autoOpenFaq();
+        }
+    })();
+    /* === /Auto-open FAQs across redirect ========================= */
+
 })();
