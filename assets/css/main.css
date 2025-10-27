@@ -4129,7 +4129,6 @@ button,
 	}
 
 
-
 	/* Submenu link styling (inherits your base link styles, slightly adjusted) */
 	#sidebar nav ul.submenu a {
 		/* inherits color, caps, underline animation from #sidebar nav a */
@@ -4263,22 +4262,6 @@ button,
 				hyphens: auto;
 			}
 
-
-		/* ───────── Interaction policy at ≤1280px ─────────
-		/* Hover opens submenu; panel stays open while hovered */
-		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
-		#sidebar nav > ul > li.has-submenu > ul.submenu:hover {
-			max-height: 80vh !important;
-			opacity: 1 !important;
-			transform: translateY(0) scaleY(1) !important;
-		}
-
-		/* BLOCK: focus auto-open */
-		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
-			max-height: 0 !important;
-			opacity: 0 !important;
-			transform: translateY(-.5rem) scaleY(.96) !important;
-		}
 
 }
 
