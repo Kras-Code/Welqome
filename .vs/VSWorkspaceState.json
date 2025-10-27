@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\assets",
-    "\\assets\\js"
+    "\\assets\\js",
+    "\\founder-karol"
   ],
-  "SelectedNode": "\\assets\\js\\sidebar.js",
+  "SelectedNode": "\\assets\\js\\firebase-init.js",
   "PreviewInSolutionExplorer": false
 }
