@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 <!--
     Hyperspace by HTML5 UP
     html5up.net | @ajlkn
@@ -6,19 +6,21 @@
 -->
 <html>
 <head>
-    <title>WelQome Blog</title>
+    <title>Reset your password</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/assets/css/main.css" />
     <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 </head>
+
+
 <body class="is-preload">
 
     <!-- Header -->
     <header id="header" class=" wrapper wq-gradient-alt">
 
-        <a href="/" class="slogo-link" aria-label="WelQome homepage">
-            <img src="/images/welqome_automate.png" alt="WelQome Logo" class="slogo">
+        <a href="/index.html" class="slogo-link" aria-label="WelQome homepage">
+            <img src="images/welqome_automate.png" alt="WelQome Logo" class="slogo">
         </a>
 
         <nav>
@@ -45,7 +47,23 @@
         <!-- Main -->
         <section id="main" class="wrapper wq-gradient">
             <div class="inner fit-media">
+                <h1 class="major">Forgot your password?</h1>
+
+                <form id="forgot-form" autocomplete="off">
+                    <label for="forgot-email">Email</label>
+                    <input id="forgot-email" type="email" required autocomplete="email" />
+
+                    <button id="forgot-submit" type="submit">Send reset link</button>
+
+                    <p id="forgot-msg" role="status" style="display:none; margin-top:.75rem;"></p>
+                    <p id="forgot-error" role="alert" style="display:none; margin-top:.5rem; color:#f86;"></p>
+                </form>
+
+                <p style="margin-top:1rem">
+                    <a href="/" class="button small">Back to login</a>
+                </p>
             </div>
+
         </section>
 
     </div>
@@ -157,7 +175,7 @@
 
             <!-- Bottom line -->
             <div class="wq-footer__legal">
-                <p>� <span data-year>2025</span> WelQome. All rights reserved.</p>
+                <p>© <span data-year>2025</span> WelQome. All rights reserved.</p>
             </div>
         </div>
 
@@ -165,14 +183,14 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/jquery.scrollex.min.js"></script>
-    <script src="/assets/js/jquery.scrolly.min.js"></script>
-    <script src="/assets/js/browser.min.js"></script>
-    <script src="/assets/js/breakpoints.min.js"></script>
-    <script src="/assets/js/util.js"></script>
-    <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/fullscreen.js" defer></script>
-
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrollex.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/fullscreen.js" defer></script>
+    <script type="module" src="/assets/js/forgot.js"></script>
 </body>
 </html>
