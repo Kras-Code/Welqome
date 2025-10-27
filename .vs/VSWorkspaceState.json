@@ -3,8 +3,11 @@
     "",
     "\\assets",
     "\\assets\\js",
-    "\\founder-karol"
+    "\\founder-jai",
+    "\\founder-karol",
+    "\\members",
+    "\\members\\dashboard",
+    "\\members\\forgot"
   ],
-  "SelectedNode": "\\assets\\js\\firebase-init.js",
   "PreviewInSolutionExplorer": false
 }

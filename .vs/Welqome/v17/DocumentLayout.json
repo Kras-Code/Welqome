@@ -38,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
@@ -51,47 +51,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-10-27T14:57:00.118Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "login.js",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\login.js",
-              "RelativeDocumentMoniker": "assets\\js\\login.js",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\login.js",
-              "RelativeToolTip": "assets\\js\\login.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-27T19:49:10.608Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\forgot\\index.html",
-              "RelativeDocumentMoniker": "members\\forgot\\index.html",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\forgot\\index.html",
-              "RelativeToolTip": "members\\forgot\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAA0AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-27T19:44:54.865Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\dashboard\\index.html",
-              "RelativeDocumentMoniker": "members\\dashboard\\index.html",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\dashboard\\index.html",
-              "RelativeToolTip": "members\\dashboard\\index.html",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-27T18:48:28.809Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -119,6 +79,43 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "login.js",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\login.js",
+              "RelativeDocumentMoniker": "assets\\js\\login.js",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\login.js",
+              "RelativeToolTip": "assets\\js\\login.js",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABMAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-27T19:49:10.608Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\forgot\\index.html",
+              "RelativeDocumentMoniker": "members\\forgot\\index.html",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\forgot\\index.html",
+              "RelativeToolTip": "members\\forgot\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-10-27T19:44:54.865Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\dashboard\\index.html",
+              "RelativeDocumentMoniker": "members\\dashboard\\index.html",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\members\\dashboard\\index.html",
+              "RelativeToolTip": "members\\dashboard\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-10-27T18:48:28.809Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 6,
               "Title": "blog.html",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\blog.html",
@@ -127,8 +124,7 @@
               "RelativeToolTip": "blog.html",
               "ViewState": "AgIAABgAAAAAAAAAAAAAAC4AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-26T20:04:55.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T20:04:55.663Z"
             },
             {
               "$type": "Document",
@@ -140,8 +136,7 @@
               "RelativeToolTip": "assets\\js\\fullscreen.js",
               "ViewState": "AgIAAMcBAAAAAAAAAAAiwGMBAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-26T18:54:13.281Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T18:54:13.281Z"
             },
             {
               "$type": "Document",
@@ -153,8 +148,7 @@
               "RelativeToolTip": "index.html",
               "ViewState": "AgIAAK0AAAAAAAAAAAAAAHoAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-10-26T18:42:20.442Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-26T18:42:20.442Z"
             }
           ]
         }
