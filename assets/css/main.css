@@ -4129,6 +4129,7 @@ button,
 	}
 
 
+
 	/* Submenu link styling (inherits your base link styles, slightly adjusted) */
 	#sidebar nav ul.submenu a {
 		/* inherits color, caps, underline animation from #sidebar nav a */
@@ -4267,16 +4268,16 @@ button,
 		/* Hover opens submenu; panel stays open while hovered */
 		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
 		#sidebar nav > ul > li.has-submenu > ul.submenu:hover {
-			max-height: 80vh;
-			opacity: 1 ;
-			transform: translateY(0) scaleY(1);
+			max-height: 80vh !important;
+			opacity: 1 !important;
+			transform: translateY(0) scaleY(1) !important;
 		}
 
 		/* BLOCK: focus auto-open */
 		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
-			max-height: 0 ;
-			opacity: 0;
-			transform: translateY(-.5rem) scaleY(.96);
+			max-height: 0 !important;
+			opacity: 0 !important;
+			transform: translateY(-.5rem) scaleY(.96) !important;
 		}
 
 }
