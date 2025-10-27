@@ -1,37 +1,77 @@
-<!-- hide content until auth resolved (prevents flash) -->
-<style>
-    html {
-        visibility: hidden;
-    }
-</style>
-
-<script type="module" src="/assets/js/auth-guard.js"></script>
-
+<!DOCTYPE html>
 <html lang="en">
-    <body>
-        <p>Success!</p>
+<head>
+    <meta charset="utf-8" />
+    <title>WelQome — Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Sign out control -->
-        <button id="signOutBtn" type="button" aria-label="Sign out">Sign out</button>
+    <!-- Brand CSS -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
 
-        <!-- Firebase Auth v12.4.0 sign-out -->
-        <script type="module">
-            import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+    <!-- Hide until auth resolves (prevents unauthenticated flash) -->
+    <style>
+        html {
+            visibility: hidden
+        }
+    </style>
 
-            // Uses the default Firebase app (make sure your init ran before this)
-            const auth = getAuth();
+    <!-- Auth guard: redirects unauthenticated users to /members/ and reveals on success -->
+    <script type="module" src="/assets/js/auth-guard.js"></script>
+</head>
 
-            document.getElementById("signOutBtn")?.addEventListener("click", async () => {
-                try {
-                    await signOut(auth);
-                    // Redirect after sign-out:
-                    window.location.replace("/");
-                } catch (err) {
-                    console.error("Sign-out failed:", err);
-                    alert("Sign-out failed. See console for details.");
-                }
-            });
-        </script>
-    </body>
+<body>
+    <!-- Header -->
+    <header id="header" class="wrapper wq-gradient-alt">
+        <a href="/" class="slogo-link" aria-label="WelQome homepage">
+            <img src="/images/welqome_automate.png" alt="WelQome Logo" class="slogo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/" class="button match-slogo">WelQome Homepage</a></li>
+                <li><a href="/#four" class="button match-slogo">Contact Us</a></li>
+                <li>
+                    <a href="/#four" class="button match-slogo" aria-haspopup="dialog" data-zoom-template="#tpl-faqs">
+                        FAQs
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <main id="main" class="wrapper wq-gradient" role="main">
+            <div class="inner fit-media">
+                <h1 class="major">Dashboard</h1>
+
+                <!-- Example protected content -->
+                <p>Welcome to your dashboard. Only authenticated users can see this.</p>
+
+                <div class="actions" style="margin-top:1rem">
+                    <button id="signOutBtn" type="button" class="button alt">Sign out</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Optional: your global scripts (if genuinely needed on dashboard).
+         Prefer absolute paths; omit jQuery stack if unused on this page. -->
+    <!-- <script src="/assets/js/main.js"></script> -->
+    <!-- Sign-out (uses the same Firebase app as /assets/js/firebase-init.js) -->
+    <script type="module">
+        import { auth } from "/assets/js/firebase-init.js";
+        import { signOut } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+        document.getElementById("signOutBtn")?.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+                window.location.replace("/members/"); // back to login after sign-out
+            } catch (err) {
+                console.error("Sign-out failed:", err);
+                alert("Sign-out failed. See console for details.");
+            }
+        });
+    </script>
+</body>
 </html>
