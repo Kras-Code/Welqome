@@ -3,7 +3,7 @@ import { auth } from "/assets/js/firebase-init.js";
 import { onAuthStateChanged }
     from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
-const LOGIN_URL = "/login/";
+const LOGIN_URL = "/members/";
 
 document.documentElement.style.visibility = "hidden";
 onAuthStateChanged(auth, (user) => {

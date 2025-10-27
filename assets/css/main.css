@@ -4263,6 +4263,22 @@ button,
 			}
 
 
+		/* ───────── Interaction policy at ≤1280px ─────────
+		/* Hover opens submenu; panel stays open while hovered */
+		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
+		#sidebar nav > ul > li.has-submenu > ul.submenu:hover {
+			max-height: 80vh;
+			opacity: 1 ;
+			transform: translateY(0) scaleY(1);
+		}
+
+		/* BLOCK: focus auto-open */
+		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
+			max-height: 0 ;
+			opacity: 0;
+			transform: translateY(-.5rem) scaleY(.96);
+		}
+
 }
 
 
