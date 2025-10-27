@@ -17,7 +17,7 @@
 
     // 4) Where to go after successful login
     // If your dashboard is a file, use "/members.html"; if it’s a folder with index.html, use "/members/"
-    const DASHBOARD_URL = "dashboard.html";
+    const DASHBOARD_URL = "/membres/dashboard";
 
   // Optional: if already signed in, skip the form and go straight to dashboard
   onAuthStateChanged(auth, (user) => {
