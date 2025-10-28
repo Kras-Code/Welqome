@@ -6542,17 +6542,6 @@ body.page-index {
 		font-size: .95rem;
 	}
 
-	/* Grid of evidence cards */
-	.evidence-grid {
-		--gap: clamp(.8rem, 2vw, 1.25rem);
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-		gap: var(--gap);
-		list-style: none;
-		padding: 0;
-		margin: 1rem 0 0 0;
-	}
-
 	/* Card */
 	/* Evidence grid = same layout rhythm as .wq-feature-grid */
 	.evidence-grid {
@@ -6562,6 +6551,7 @@ body.page-index {
 		gap: var(--gap);
 		align-items: stretch;
 		margin-bottom: calc(var(--gap) * 2);
+		margin: 1rem 0 0 0;
 		list-style: none;
 		padding: 0;
 	}
@@ -6613,10 +6603,12 @@ body.page-index {
 	.evidence-claim {
 		margin: 0;
 		line-height: 1.15;
+		white-space: normal !important; /* override any global nowrap */
+		overflow-wrap: anywhere; /* robust wrapping, even for long tokens */
 	}
 
 		.evidence-claim .num {
-			font-size: 3em;
+			font-size: 2.5em;
 			font-weight: 800;
 			margin-right: 0;
 		}
@@ -6626,6 +6618,193 @@ body.page-index {
 		grid-column: 1 / -1;
 	}
 
+
+
+
+/*--------------- NEW FACT CARDS infographics--------------------------*/
+
+/* Green emphasis for the phrase “captures missed calls” */
+.wq-green {
+	color: var(--wq-green, #22c55e);
+	font-weight: 600;
+}
+
+
+/* ---- Odds Ratio Graphic ---- */
+.wq-or {
+	--wq-green: var(--wq-accent-success, #16a34a);
+	--wq-muted: rgba(255,255,255,0.18);
+	--wq-text: var(--wq-text, #eaf0ff);
+	--or: 7; /* set inline; controls the ratio */
+	/* Reserve a tiny gutter so end-caps never clip without changing outer card geometry */
+	--cap-gutter: 2ch;
+	display: grid;
+	gap: .45rem;
+	width: 100%;
+	max-width: 520px;
+	padding-right: var(--cap-gutter);
+	margin-top: .5rem; /* slightly more space above the infographic */
+}
+
+.wq-or__title {
+	margin: 0;
+	font-weight: 700;
+	line-height: 1.2;
+	color: var(--wq-text);
+}
+
+.wq-or__rows {
+	position: relative;
+	display: grid;
+	gap: .5rem;
+}
+
+.wq-or__row {
+	display: grid;
+	grid-template-columns: max-content 1fr;
+	align-items: center;
+	gap: .6rem;
+}
+
+.wq-or__label {
+	font-size: .9rem;
+	opacity: .85;
+	white-space: nowrap;
+}
+
+/* Bars share a common scale: total width corresponds to (1 + OR) units. */
+.wq-or__bar {
+	--unit: 1; /* overridden below */
+	position: relative; /* positioning context for end-cap */
+	overflow: visible; /* allow end-cap to sit just beyond the edge */
+	height: .6rem;
+	border-radius: 999px;
+	background: linear-gradient(90deg, var(--wq-green), var(--wq-green));
+	/* width = unit / (1+OR) of the container, capped at 100% */
+	width: calc((var(--unit) / (var(--or) + 1)) * 100%);
+	box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 14px rgba(0,0,0,0.25);
+}
+
+.wq-or__bar--baseline {
+	--unit: 1;
+	background: linear-gradient(90deg, var(--wq-muted), var(--wq-muted));
+}
+
+.wq-or__bar--variant {
+	--unit: calc(var(--or));
+	background: linear-gradient(90deg, var(--wq-green), var(--wq-green));
+}
+
+/* End-cap labels anchored to each bar’s right edge (e.g., ×1, ×7) */
+.wq-or__cap {
+	position: absolute;
+	left: 100%; /* pin to bar end */
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: .35rem; /* small gap from bar edge */
+	font-weight: 700;
+	font-size: .82rem;
+	line-height: 1;
+	white-space: nowrap;
+	color: var(--wq-text, #eaf0ff);
+	text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+
+.wq-or__note {
+	display: block;
+	font-size: .78rem;
+	line-height: 1.3;
+	opacity: .8;
+}
+
+/* --- People infographics ---*/
+
+/* Infographic grid: always a 3×3 for perfect alignment */
+/* Evidence infographic — single horizontal row, larger icons, tighter gaps */
+.evidence-graphic {
+	width: 100%;
+	margin: 0 0 .5rem 0;
+	overflow: hidden; /* prevents any minor overflow from negative margins */
+}
+
+	.evidence-graphic .infogrid {
+		/* Tunables */
+		--icon-gap: clamp(0.06rem, 0.45vw, 0.16rem); /* tighter spacing */
+		--edge-bleed: 0.3rem; /* lets icons grow wider */
+
+		display: grid;
+		grid-template-columns: repeat(9, minmax(0, 1fr)); /* 9 equal cells in one row */
+		column-gap: var(--icon-gap);
+		align-items: center;
+		justify-items: stretch;
+		/* extend slightly beyond the card so icons are larger without wrapping */
+		width: calc(100% + var(--edge-bleed) * 2);
+		margin-inline: calc(var(--edge-bleed) * -1);
+	}
+
+		.evidence-graphic .infogrid img {
+			display: block;
+			width: 100%; /* icon fills its cell */
+			height: auto; /* preserve SVG aspect ratio */
+		}
+
+
+/* Narrow screens: slightly reduce bleed to avoid horizontal scroll */
+@media (max-width: 480px) {
+	.evidence-graphic .infogrid {
+		--edge-bleed: 0.15rem;
+	}
+}
+
+
+
+
+/* Head remains stacked; a two-column grid aligns each claim with its pie */
+
+/* Donut pie — GREEN; orientation reverted (no fixed “from …” angle) */
+/* Donut pie — make it a full pie (no hole) */
+.evidence-pie {
+	--size: 100px;
+	--wq-green: #22c55e;
+	--fg: var(--wq-green);
+	--bg: rgba(255,255,255,0.18);
+	--hole: var(--wq-card-bg, rgba(255,255,255,0.03)); /* now unused, can keep or delete */
+	--ring: rgba(255,255,255,0.06);
+	width: var(--size);
+	height: var(--size);
+	border-radius: 50%;
+	/* REPLACE the background line with the one below */
+	background: conic-gradient(var(--fg) calc(var(--pct) * 1%), var(--bg) 0);
+	box-shadow: 0 0 0 1px var(--ring), inset 0 0 0 0.5px var(--ring);
+	justify-self: end;
+}
+
+
+/* Responsive: keep layout, just scale pies a bit */
+@media (max-width: 736px) {
+	.evidence-pie {
+		--size: 64px;
+	}
+}
+
+/* Two-column pairing: claim | pie */
+/* Two-column pairing: claim | pie */
+.evidence-head--rows .evidence-grid {
+	display: grid;
+	grid-template-columns: 1fr auto; /* claim stretches, pie hugs right */
+	column-gap: 1.5rem;
+	row-gap: var(--pie-gap, 1.5rem);
+	/* REPLACE this: align-items: center; */
+	align-items: start; /* <-- top-align claim + pie */
+	margin-top: 0;
+}
+
+/* (Optional hard pin if something else overrides it) */
+.evidence-head--rows .evidence-claim,
+.evidence-head--rows .evidence-pie {
+	align-self: start;
+}
 
 
 
