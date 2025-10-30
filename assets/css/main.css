@@ -4140,155 +4140,11 @@ button,
 	}
 
 
-@media screen and (max-width: 1280px) {
-	/* ───────── Top bar layout (unchanged) ───────── */
-	#sidebar {
-		--nav-h: 3.5em;
-		width: 100%;
-		padding: 0;
-		height: auto;
-		min-height: var(--nav-h);
-		overflow: visible;
-		text-align: center;
-	}
-
-		#sidebar > .inner {
-			display: flex;
-			flex-direction: row;
-			align-items: stretch;
-			height: auto;
-		}
-
-		#sidebar nav {
-			height: auto;
-		}
-
-			#sidebar nav > ul {
-				display: flex;
-				align-items: center;
-				flex-wrap: wrap;
-				gap: 2em;
-				margin: 0;
-				padding: 0;
-			}
-
-				#sidebar nav > ul > li {
-					display: flex;
-					align-items: center;
-					height: var(--nav-h);
-				}
-
-			#sidebar nav a {
-				display: inline-flex;
-				align-items: center;
-				height: var(--nav-h);
-				line-height: var(--nav-h);
-				padding: 0;
-				white-space: nowrap; /* keep each item on a single row */
-			}
-
-		/* Logo scales to bar height per row */
-		#sidebar .logo {
-			display: block;
-			height: var(--nav-h);
-			width: auto;
-			flex: 0 0 auto;
-		}
-
-		/* Keep your active/underline style */
-		#sidebar nav a:after {
-			background-image: linear-gradient(to right, #0162eb, #00c0fa);
-		}
-
-		/* ───────── Submenu panel styling (visuals preserved) ───────── */
-		#sidebar nav > ul > li.has-submenu {
-			position: relative;
-		}
-
-		/* Panel container: default = closed */
-		#sidebar nav ul.submenu {
-			position: absolute;
-			top: 100%;
-			left: 0; /* align left edge with parent item */
-			right: auto;
-			width: 100%; /* exactly the width of the parent <li> */
-			min-width: 100%;
-			display: block;
-			border: 1px solid rgba(255,255,255,0.12);
-			border-radius: 10px;
-			padding: .35rem 0;
-			z-index: 10002;
-			/* animated reveal: start slightly ABOVE and scale down from the top */
-			max-height: 0;
-			overflow: hidden;
-			opacity: 0;
-			transform-origin: top center;
-			transform: translateY(-.5rem) scaleY(.96);
-			transition: max-height .35s ease, opacity .25s ease, transform .35s ease;
-			box-shadow: 0 8px 22px rgba(0,0,0,.35);
-			will-change: transform, max-height, opacity;
-			/* gradient background (as before) */
-			--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
-			--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
-			--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
-			background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
-			background-repeat: no-repeat, no-repeat;
-			background-color: var(--bg-a);
-		}
-
-			/* Vertical list items + dividers (visual) */
-			#sidebar nav ul.submenu > li {
-				display: block;
-				height: auto;
-				margin: 0;
-				padding: 0;
-				opacity: 1; /* immediate (no stagger on mobile bar) */
-				transform: none;
-			}
-
-				#sidebar nav ul.submenu > li + li {
-					border-top: 1px solid rgba(255,255,255,0.14);
-				}
-
-			#sidebar nav ul.submenu a {
-				display: block;
-				padding: .7rem 1rem;
-				box-sizing: border-box;
-				max-width: 100%;
-				height: auto;
-				line-height: 1.25;
-				white-space: normal !important;
-				overflow-wrap: anywhere;
-				word-break: break-word;
-				hyphens: auto;
-			}
-
-
-		/* ───────── Interaction policy at ≤1280px ─────────
-		/* Hover opens submenu; panel stays open while hovered */
-		#sidebar nav > ul > li.has-submenu:hover > ul.submenu,
-		#sidebar nav > ul > li.has-submenu > ul.submenu:hover {
-			max-height: 80vh !important;
-			opacity: 1 !important;
-			transform: translateY(0) scaleY(1) !important;
-		}
-
-		/* BLOCK: focus auto-open */
-		#sidebar nav > ul > li.has-submenu:focus-within > ul.submenu {
-			max-height: 0 !important;
-			opacity: 0 !important;
-			transform: translateY(-.5rem) scaleY(.96) !important;
-		}
-
-}
 
 
 
 
-
-
-
-	@media screen and (max-width: 736px) {
+	@media screen and (max-width: 1280px) {
 
 		#sidebar {
 			display: none;
@@ -4351,16 +4207,8 @@ body.page-index {
 	}
 }
 
-/* 737–1280px: desktop sidebar becomes top bar; push content down */
-@media screen and (max-width: 1280px) and (min-width: 737px) {
-	body {
-		padding-left: 0;
-		padding-top: var(--topbar-h);
-	}
-}
-
 /* ≤736px: mobile drawer + veil take over */
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 1280px) {
 
 	/* Always instantiate the backdrop on mobile so sibling selectors can animate it */
 	#m-sidebar-backdrop {
@@ -4709,7 +4557,7 @@ body.page-index {
 }
 
 /* ≤736px: desktop sidebar is hidden; no layout offset (mobile drawer handles overlay) */
-@media screen and (max-width: 736px) {
+@media screen and (max-width: 1280px) {
 	body {
 		padding: 0;
 	}
@@ -4720,6 +4568,10 @@ body.page-index {
 
 
 	/* Intro */
+
+	#intro h1 .h1-line {
+		display: block;
+	}
 
 	/* h1 copies p style*/
 	#intro .inner .h1--subtle {

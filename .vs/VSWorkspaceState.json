@@ -2,11 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\assets",
+    "\\assets\\css",
     "\\assets\\js",
     "\\members",
     "\\members\\dashboard",
     "\\members\\forgot"
   ],
-  "SelectedNode": "\\members\\dashboard\\index.html",
+  "SelectedNode": "\\assets\\css\\main.css",
   "PreviewInSolutionExplorer": false
 }
