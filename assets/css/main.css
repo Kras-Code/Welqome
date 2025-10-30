@@ -4671,26 +4671,6 @@ body.page-index {
 	}
 }
 
-.wq-btn {
-	-webkit-appearance: none;
-	appearance: none;
-	border: 0;
-	cursor: pointer;
-	border-radius: calc(var(--wq-radius) - 6px);
-	font-weight: 700;
-	line-height: 1;
-	padding: .9rem 1rem;
-	transition: transform .08s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
-	box-shadow: 0 6px 16px rgba(0,0,0,.25);
-	text-align: center;
-}
-
-	.wq-btn:focus-visible {
-		outline: 2px solid var(--wq-cyan-500);
-		outline-offset: 2px;
-	}
-
-
 .wq-btn--outline {
 	color: var(--wq-text);
 	background: transparent;
@@ -4707,6 +4687,32 @@ body.page-index {
 		color: var(--wq-cyan-500);
 		text-underline-offset: 2px;
 	}
+
+/* --- Banner layout: stack content; desc full width; buttons below on left --- */
+.wq-cookie--banner .wq-cookie__grid {
+	display: grid; /* override any prior flex/2-col grid */
+	grid-template-columns: 1fr; /* single column across the full box */
+	grid-auto-rows: min-content;
+	row-gap: .65rem;
+}
+
+/* Ensure title/desc/links occupy the full width row */
+.wq-cookie--banner .wq-cookie__title,
+.wq-cookie--banner .wq-cookie__desc,
+.wq-cookie--banner .wq-cookie__links {
+	grid-column: 1 / -1;
+}
+
+/* Buttons below the description (and links), left-aligned */
+.wq-cookie--banner .wq-cookie__buttons {
+	grid-column: 1 / -1; /* same full-width row, but content aligns left */
+	justify-self: start; /* anchor button group to the left edge */
+	display: flex; /* keep your existing .wq-btn styles; lay them out inline */
+	flex-wrap: wrap; /* wrap gracefully on narrow widths */
+	gap: .5rem; /* tidy spacing between buttons */
+	margin-top: .25rem; /* subtle separation from text */
+}
+
 
 /* Modal overlay */
 .wq-cookie--modal {
