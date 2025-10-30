@@ -4565,6 +4565,298 @@ body.page-index {
 
 
 
+/* ----------------------------------------------------- COOKIES BANNER------------------------------------*/
+:root {
+	/* Brand tokens (fallbacks if your site variables are absent) */
+	--wq-blue-900: var(--wq-blue-900, #023e8a);
+	--wq-blue-700: var(--wq-blue-700, #0161eb);
+	--wq-cyan-500: var(--wq-accent-1, #00c0fa);
+	--wq-bg-900: var(--wq-bg, #0a1120);
+	--wq-card: color-mix(in oklab, white 6%, transparent);
+	--wq-ring: color-mix(in oklab, white 10%, transparent);
+	--wq-text: var(--wq-text, #eaf0ff);
+	--wq-muted: color-mix(in oklab, var(--wq-text) 62%, transparent);
+	--wq-success: var(--wq-accent-success, #16a34a);
+	--wq-radius: 18px;
+	--wq-shadow: 0 18px 36px rgba(2, 14, 42, .5);
+}
+
+.wq-cookie {
+	font: inherit;
+	color: var(--wq-text);
+}
+
+	.wq-cookie * {
+		box-sizing: border-box;
+	}
+
+/* Banner (bottom sheet) */
+.wq-cookie--banner {
+	position: fixed;
+	inset: auto 0 0 0;
+	z-index: 9999;
+	display: none;
+	padding: clamp(.5rem, 1.5vw, 1rem);
+}
+
+	.wq-cookie--banner[aria-hidden="false"] {
+		display: block;
+	}
+
+.wq-cookie__box {
+	--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+	--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+	--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+	/* text/accents tuned for dark surfaces */
+	--ink: #eef6ff;
+	--muted: #8fa3c2;
+	--ring: rgba(1, 97, 235, 0.22);
+	color: #fff;
+	position: relative;
+	isolation: isolate;
+	/* keep the same stacking order so it visually relates to .wq-gradient */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+	background-repeat: no-repeat, no-repeat;
+	background-position: 100% -10%, center;
+	background-size: auto, cover;
+	/* solid fallback ensures nothing “wins” over the gradient */
+	background-color: var(--bg-a);
+	margin: 0 auto;
+	max-width: 1100px;
+	border: 1px solid var(--wq-ring);
+	border-radius: var(--wq-radius);
+	box-shadow: var(--wq-shadow);
+	padding: clamp(1rem, 2vw, 1.25rem);
+}
+
+.wq-cookie__grid {
+	display: grid;
+	gap: 1rem;
+	align-items: start;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 860px) {
+	.wq-cookie__grid {
+		grid-template-columns: 3fr 2fr;
+		gap: 1.25rem;
+	}
+}
+
+.wq-cookie__title {
+	margin: 0 0 .35rem 0;
+	font-weight: 800;
+	line-height: 1.1;
+	font-size: clamp(1.05rem, 2vw, 1.25rem);
+	letter-spacing: .2px;
+	/* subtle white "glow stroke" */
+	text-shadow: 0 0 .65px #fff, 0 0 .65px #fff, 0 0 6px rgba(255,255,255,.08);
+}
+
+.wq-cookie__desc {
+	margin: 0;
+	color: var(--wq-muted);
+}
+
+.wq-cookie__buttons {
+	display: grid;
+	gap: .5rem;
+	align-content: start;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 420px) {
+	.wq-cookie__buttons {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
+.wq-btn {
+	-webkit-appearance: none;
+	appearance: none;
+	border: 0;
+	cursor: pointer;
+	border-radius: calc(var(--wq-radius) - 6px);
+	font-weight: 700;
+	line-height: 1;
+	padding: .9rem 1rem;
+	transition: transform .08s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+	box-shadow: 0 6px 16px rgba(0,0,0,.25);
+	text-align: center;
+}
+
+	.wq-btn:focus-visible {
+		outline: 2px solid var(--wq-cyan-500);
+		outline-offset: 2px;
+	}
+
+
+.wq-btn--outline {
+	color: var(--wq-text);
+	background: transparent;
+	box-shadow: inset 0 0 0 1px var(--wq-ring);
+}
+
+.wq-cookie__links {
+	margin-top: .5rem;
+	font-size: .9rem;
+	color: var(--wq-muted);
+}
+
+	.wq-cookie__links a {
+		color: var(--wq-cyan-500);
+		text-underline-offset: 2px;
+	}
+
+/* Modal overlay */
+.wq-cookie--modal {
+	position: fixed;
+	inset: 0;
+	z-index: 10000;
+	display: none;
+	background: color-mix(in oklab, black 40%, transparent);
+	padding: 1rem;
+	overflow: auto;
+}
+
+	.wq-cookie--modal[aria-hidden="false"] {
+		display: grid;
+		place-items: center;
+	}
+
+.wq-cookie__dialog {
+	--bg-a: #050f27; /* near-navy black (darker than #0b1f4b) */
+	--bg-b: #0a1b3d; /* dark steel blue (darker than #023e8a) */
+	--bg-c: #0a2f7a; /* muted cobalt (darker than #0161eb) */
+	/* text/accents tuned for dark surfaces */
+	--ink: #eef6ff;
+	--muted: #8fa3c2;
+	--ring: rgba(1, 97, 235, 0.22);
+	color: #fff;
+	position: relative;
+	isolation: isolate;
+	/* keep the same stacking order so it visually relates to .wq-gradient */
+	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
+	background-repeat: no-repeat, no-repeat;
+	background-position: 100% -10%, center;
+	background-size: auto, cover;
+	/* solid fallback ensures nothing “wins” over the gradient */
+	background-color: var(--bg-a);
+	width: min(860px, 96vw);
+	border: 1px solid var(--wq-ring);
+	border-radius: var(--wq-radius);
+	box-shadow: var(--wq-shadow);
+	padding: clamp(1rem, 2vw, 1.25rem);
+}
+
+.wq-cookie__section + .wq-cookie__section {
+	margin-top: .85rem;
+}
+
+.wq-cat {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	gap: .35rem .75rem;
+	padding: .75rem;
+	border-radius: 14px;
+	background: color-mix(in oklab, var(--wq-card), transparent 0%);
+	box-shadow: inset 0 0 0 1px var(--wq-ring);
+}
+
+.wq-cat__meta {
+	color: var(--wq-muted);
+	font-size: .95rem;
+	grid-column: 1 / -1;
+	margin-top: -.25rem;
+}
+
+.wq-switch {
+	--h: 28px;
+	--w: 52px;
+	position: relative;
+	width: var(--w);
+	height: var(--h);
+	border-radius: var(--h);
+	background: color-mix(in oklab, var(--wq-card), black 12%);
+	box-shadow: inset 0 0 0 1px var(--wq-ring);
+}
+
+	.wq-switch input {
+		position: absolute;
+		opacity: 0;
+		inset: 0;
+	}
+
+.wq-switch__thumb {
+	position: absolute;
+	top: 3px;
+	left: 3px;
+	width: calc(var(--h) - 6px);
+	height: calc(var(--h) - 6px);
+	background: white;
+	border-radius: 999px;
+	box-shadow: 0 4px 12px rgba(0,0,0,.35);
+	transition: left .15s ease;
+}
+
+.wq-switch input:checked + .wq-switch__thumb {
+	left: calc(var(--w) - var(--h) + 3px);
+	background: var(--wq-cyan-500);
+}
+
+.wq-switch input:disabled + .wq-switch__thumb {
+	background: #bfc9da;
+	box-shadow: none;
+}
+
+.wq-cookie__footer {
+	display: grid;
+	gap: .5rem;
+	grid-template-columns: 1fr 1fr 1fr;
+	margin-top: 1rem;
+}
+
+@media (max-width: 520px) {
+	.wq-cookie__footer {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Reduce Motion */
+@media (prefers-reduced-motion: reduce) {
+	.wq-btn {
+		transition: none;
+	}
+
+	.wq-switch__thumb {
+		transition: none;
+	}
+}
+
+/* ≥1280px: move cookie banner into the main column (15em right of left edge)
+   and size the box to the available width there */
+@media (min-width: 1280px) {
+	.wq-cookie--banner {
+		left: 15em; /* override inset's left=0 */
+		right: 0;
+		bottom: 0;
+		top: auto;
+	}
+
+		/* Fill the available column while respecting paddings; stays centered */
+		.wq-cookie--banner .wq-cookie__box {
+			/* available width = viewport - sidebar - banner paddings */
+			width: calc(100vw - 15em - 2 * clamp(.5rem, 1.5vw, 1rem));
+			max-width: 1100px; /* keep your design cap */
+			margin-left: auto; /* keep centered within the main column */
+			margin-right: auto;
+		}
+}
+
+
+
+ /* ----------------------- End Cookies ----------------------------------------*/
+
 
 
 	/* Intro */
@@ -4572,6 +4864,7 @@ body.page-index {
 	#intro h1 .h1-line {
 		display: block;
 	}
+
 
 	/* h1 copies p style*/
 	#intro .inner .h1--subtle {
