@@ -4618,7 +4618,7 @@ body.page-index {
 	background-image: radial-gradient(900px 480px at 100% -10%, rgba(255,255,255,0.035), transparent 62%), linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 44%, var(--bg-c) 100%);
 	background-repeat: no-repeat, no-repeat;
 	background-position: 100% -10%, center;
-	background-size: auto, cover;
+	background-size: auto, cover;\
 	/* solid fallback ensures nothing “wins” over the gradient */
 	background-color: var(--bg-a);
 	margin: 0 auto;
