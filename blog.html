@@ -6,13 +6,15 @@
 -->
 <html>
 <head>
-    <title>WelQome Founder - Jai Kumar</title>
+    <title>WelQome Blog</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- Page-scoped blog layout tweaks -->
 </head>
-<body class="is-preload">
+<body class="is-preload blog">
 
     <!-- Header -->
     <header id="header" class=" wrapper wq-gradient-alt">
@@ -37,8 +39,6 @@
         </nav>
     </header>
 
-
-
     <!-- Wrapper -->
     <div id="wrapper">
 
@@ -46,19 +46,149 @@
         <section id="main" class="wrapper wq-gradient">
             <div class="inner fit-media">
 
+                <!-- Blog dashboard header -->
                 <h1 class="major">
-                    Jai Kumar MA. | Founder, CTO
-                    <a href="https://www.linkedin.com/in/jai-kumar-09a22a2b0/"
-                       class="icon brands fa-linkedin li-icon"
-                       aria-label="LinkedIn: Jai Kumar"
-                       target="_blank"
-                       rel="noopener"><span class="label">LinkedIn</span></a>
+                    WelQome Blog
                 </h1>
 
-                <span class="image left"><img src="/images/jai.png" alt="" /></span>
-                <p>Jai delivers a robust combination of consultation and backend computing as Chief Technology Officer of WelQome.</p>
-                <p>Backed by 10+ years of self-taught programming experience in Python and Javascript, he has built a robust understanding of integrating artificial intelligence into API architecture for Telephony &amp; Cloud Computing.</p>
-                <p>Jai holds a Master's degree in Medical Ethics and Law, which has versed him in technical, consultative communication. His academic training has equipped him with the expertise to provide informed advice to your business and ensure that all agents adhere to ethical and GDPR-compliant data practices.</p>
+                <!-- Dashboard controls -->
+                <section class="wq-blog-dashboard">
+                    <div class="wq-blog-dashboard__intro">
+                        <span class="wq-label">Overview</span>
+                        <p>
+                            Browse articles by category, scan the latest launches, or deep-dive into
+                            case studies from businesses already benefiting from WelQome.
+                        </p>
+                    </div>
+
+
+                    <div class="wq-blog-dashboard__filters" aria-label="Filter posts by category">
+                        <button type="button" class="wq-pill wq-pill--active">All</button>
+                        <button type="button" class="wq-pill">Product updates</button>
+                        <button type="button" class="wq-pill">Playbooks</button>
+                        <button type="button" class="wq-pill">Case studies</button>
+                        <button type="button" class="wq-pill">Founder notes</button>
+                    </div>
+                </section>
+
+                <!-- Blog posts grid -->
+                <section class="features">
+
+                    <!-- Example post 1 -->
+                    <article>
+                        <span class="icon solid fa-robot"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Product update</span>
+                                <span>October 2025 · 6 min read</span>
+                            </div>
+                            <h3>Meet your 24/7 AI receptionist</h3>
+                            <p>
+                                How WelQome answers calls with human-like warmth, routes conversations intelligently,
+                                and books appointments directly into your existing calendar and CRM stack.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/ai-receptionist-launch/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                    <!-- Example post 2 -->
+                    <article>
+                        <span class="icon solid fa-phone-volume"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Case study</span>
+                                <span>September 2025 · 5 min read</span>
+                            </div>
+                            <h3>From missed calls to booked appointments in a dental clinic</h3>
+                            <p>
+                                A real-world deployment in a UK dental practice: baseline call volumes, missed-call
+                                recovery, and how AI reception triage increased booked appointments without adding headcount.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/dental-missed-calls-case-study/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                    <!-- Example post 3 -->
+                    <article>
+                        <span class="icon solid fa-link"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Playbook</span>
+                                <span>August 2025 · 8 min read</span>
+                            </div>
+                            <h3>Designing call flows that actually convert new patients</h3>
+                            <p>
+                                A practical framework for mapping intake questions, objection-handling and escalation rules
+                                so your AI receptionist stays on-brand and drives measurable revenue.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/call-flow-conversion-playbook/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                    <!-- Example post 4 -->
+                    <article>
+                        <span class="icon solid fa-database"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Product update</span>
+                                <span>July 2025 · 4 min read</span>
+                            </div>
+                            <h3>Deep CRM integration: HubSpot, Salesforce and beyond</h3>
+                            <p>
+                                Under the hood of WelQome’s integrations layer: how we write to your CRM,
+                                handle consent and GDPR, and keep your reporting clean for marketing and ops.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/crm-integration-deep-dive/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                    <!-- Example post 5 -->
+                    <article>
+                        <span class="icon solid fa-user-tie"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Founder note</span>
+                                <span>June 2025 · 3 min read</span>
+                            </div>
+                            <h3>Why we built WelQome</h3>
+                            <p>
+                                The origin story: chronic missed calls in clinics, frustrated front-of-house teams,
+                                and the insight that AI receptionists can preserve human warmth while scaling capacity.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/founder-story-why-welqome/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                    <!-- Example post 6 -->
+                    <article>
+                        <span class="icon solid fa-shield-alt"></span>
+                        <div>
+                            <div class="wq-blog-meta">
+                                <span class="wq-label">Security & compliance</span>
+                                <span>May 2025 · 7 min read</span>
+                            </div>
+                            <h3>GDPR, call recording and AI reception: what operators need to know</h3>
+                            <p>
+                                A clear guide to lawful bases, call recording policies, and how WelQome’s architecture
+                                keeps PHI and customer data protected in UK and EU deployments.
+                            </p>
+                        </div>
+                        <ul class="actions">
+                            <li><a href="/blog/gdpr-ai-receptionists/" class="button small">Read article</a></li>
+                        </ul>
+                    </article>
+
+                </section>
 
             </div>
         </section>
@@ -115,8 +245,6 @@
                             </a>
                         </address>
                     </div>
-
-
                 </div>
 
                 <!-- Meta: side-by-side labels with images underneath -->
@@ -135,7 +263,6 @@
                     </div>
                 </div>
             </section>
-
 
             <!-- Link Columns -->
             <nav class="wq-footer__nav" aria-label="Footer navigation">
@@ -172,11 +299,9 @@
 
             <!-- Bottom line -->
             <div class="wq-footer__legal">
-                <p>� <span data-year>2025</span> WelQome. All rights reserved.</p>
+                <p>� <span data-year>2025</span> WelQome. All rights reserved.</p>
             </div>
         </div>
-
-
     </footer>
 
     <!-- Scripts -->
