@@ -156,6 +156,9 @@ input, select, textarea {
 		text-decoration: none;
 	}
 
+		a:has(img) {
+			border-bottom: none;
+		}
 		a:hover {
 			border-bottom-color: transparent;
 			color: #ffffff;
@@ -2110,7 +2113,6 @@ button,
 
 /*Features*/
 
-/* Features */
 
 /* One-column stack: desc on top, grid below (same width) */
 .features-layout {
