@@ -6926,40 +6926,57 @@ body.page-index {
 
 /* Donut pie — GREEN; orientation reverted (no fixed “from …” angle) */
 /* Donut pie — make it a full pie (no hole) */
+/* Donut pie — GREEN with a hollow centre */
 .evidence-pie {
 	--size: 100px;
+	--thickness: 12px; /* thickness of the ring */
 	--wq-green: #22c55e;
 	--fg: var(--wq-green);
 	--bg: rgba(255,255,255,0.18);
-	--hole: var(--wq-card-bg, rgba(255,255,255,0.03)); /* now unused, can keep or delete */
 	--ring: rgba(255,255,255,0.06);
 	width: var(--size);
 	height: var(--size);
 	border-radius: 50%;
-	/* REPLACE the background line with the one below */
+	/* Filled ring using conic gradient */
 	background: conic-gradient(var(--fg) calc(var(--pct) * 1%), var(--bg) 0);
-	box-shadow: 0 0 0 1px var(--ring), inset 0 0 0 0.5px var(--ring);
-	justify-self: end;
+	/* Outer subtle ring */
+	box-shadow: 0 0 0 1px var(--ring);
+	/* Positioning in the grid cell */
+	justify-self: start;
+	/* Cut out the centre to make it a donut */
+	-webkit-mask: radial-gradient( farthest-side, transparent calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)) );
+	mask: radial-gradient( farthest-side, transparent calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)) );
 }
-
 
 /* Responsive: keep layout, just scale pies a bit */
 @media (max-width: 736px) {
 	.evidence-pie {
 		--size: 64px;
+		--thickness: 8px;
 	}
 }
 
+
 /* Two-column pairing: claim | pie */
 /* Two-column pairing: claim | pie */
+/* Two-column pairing: pie (left) | claim (right) */
 .evidence-head--rows .evidence-grid {
 	display: grid;
-	grid-template-columns: 1fr auto; /* claim stretches, pie hugs right */
+	grid-template-columns: 1fr auto; /* wide column for text, narrow for chart */
 	column-gap: 1.5rem;
 	row-gap: var(--pie-gap, 1.5rem);
-	/* REPLACE this: align-items: center; */
-	align-items: start; /* <-- top-align claim + pie */
+	align-items: start;
 	margin-top: 0;
+	/* Flip the visual inline direction so the second child (pie)
+	   lands on the left, first child (claim) on the right */
+	direction: rtl;
+}
+
+/* Restore normal text direction inside children */
+.evidence-head--rows .evidence-claim,
+.evidence-head--rows .evidence-pie {
+	align-self: start;
+	direction: ltr;
 }
 
 /* (Optional hard pin if something else overrides it) */
