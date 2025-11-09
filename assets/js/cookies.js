@@ -102,14 +102,26 @@
         if (!$modal) return;
         $modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
-        // Prime switches from stored or default
-        const c = readConsent() || defaultConsent();
-        setSwitch('#wq-cc-functional', c.functional);
-        setSwitch('#wq-cc-analytics', c.analytics);
-        setSwitch('#wq-cc-marketing', c.marketing);
-        // Focus
+
+        // 1. If user has already saved consent, mirror their real choices.
+        const stored = readConsent();
+
+        // 2. If no stored consent yet, just *pre-fill the UI* to "all on".
+        //    This does NOT apply consent – it only changes the checkbox state.
+        const uiState = stored || {
+            ...defaultConsent(),
+            functional: true,
+            analytics: true,
+            marketing: true
+        };
+
+        setSwitch('#wq-cc-functional', uiState.functional);
+        setSwitch('#wq-cc-analytics', uiState.analytics);
+        setSwitch('#wq-cc-marketing', uiState.marketing);
+
         queueMicrotask(() => $dialog?.focus());
     }
+
     function closeModal() {
         if (!$modal) return;
         $modal.setAttribute('aria-hidden', 'true');
