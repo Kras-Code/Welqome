@@ -4810,7 +4810,7 @@ body.page-index {
 
 .wq-switch input:checked + .wq-switch__thumb {
 	left: calc(var(--w) - var(--h) + 3px);
-	background: var(--wq-cyan-500);
+	background: #bfc9da;
 }
 
 .wq-switch input:disabled + .wq-switch__thumb {
