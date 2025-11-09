@@ -6881,30 +6881,33 @@ body.page-index {
 	--icon-gap: clamp(0.06rem, 0.45vw, 0.16rem);
 	width: 100%;
 	margin: .25em 0 .5rem;
-	overflow: hidden;
+	/* allow the shadow to render outside */
+	overflow: visible;
 }
 
 	/* Wrapper: apply bleed once */
 	.evidence-graphic .infogrid {
-		width: calc(100% + var * 2);
-		margin-inline: calc(var * -1);
-	}
-
-		/* Graphics normalize */
-		.evidence-graphic .infogrid > :is(img, picture, svg) {
-			display: block;
-			width: 100%;
-			height: auto;
-		}
-
-	/* Progressive enhancement:
-   Default to grid (works everywhere).
-   If :has is supported, use block for single item and grid only for multi. */
-	.evidence-graphic .infogrid {
+		/* assuming you have a custom property for bleed: --bleed */
+		width: calc(100% + var(--bleed, 0px) * 2);
+		margin-inline: calc(var(--bleed, 0px) * -1);
 		display: grid;
 		grid-template-columns: repeat(9, 1fr);
 		gap: var(--icon-gap);
 	}
+
+		/* Graphics normalize + ring-following shadow */
+		.evidence-graphic .infogrid > :is(img, picture, svg) {
+			display: block;
+			width: 100%;
+			height: auto;
+			/* Shadow that follows the non-transparent pixels */
+			filter:
+			/* soft “edge highlight” analogue of
+		   0 0 0 1px rgba(255,255,255,0.08) inset */
+			drop-shadow(0 0 0 rgba(255,255,255,0.08))
+			/* outer lift: 0 6px 14px rgba(0,0,0,0.25) */
+			drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+		}
 
 @supports selector(:has(*)) {
 	/* Single item: no grid (lighter layout, same full-width strip) */
@@ -6926,40 +6929,35 @@ body.page-index {
 
 /* Donut pie — GREEN; orientation reverted (no fixed “from …” angle) */
 /* Donut pie — make it a full pie (no hole) */
-/* Donut pie — GREEN with a hollow centre */
 .evidence-pie {
 	--size: 100px;
-	--thickness: 12px; /* thickness of the ring */
 	--wq-green: #22c55e;
 	--fg: var(--wq-green);
 	--bg: rgba(255,255,255,0.18);
+	--hole: var(--wq-card-bg, rgba(255,255,255,0.03)); /* now unused, can keep or delete */
 	--ring: rgba(255,255,255,0.06);
 	width: var(--size);
 	height: var(--size);
 	border-radius: 50%;
-	/* Filled ring using conic gradient */
+	/* REPLACE the background line with the one below */
 	background: conic-gradient(var(--fg) calc(var(--pct) * 1%), var(--bg) 0);
-	/* Outer subtle ring */
-	box-shadow: 0 0 0 1px var(--ring);
-	/* Positioning in the grid cell */
-	justify-self: start;
-	/* Cut out the centre to make it a donut */
-	-webkit-mask: radial-gradient( farthest-side, transparent calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)) );
-	mask: radial-gradient( farthest-side, transparent calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)) );
+	box-shadow:
+	/* coloured ring edges (current behaviour) */
+	0 0 0 1px var(--ring), inset 0 0 0 0.5px var(--ring),
+	/* SAME shading as your card: soft inner highlight + drop shadow */
+	0 0 0 1px rgba(255,255,255,0.08) inset, 0 6px 14px rgba(0,0,0,0.25);
+	justify-self: end;
 }
+
 
 /* Responsive: keep layout, just scale pies a bit */
 @media (max-width: 736px) {
 	.evidence-pie {
 		--size: 64px;
-		--thickness: 8px;
 	}
 }
 
-
 /* Two-column pairing: claim | pie */
-/* Two-column pairing: claim | pie */
-/* Two-column pairing: pie (left) | claim (right) */
 .evidence-head--rows .evidence-grid {
 	display: grid;
 	grid-template-columns: 1fr auto; /* wide column for text, narrow for chart */
