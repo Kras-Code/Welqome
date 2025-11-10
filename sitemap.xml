@@ -1,27 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+	<!-- Root -->
 	<url>
 		<loc>https://welqome.co.uk/</loc>
-		<lastmod>2025-10-07</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>1.0</priority>
+	</url>
+
+	<!-- Folder-based pages -->
+	<url>
+		<loc>https://welqome.co.uk/blog/</loc>
 	</url>
 	<url>
-		<loc>https://welqome.co.uk/founder1.html</loc>
-		<lastmod>2025-10-07</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.7</priority>
+		<loc>https://welqome.co.uk/founder-jai/</loc>
 	</url>
 	<url>
-		<loc>https://welqome.co.uk/founder2.html</loc>
-		<lastmod>2025-10-07</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.7</priority>
+		<loc>https://welqome.co.uk/founder-karol/</loc>
 	</url>
 	<url>
-		<loc>https://welqome.co.uk/faqs.html</loc>
-		<lastmod>2025-10-07</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.7</priority>
+		<loc>https://welqome.co.uk/members/</loc>
 	</url>
+	<url>
+		<loc>https://welqome.co.uk/members/dashboard/</loc>
+	</url>
+	<url>
+		<loc>https://welqome.co.uk/members/forgot/</loc>
+	</url>
+
+	<!-- Stand-alone HTML pages in the root -->
+	<url>
+		<loc>https://welqome.co.uk/blog.html</loc>
+	</url>
+	<url>
+		<loc>https://welqome.co.uk/elements.html</loc>
+	</url>
+	<url>
+		<loc>https://welqome.co.uk/generic.html</loc>
+	</url>
+
 </urlset>
