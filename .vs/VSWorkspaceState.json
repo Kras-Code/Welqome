@@ -1,15 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\assets",
-    "\\assets\\css",
-    "\\assets\\js",
+    "\\blog",
     "\\founder-jai",
     "\\founder-karol",
     "\\members",
-    "\\members\\dashboard",
-    "\\members\\forgot"
+    "\\members\\dashboard"
   ],
-  "SelectedNode": "\\assets\\js\\cookies.js",
+  "SelectedNode": "\\index.html",
   "PreviewInSolutionExplorer": false
 }
