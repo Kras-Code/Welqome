@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\blog.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:blog.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\founder-jai\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:founder-jai\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\noscript.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\css\\noscript.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\blog.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:blog.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
@@ -17,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\blogfade.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\js\\blogfade.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\privacy.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:privacy.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,6 +54,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\founder-jai\\index.html",
+              "RelativeDocumentMoniker": "founder-jai\\index.html",
+              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\founder-jai\\index.html",
+              "RelativeToolTip": "founder-jai\\index.html",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAEoAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-11-17T17:23:20.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "noscript.css",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\noscript.css",
@@ -71,7 +80,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "blogfade.js",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\js\\blogfade.js",
               "RelativeDocumentMoniker": "assets\\js\\blogfade.js",
@@ -79,25 +88,11 @@
               "RelativeToolTip": "assets\\js\\blogfade.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-11T15:03:45.151Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T15:03:45.151Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "index.html",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html",
-              "RelativeDocumentMoniker": "index.html",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\index.html",
-              "RelativeToolTip": "index.html",
-              "ViewState": "AgIAAFgEAAAAAAAAAAAAAHkEAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-11-11T14:44:56.305Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "main.css",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\assets\\css\\main.css",
               "RelativeDocumentMoniker": "assets\\css\\main.css",
@@ -105,12 +100,11 @@
               "RelativeToolTip": "assets\\css\\main.css",
               "ViewState": "AgIAACsdAAAAAAAAAAAAAFMdAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-11T14:33:00.775Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T14:33:00.775Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "blog.html",
               "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\blog.html",
               "RelativeDocumentMoniker": "blog.html",
@@ -118,21 +112,7 @@
               "RelativeToolTip": "blog.html",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-11-11T14:32:34.833Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "privacy.html",
-              "DocumentMoniker": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\privacy.html",
-              "RelativeDocumentMoniker": "privacy.html",
-              "ToolTip": "C:\\Users\\karol\\source\\repos\\Kras-Code\\Welqome\\privacy.html",
-              "RelativeToolTip": "privacy.html",
-              "ViewState": "AgIAABwAAAAAAAAAAIAwwDcAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2025-11-11T14:32:32.828Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-11T14:32:34.833Z"
             }
           ]
         }
